@@ -1,0 +1,60 @@
+{
+  "server": {
+    "proxies": []
+  },
+  "plugins": {
+    "description": "this hash is optional and defines project wide additions, such as extra plugins and associated types and extensions",
+    "gulp-sass": {
+      "extentions": "sass",
+      "type": "stylesheet"
+    },
+    "gulp-coffee": {
+      "extentions": "coffee",
+      "type": "script"
+    }
+  },
+  "frameworks": {
+    "description": "here some global framework settings can be made",
+    "sproutcore": {
+      "combineScripts": false
+    },
+    "sproutcore:desktop": {
+      "combineStylesheets": false
+    }
+  },
+  "apps": [
+    {
+      "description": "this hash is optional, as many things can be autodetected. this config file can overrule files deeper in the tree",
+      "name":"myapp",
+      "theme": "ace",
+      "title": "MyApp",
+      "path": "apps/name",
+      "htmlHead": [],
+      "htmlScripts": [],
+      "urlPrefix": "",
+      "frameworks": [
+        {
+          "name": "sproutcore-wysiwyg",
+          "path": "frameworks/SproutCore-WysiWyg",
+          "combineStylesheets": true,
+          "combineScripts": false
+        }
+      ],
+      "frameworks": ["sproutcore-wysiwyg"],
+      "modules": [
+        {
+          "name": "learnScModOne",
+          "path": "modules/learnSC1",
+          "shouldPreload": true
+        }
+      ],
+      "modules": ["learnSC1"],
+      "plugins": {
+        "description": "plugins can be defined per app, "
+      }
+    }
+  ],
+  "deploy": {
+
+  }
+}

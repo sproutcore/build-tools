@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+var util = require('util'),
+    path = require('path'),
+    args = process.argv,
+    curPath = process.env.PWD,
+    buildtools = require('../index'),
+    command = args[2],
+    runtype = (command === "build")? "save": "server",
+    app = (command === "build")? args[3]: null;
+
+util.puts("Sproutcore NodeJS BuildTools v0.0.1");
+util.puts("");
+
+var project = buildtools.Project.create({
+  path: curPath,
+  mode: runtype,
+  app: app
+});
+
+//util.log("args: " + util.inspect(args));
