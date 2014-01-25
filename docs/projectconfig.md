@@ -21,7 +21,7 @@ There are different lemmas to the project config, each for their specific target
 The server lemma in the configuration contains all the settings intended to be used by the development server.
 It contains essentially three items: proxies, port and allowFromAll
 
-### Proxies
+#### Proxies
 A proxy configuration contains:
 
   1. prefix: the first part of the url the server should match against. "/images" will trigger this proxy for all urls starting with "/images"
@@ -29,18 +29,18 @@ A proxy configuration contains:
   3. port: on which port should the proxy forward the request
   4. proxyPrefix: How should the proxy change the url of the forwarded request. If empty it will forward the request as is, if not empty it will replace the prefix given at 1. with the string in this setting.
 
-### Other settings
+#### Other settings
 
   1. port: on which port should the devserver run. Default is 4020
   2. allowFromAll: if true: allow requests from other computers than localhost.
 
-## plugins
+### plugins
 
 The plugins lemma is to configure included plugins or additional plugins inside the project for all apps and all frameworks.
 
-## Apps and Frameworks
+### Apps and Frameworks
 The apps and frameworks lemmas are hashes in which the key is the name of the app or framework, and the value a hash with properties.
 If this hash does not contain a key named path, and the autodetection did not pick up any configuration declaring this name, it is assumed the key is equal to a folder name in apps/ or frameworks/. Property values in these hashes will override configurations found inside these apps or frameworks. More about the specifics for app and framework configurations in their respective chapters.
 
-## deploy
+### deploy
 The deploy lemma can contain settings which overrides all other configurations, but only in case of a build (or save).
