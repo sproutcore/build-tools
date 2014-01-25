@@ -19,9 +19,10 @@
   },
   "plugins": {
     "description": "this hash is optional and defines project wide additions, such as extra plugins and associated types and extensions",
-    "gulp-sass": {
+    "sass": {
       "extentions": "sass",
-      "type": "stylesheet"
+      "type": "stylesheet",
+      "node_module": "gulp-sass"
     },
     "gulp-coffee": {
       "extentions": "coffee",

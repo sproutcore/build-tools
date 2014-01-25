@@ -2,7 +2,7 @@
 
 ## Main concept
 
-The buildtools uses SC classes to generate functionality on the level of the project, app and framework.
+The buildtools use SC classes to generate functionality on the level of the project, app and framework.
 In order to make the configuration match nicely with both SC as well as make the configuration as consistent as possible throughout, the configuration should be very similar to the way default properties of SC classes are overriden, namely through hashes in the create statement.
 
 The buildtools can then do something like this:
@@ -16,9 +16,9 @@ which will allow a default configuration in the framework itself, additional con
 As will be shown later, every framework can and will have multiple object instances, in order to allow app specific overrides as well as to prevent app specific overrides leaking into other apps.
 
 The example project config file contained in this directory is very complex in order to show all the possible overrides. Configuration files found inside apps or frameworks should have the same syntax as the corresponding parts in the project config.
-In a real project, the project configuration file can most likely be very small, or even non-existant as the buildtools will try to autodetect the project configuration as much as possible.
+In a real project, the project configuration file can most likely be very small, or even non-existent as the buildtools will try to autodetect the project configuration as much as possible.
 
-## Project file sections
+## Project configuration file sections
 
 There are different sections in the project config.
 
@@ -51,8 +51,43 @@ It is a hash of which the key is the name of the plugin to be used, and the valu
 If you do not define a node_module value, the buildtools assume that the name of the plugin is the module to require();
 
 ### Apps and Frameworks
-The apps and frameworks sections are hashes in which the key is the name of the app or framework, and the value a hash with properties.
-If this hash does not contain a key named path, and the autodetection did not pick up any configuration declaring this name, it is assumed the key is equal to a folder name in apps/ or frameworks/. Property values in these hashes will override configurations found inside these apps or frameworks. More about the specifics for app and framework configurations in their respective chapters.
+The apps and frameworks sections are hashes in which the key is the name of the app or framework (if a subframework is intended, a syntax like "sproutcore:desktop" as name), and the value a hash with properties.
+If this hash does not contain a key named path, and the autodetection did not pick up any configuration declaring this name (which can also be like "sproutcore:desktop"), it is assumed the key is equal to a folder name in apps/ or frameworks/. Property values in these hashes will override configurations found inside these apps or frameworks. More about the specifics for app and framework configurations in their respective chapters.
 
 ### deploy
 The deploy section can contain settings which overrides all other configurations, but only in case of a build (or save).
+
+## Framework configuration file fields
+
+  - name: The name section contains the name of the framework (optional). The name can either be set in the configuration, or it is derived from the path. If set, complex notation can be used: "sproutcore:desktop".
+  - path: The path section contains the relative path of the framework. This can be either set, or computed from the name.
+  - combineScripts: set to true if scripts of this framework should be combined into one file (default: true)
+  - combineStylesheets: set to true if stylesheets of this framework should be combined into one file (default: true)
+  - minifyScripts: set to true if scripts of this framework should be minified (default: false)
+  - minifyStylesheets: set to true if stylesheets of this framework should be minified (default: false)
+  - stylesheetProcessor: which processor should be used for the stylesheets in this framework
+  - watchForChanges: set to true if the current framework should be watched for changes
+
+(should the following get its own class?)
+
+  - isModule: set to true if the current framework should be treated like a module (default: false)
+  - shouldPreload: set to true if the current module (isModule needs to be true) should be packed together with the main package (default: false)
+
+## Application configuration file fields
+
+  - name: contains the name of the application. If left empty, the buildtools will get the folder name from the path
+  - path: contains the path of the application
+  - theme: which theme the app uses
+  - buildLanguage: tells the build tools which language should be built (deprecate?)
+  - htmlHead: can be either a string or array containing additional tags to be included in the main html
+  - htmlBody: if set this will be used as loading page
+  - urlPrefix: if set, all urls generated for this application will be prefixed with this url. For example:
+    "" will cause a relative build, "/" will make the urls absolute.
+
+As an app itself is very much like a framework with extras, an app will automatically add itself as last framework.
+The following configuration fields can be used to configure that framework.
+
+  - combineScripts: set to true if scripts of this framework should be combined into one file (default: true)
+  - combineStylesheets: set to true if stylesheets of this framework should be combined into one file (default: true)
+  - minifyScripts: set to true if scripts of this framework should be minified (default: false)
+  - minifyStylesheets: set to true if stylesheets of this framework should be minified (default: false)
