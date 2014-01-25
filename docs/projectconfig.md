@@ -95,12 +95,12 @@ The following might need a separate class, extending from Framework, perhaps bec
   - theme: which theme the app uses
   - buildLanguage: tells the build tools which language should be built (deprecate?)
   - htmlHead: can be either a string or array containing additional tags to be included in the main html
-  - htmlBody: if set this will be used as loading page
+  - htmlBody: if set this will be used as loading page, to which things will be added SC requires in order to start.
   - urlPrefix: if set, all urls generated for this application will be prefixed with this url. For example:
     "" will cause a relative build, "/" will make the urls absolute.
   - includeSC: if set, automatically includes the SproutCore framework. If frameworks/sproutcore doesn't exist,
     it will use the internal version (default: true)
-  - include: if set, the app will be included for serving and / or deploying (building)
+  - include: if set, the app will be included for serving and / or deploying (building) (default: true)
   - dependencies: this is either an array with framework references, or a hash conform the apps/frameworks hash described above.
 
 As an app itself is very much like a framework with extras, an app will automatically add itself as last framework.
