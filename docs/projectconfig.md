@@ -1,3 +1,8 @@
+# Note
+This file is a work in progress, and contains open questions. At the same time it is used as a reference while building,
+together with the projectconfig.sample.json file.
+If you find inconsistencies or just want to send remarks, feel free to leave comments on this file, file an issue, or send a pull request!
+
 # Configuration Files
 
 ## Main concept
@@ -11,12 +16,15 @@ The buildtools can then do something like this:
   - fwconfig is the internal configuration file of the framework itself
   - globalconfig is the framework configuration found in the frameworks section of the project configuration file
   - appconfig is the configuration found in the frameworks section of the app where this framework is being added to
+  - when deploying, the deploy configuration is added as fourth parameter, if present.
 
 which will allow a default configuration in the framework itself, additional configuration on project level, as well as app-specific overrides.
 As will be shown later, every framework can and will have multiple object instances, in order to allow app specific overrides as well as to prevent app specific overrides leaking into other apps.
 
 The example project config file contained in this directory is very complex in order to show all the possible overrides. Configuration files found inside apps or frameworks should have the same syntax as the corresponding parts in the project config.
 In a real project, the project configuration file can most likely be very small, or even non-existent as the buildtools will try to autodetect the project configuration as much as possible.
+
+All config files for the SproutCore buildtools are called sc_config.json
 
 ## Project configuration file sections
 
@@ -51,11 +59,17 @@ It is a hash of which the key is the name of the plugin to be used, and the valu
 If you do not define a node_module value, the buildtools assume that the name of the plugin is the module to require();
 
 ### Apps and Frameworks
-The apps and frameworks sections are hashes in which the key is the name of the app or framework (if a subframework is intended, a syntax like "sproutcore:desktop" as name), and the value a hash with properties.
-If this hash does not contain a key named path, and the autodetection did not pick up any configuration declaring this name (which can also be like "sproutcore:desktop"), it is assumed the key is equal to a folder name in apps/ or frameworks/. Property values in these hashes will override configurations found inside these apps or frameworks. More about the specifics for app and framework configurations in their respective chapters.
+The apps and frameworks sections can have two syntaxes:
 
-### deploy
+  1. the sections are arrays, containing strings with references (sproutcore:desktop). If a certain framework should not be loaded, the reference should start with a !
+  2. the sections are hashes in which the key is the name of the app or framework (if a subframework is intended, a syntax like "sproutcore:desktop" as name), and the value a hash with properties. If this hash does not contain a key named path, and the autodetection did not pick up any configuration declaring this name (which can also be like "sproutcore:desktop"), it is assumed the key is equal to a folder name in apps/ or frameworks/. Property values in these hashes will override configurations found inside these apps or frameworks. More about the specifics for app and framework configurations in their respective chapters.
+
+### Deploy
+
 The deploy section can contain settings which overrides all other configurations, but only in case of a build (or save).
+The section can have a frameworks and an apps section, describing for which app or framework what setting should be overridden.
+When a deploy action is run, the configuration will be added after all the others, overriding any other setting made at any other place for this particular framework or app.
+TODO: describe here the default deploy settings (such as minifyScripts?)
 
 ## Framework configuration file fields
 
@@ -67,8 +81,9 @@ The deploy section can contain settings which overrides all other configurations
   - minifyStylesheets: set to true if stylesheets of this framework should be minified (default: false)
   - stylesheetProcessor: which processor should be used for the stylesheets in this framework
   - watchForChanges: set to true if the current framework should be watched for changes
+  - dependencies: an array of strings with references
 
-(should the following get its own class?)
+The following might need a separate class, extending from Framework, perhaps because of specific requirements:
 
   - isModule: set to true if the current framework should be treated like a module (default: false)
   - shouldPreload: set to true if the current module (isModule needs to be true) should be packed together with the main package (default: false)
@@ -83,6 +98,10 @@ The deploy section can contain settings which overrides all other configurations
   - htmlBody: if set this will be used as loading page
   - urlPrefix: if set, all urls generated for this application will be prefixed with this url. For example:
     "" will cause a relative build, "/" will make the urls absolute.
+  - includeSC: if set, automatically includes the SproutCore framework. If frameworks/sproutcore doesn't exist,
+    it will use the internal version (default: true)
+  - include: if set, the app will be included for serving and / or deploying (building)
+  - dependencies: this is either an array with framework references, or a hash conform the apps/frameworks hash described above.
 
 As an app itself is very much like a framework with extras, an app will automatically add itself as last framework.
 The following configuration fields can be used to configure that framework.
