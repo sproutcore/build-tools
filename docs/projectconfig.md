@@ -2,27 +2,32 @@
 
 ## Main concept
 
-The main concept behind the configuration is that the initialization of the objects should be like this:
+The buildtools uses SC classes to generate functionality on the level of the project, app and framework.
+In order to make the configuration match nicely with both SC as well as make the configuration as consistent as possible throughout, the configuration should be very similar to the way default properties of SC classes are overriden, namely through hashes in the create statement.
+
+The buildtools can then do something like this:
 
 ```var fw = Framework.create(fwconfig,globalconfig,appconfig)```, where
   - fwconfig is the internal configuration file of the framework itself
-  - globalconfig is the global configuration found in the project
-  - appconfig is the configuration found in the app where this framework is being added to
+  - globalconfig is the framework configuration found in the frameworks section of the project configuration file
+  - appconfig is the configuration found in the frameworks section of the app where this framework is being added to
 
-This should work similarly for apps and modules.
-The example project config file is very big to show all options. Configuration files found inside apps or frameworks should have
-the same syntax as the corresponding parts in the project config.
+which will allow a default configuration in the framework itself, additional configuration on project level, as well as app-specific overrides.
+As will be shown later, every framework can and will have multiple object instances, in order to allow app specific overrides as well as to prevent app specific overrides leaking into other apps.
 
-## Project file parts
+The example project config file contained in this directory is very complex in order to show all the possible overrides. Configuration files found inside apps or frameworks should have the same syntax as the corresponding parts in the project config.
+In a real project, the project configuration file can most likely be very small, or even non-existant as the buildtools will try to autodetect the project configuration as much as possible.
 
-There are different lemmas to the project config, each for their specific target
+## Project file sections
+
+There are different sections in the project config.
 
 ### Server
-The server lemma in the configuration contains all the settings intended to be used by the development server.
-It contains essentially three items: proxies, port and allowFromAll
+The server section in the configuration contains all the settings intended to be used by the development server.
+It is a hash containing essentially three items: proxies, port and allowFromAll
 
 #### Proxies
-A proxy configuration contains:
+When developing a SproutCore app, you might want to use images or other data that should not be included in the app itself. To make the development easier, the buildtools development server can proxy requests to a different server. A proxy configuration contains:
 
   1. prefix: the first part of the url the server should match against. "/images" will trigger this proxy for all urls starting with "/images"
   2. host: to which host should the proxy forward the request
@@ -34,13 +39,20 @@ A proxy configuration contains:
   1. port: on which port should the devserver run. Default is 4020
   2. allowFromAll: if true: allow requests from other computers than localhost.
 
-### plugins
+### Plugins
 
-The plugins lemma is to configure included plugins or additional plugins inside the project for all apps and all frameworks.
+The plugins section is to configure included plugins or additional plugins inside the project for all apps and all frameworks.
+It is a hash of which the key is the name of the plugin to be used, and the value is a hash containing
+
+  1. type: which is the type of file targeted by this plugin (scripts, stylesheets or resources)
+  2. extension: which file extension this plugin should be acting on?
+  3. node_module: (optional) which node module should be required?
+
+If you do not define a node_module value, the buildtools assume that the name of the plugin is the module to require();
 
 ### Apps and Frameworks
-The apps and frameworks lemmas are hashes in which the key is the name of the app or framework, and the value a hash with properties.
+The apps and frameworks sections are hashes in which the key is the name of the app or framework, and the value a hash with properties.
 If this hash does not contain a key named path, and the autodetection did not pick up any configuration declaring this name, it is assumed the key is equal to a folder name in apps/ or frameworks/. Property values in these hashes will override configurations found inside these apps or frameworks. More about the specifics for app and framework configurations in their respective chapters.
 
 ### deploy
-The deploy lemma can contain settings which overrides all other configurations, but only in case of a build (or save).
+The deploy section can contain settings which overrides all other configurations, but only in case of a build (or save).
