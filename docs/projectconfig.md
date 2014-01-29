@@ -74,14 +74,19 @@ TODO: describe here the default deploy settings (such as minifyScripts?)
 ## Framework configuration file fields
 
   - name: The name section contains the name of the framework (optional). The name can either be set in the configuration, or it is derived from the path. If set, complex notation can be used: "sproutcore:desktop".
-  - path: The path section contains the relative path of the framework. This can be either set, or computed from the name.
+  - path: The path section contains the relative path of the framework. This can be either set, or computed from the name. If the path is a filename, the file will be included. If the path is an url, the url will be inserted in the generated html file.
   - combineScripts: set to true if scripts of this framework should be combined into one file (default: true)
   - combineStylesheets: set to true if stylesheets of this framework should be combined into one file (default: true)
   - minifyScripts: set to true if scripts of this framework should be minified (default: false)
   - minifyStylesheets: set to true if stylesheets of this framework should be minified (default: false)
   - stylesheetProcessor: which processor should be used for the stylesheets in this framework
   - watchForChanges: set to true if the current framework should be watched for changes
+  - dontProcess: set to true if the buildtools should include the code found here as is
   - dependencies: an array of strings with references
+
+The settings dontProcess together with the path being a file can be used to inject certain code on a certain spot in the load order.
+An example for this use could be that a custom localization should be loaded externally, but before the app itself loads in order to
+not have to rebuild the entire application whenever a translation string changes.
 
 The following might need a separate class, extending from Framework, perhaps because of specific requirements:
 
@@ -101,7 +106,7 @@ The following might need a separate class, extending from Framework, perhaps bec
   - includeSC: if set, automatically includes the SproutCore framework. If frameworks/sproutcore doesn't exist,
     it will use the internal version (default: true)
   - include: if set, the app will be included for serving and / or deploying (building) (default: true)
-  - dependencies: this is either an array with framework references, or a hash conform the apps/frameworks hash described above.
+  - dependencies: this is either an array with framework references, or a hash conform the apps/frameworks hash described above. A framework reference can also be a path, but also an url. In case sproutcore is detected in the list, the app will respect the order of the dependencies and inject frameworks or files before it adds sproutcore.
 
 As an app itself is very much like a framework with extras, an app will automatically add itself as last framework.
 The following configuration fields can be used to configure that framework.
