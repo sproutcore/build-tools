@@ -22,7 +22,8 @@
     "gulp-replace": "~0.2.0",
     "gulp-concat": "~2.1.7",
     "gulp-rev": "~0.2.1",
-    "gulp-less": "~1.1.10"
+    "gulp-less": "~1.1.10",
+    "jsonschema": "~0.4.0"
   },
   "version": "0.1.0",
   "engines": {
