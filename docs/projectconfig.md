@@ -116,3 +116,4 @@ The following configuration fields can be used to configure that framework.
   - combineStylesheets: set to true if stylesheets of this framework should be combined into one file (default: true)
   - minifyScripts: set to true if scripts of this framework should be minified (default: false)
   - minifyStylesheets: set to true if stylesheets of this framework should be minified (default: false)
+  - stylesheetProcessor: which processor should be used for the stylesheets in this framework
