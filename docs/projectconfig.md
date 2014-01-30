@@ -82,7 +82,8 @@ TODO: describe here the default deploy settings (such as minifyScripts?)
   - stylesheetProcessor: which processor should be used for the stylesheets in this framework
   - watchForChanges: set to true if the current framework should be watched for changes
   - dontProcess: set to true if the buildtools should include the code found here as is
-  - dependencies: an array of strings with references
+  - dependencies: an array of strings with references pointing at the runtime dependencies
+  - testDependencies: an array of strings with references pointing at dependencies needed to run the tests
 
 The settings dontProcess together with the path being a file can be used to inject certain code on a certain spot in the load order.
 An example for this use could be that a custom localization should be loaded externally, but before the app itself loads in order to
