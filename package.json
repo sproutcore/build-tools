@@ -15,7 +15,7 @@
     "Jeff Pittman"
   ],
   "dependencies": {
-    "sc-runtime": "git://github.com/mauritslamers/sc-runtime.git",
+    "sc-runtime": "git://github.com/mauritslamers/sc-runtime.git#statechart",
     "gulp": "~3.4.0",
     "gulp-uglify": "~0.1.0",
     "gulp-compass": "~1.0.9",
