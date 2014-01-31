@@ -12,10 +12,8 @@ var util = require('util'),
 util.puts("Sproutcore NodeJS BuildTools v0.0.1");
 util.puts("");
 
-var project = buildtools.Project.create({
-  path: curPath,
-  mode: runtype,
-  app: app
-});
+if(runtype === "server"){
+  buildtools.startDevServer(curPath);
+}
 
 //util.log("args: " + util.inspect(args));
