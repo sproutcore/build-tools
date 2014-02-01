@@ -62,7 +62,8 @@ If you do not define a node_module value, the buildtools assume that the name of
 The apps and frameworks sections can have two syntaxes:
 
   1. the sections are arrays, containing strings with references (sproutcore:desktop). If a certain framework should not be loaded, the reference should start with a !
-  2. the sections are hashes in which the key is the name of the app or framework (if a subframework is intended, a syntax like "sproutcore:desktop" as name), and the value a hash with properties. If this hash does not contain a key named path, and the autodetection did not pick up any configuration declaring this name (which can also be like "sproutcore:desktop"), it is assumed the key is equal to a folder name in apps/ or frameworks/. Property values in these hashes will override configurations found inside these apps or frameworks. More about the specifics for app and framework configurations in their respective chapters.
+  2. the sections are hashes in which the key is the name of the app or framework (if a subframework is intended, a syntax like "sproutcore:desktop" as name), and the value a hash with properties. If this hash does not contain a key named path, and the autodetection did not pick up any configuration declaring this name (which can also be like "sproutcore:desktop"), it is assumed the key is equal to a folder name in apps/ or frameworks/. Property values in these hashes will override configurations found inside these apps or frameworks. More about the specifics for app and framework configurations in their respective chapters. For frameworks there are two special options "before" and "after", which both are arrays and which indicate whether the framework should be loaded before or after a certain other framework.
+
 
 ### Deploy
 
@@ -117,3 +118,12 @@ The following configuration fields can be used to configure that framework.
   - minifyScripts: set to true if scripts of this framework should be minified (default: false)
   - minifyStylesheets: set to true if stylesheets of this framework should be minified (default: false)
   - stylesheetProcessor: which processor should be used for the stylesheets in this framework
+
+
+## References
+There is a codified option of referring to frameworks and subframeworks, as well as to other sources.
+These references can have the following formats
+  1. "sproutcore": depending on the context this is either an app, a framework or a module in the root of the project
+  2. "sproutcore:desktop": this is the subframework desktop inside the sproutcore framework
+  3. "sproutcore/lib/index.html": this is a reference to the file lib/index.html inside the sproutcore framework
+  4. "http://my.host.ext": a url, is taken literally
