@@ -107,6 +107,7 @@ The following might need a separate class, extending from Framework, perhaps bec
     "" will cause a relative build, "/" will make the urls absolute.
   - includeSC: if set, automatically includes the SproutCore framework. If frameworks/sproutcore doesn't exist,
     it will use the internal version (default: true)
+  - useSCFrom: override to decide for the app which sproutcore should be used, should be a path, only use when the default locations cannot be used, or you want to use a different sproutcore version for this specific app
   - include: if set, the app will be included for serving and / or deploying (building) (default: true)
   - dependencies: this is either an array with framework references, or a hash conform the apps/frameworks hash described above. A framework reference can also be a path, but also an url. In case sproutcore is detected in the list, the app will respect the order of the dependencies and inject frameworks or files before it adds sproutcore.
 
