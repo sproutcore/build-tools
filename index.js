@@ -15,8 +15,11 @@
 //var gulp = require('gulp');
 
 var Project = require('./lib/project');
-
+var autodetect = require('./lib/autodetect');
 
 module.exports.startDevServer = function(path){
-  var p = Project.create({ path: path });
+  // first do autodetection on path, which generates the entire config
+  autodetect(this.path, function(config){
+    var p = Project.create(config);
+  });
 };
