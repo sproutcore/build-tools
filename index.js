@@ -16,10 +16,12 @@
 
 var Project = require('./lib/project');
 var autodetect = require('./lib/autodetect');
+var util = require('util');
 
 module.exports.startDevServer = function(path){
   // first do autodetection on path, which generates the entire config
-  autodetect(this.path, function(config){
-    var p = Project.create(config);
+  autodetect(path, function(err,config){
+    util.log('generated config: ' + util.inspect(config));
+    //var p = Project.create(config);
   });
 };
