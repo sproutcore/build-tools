@@ -36,21 +36,45 @@ var dirname = __dirname; // dirname of this file
 
 var btContext = vm.createContext({
   SC: SC,
-  fs: fs,
-  projectDir: dirname,
-  parseConfig: function(f){
-    try{
-      var p = path.join(dirname,f);
-      var c = fs.readFileSync(p,{ encoding: 'utf8'});
-      vm.runInContext(c,btContext,p);
-      return true;
-    }
-    catch(e){
-      return false;
+  BT: {
+    projectDir: null,
+    curFile: null,
+    curPath: null,
+    fs: fs,
+    path: path,
+    util: util,
+    parseConfig: function(f){
+      try {
+        var p = path.join(btContext.BT.projectDir,f);
+        var cFile = btContext.BT.curFile; //save
+        btContext.BT.curFile = p;
+        var c = fs.readFileSync(p,{ encoding: 'utf8'});
+        vm.runInContext(c,btContext,p);
+        btContext.BT.curFile = cFile; // restore
+        return true;
+      }
+      catch(e){
+        return false;
+      }
     }
   },
-  path: path,
-  util: util
+  sc_require: function(f){
+    var hasSCConfig = f.indexOf("sc_config") > -1;
+    var fp = hasSCConfig? f: path.join(f,"sc_config");
+    var curDir = hasSCConfig? path.dirname(f): f;
+    var p = path.join(btContext.BT.projectDir,fp);
+    var c = fs.readFileSync(p,{ encoding: 'utf8'});
+
+    var cFile = btContext.BT.curFile; //save
+    var cPath = btContext.BT.curPath;
+    btContext.BT.curFile = p;
+    btContext.BT.curPath = curDir;
+
+    vm.runInContext(c,btContext,p);
+
+    btContext.BT.curFile = cFile; // restore
+    btContext.BT.curPath = cPath;
+  }
 });
 
 // now, we include a few files from lib and run them through the env
@@ -73,12 +97,16 @@ module.exports.startDevServer = function(projectpath){
   try {
     var p = path.join(projectpath,'sc_config');
     var c = fs.readFileSync(p,{ encoding: 'utf8'});
+    btContext.BT.projectDir = projectpath;
+    btContext.BT.curPath = projectpath;
+    btContext.BT.curFile = p;
     vm.runInContext(c,btContext,p);
-    util.log('SC.projectManager: ' + util.inspect(SC.projectManager));
+    util.log('SC.projectManager: ' + util.inspect(btContext.BT.projectManager));
   }
   catch(e){
     if(e.code === 'ENOENT'){
-      throw new Error("you did not create a valid project config file");
+      util.log("You did not create a valid project config file");
+      throw e;
     }
     else {
       util.log('unknown error in %@: %@'.fmt(p,util.inspect(e)));
