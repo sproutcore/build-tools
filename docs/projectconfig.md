@@ -128,3 +128,9 @@ These references can have the following formats
   2. "sproutcore:desktop": this is the subframework desktop inside the sproutcore framework
   3. "sproutcore/lib/index.html": this is a reference to the file lib/index.html inside the sproutcore framework
   4. "http://my.host.ext": a url, is taken literally
+
+
+# Different API
+As mentioned earlier (perhaps not in this document) typing JSON is not very easy nor convenient. Looking at a way to convert the old Buildfile format I noticed that the Abbot Buildfiles are actually plain Ruby, and are executed as such. The Buildfile contains a function call to config which inserts the configuration into the internal configuration tree.
+This approach is also very feasible for these buildtools. Because the parse tree for the configuration will be very similar anyhow, it can be an addon, on which the community can decide which format to support in the end.
+The files will be called sc_config (without .js), but will be loaded and executed as JS.
