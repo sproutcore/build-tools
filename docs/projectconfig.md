@@ -7,6 +7,91 @@ If you find inconsistencies or just want to send remarks, feel free to leave com
 
 ## Main concept
 
+The buildtools is an application written in Sproutcore. This also means that the configuration files are code files which are evaluated
+on startup.
+
+
+### Environment
+
+Because it is an SC application load order is important. The first file that will be evaluated is the project config file.
+
+The environment provides you with the following globals:
+
+- SC: a reference to SproutCore itself
+- BT: a reference to the BuildTools application
+- sc_require: a function which allows you to load and execute external sc_config files in the project
+
+#### sc_require
+
+The sc_require function will inject and execute the code inside the referred file in place. This means that if you want to refer to a global
+variable in the different file, you have to declare it before calling sc_require:
+
+
+apps/myapp/sc_config
+```
+MyProject.myApp = BT.AppBuilder.create({ path: BT.curPath });
+
+```
+
+sc_config
+```
+MyProject = SC.Application.create();
+
+sc_require('apps/myapp');
+```
+
+#### BT
+
+The BT application exposes the following API:
+
+- BT.addApp: registers an application to the BuildTools. Usually you won't have to call this, as BT.AppBuilder.create() will automatically register itself with the BuildTools. BT.addApp will however allow a single string.
+- BT.addFramework: registers a framework to the BuildTools with a specific configuration for this project. In this way you can define certain properties that will override default settings of a framework for the entire project. Be aware that you need to register frameworks before they
+are declared a dependency in your application
+
+The BT application exposes a few extra properties and functions
+
+- BT.curDir: The directory of the sc_config file being evaluated
+- BT.curFile: The full path of the sc_config file being evaluated
+- BT.projectDir: The path to the root of the project
+
+
+
+
+### Project config
+
+In this file you need to either define your applications or use sc_require to load them from a different file. As written above,
+this file is the first file to be evaluated, so if you
+
+
+### Application config
+
+
+### Framework config
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Old information
+The information below is kept in the file for now, because it does contain important definitions of internal objects and things to configure.
+
+## Main concept
+
 The buildtools use SC classes to generate functionality on the level of the project, app and framework.
 In order to make the configuration match nicely with both SC as well as make the configuration as consistent as possible throughout, the configuration should be very similar to the way default properties of SC classes are overriden, namely through hashes in the create statement.
 

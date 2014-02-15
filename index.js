@@ -43,30 +43,42 @@ var btContext = vm.createContext({
     fs: fs,
     path: path,
     util: util,
-    parseConfig: function(f){
+    runConfig: function(f){
       try {
-        var p = path.join(btContext.BT.projectDir,f);
+        var hasSCConfig = f.indexOf("sc_config") > -1;
+        var fp = hasSCConfig? f: path.join(f,"sc_config");
+        var p = path.join(btContext.BT.projectDir,fp);
         var cFile = btContext.BT.curFile; //save
+        var cPath = btContext.BT.curPath || btContext.BT.projectDir;
+        var curDir = hasSCConfig? path.dirname(f): f;
+
         btContext.BT.curFile = p;
+        btContext.BT.curPath = curDir;
+        util.log('reading file ' + p);
         var c = fs.readFileSync(p,{ encoding: 'utf8'});
+        util.log('code in file: ' + c);
         vm.runInContext(c,btContext,p);
         btContext.BT.curFile = cFile; // restore
-        return true;
+        btContext.BT.curPath = cPath;
       }
       catch(e){
-        return false;
+        util.log('error when running config: ' + util.inspect(e));
+        throw e;
       }
     }
   },
   sc_require: function(f){
     var hasSCConfig = f.indexOf("sc_config") > -1;
     var fp = hasSCConfig? f: path.join(f,"sc_config");
-    var curDir = hasSCConfig? path.dirname(f): f;
-    var p = path.join(btContext.BT.projectDir,fp);
-    var c = fs.readFileSync(p,{ encoding: 'utf8'});
 
     var cFile = btContext.BT.curFile; //save
-    var cPath = btContext.BT.curPath;
+    var cPath = btContext.BT.curPath || btContext.BT.projectDir;
+    var curDir = hasSCConfig? path.dirname(f): f;
+
+    //var p = path.join(btContext.BT.projectDir,fp);
+    var p = path.join(cPath,fp);
+    var c = fs.readFileSync(p,{ encoding: 'utf8'});
+
     btContext.BT.curFile = p;
     btContext.BT.curPath = curDir;
 
@@ -79,7 +91,7 @@ var btContext = vm.createContext({
 
 // now, we include a few files from lib and run them through the env
 
-var files = ['lib/project.js','lib/appbuilder.js'];
+var files = ['lib/enhance_env.js','lib/project.js','lib/appbuilder.js','lib/api.js','lib/framework.js'];
 
 files.forEach(function(f){
   var p = path.join(dirname,f);
@@ -88,8 +100,6 @@ files.forEach(function(f){
     vm.runInContext(c, btContext, p);
   }
 });
-
-//util.log("SC.ProjectManager: " + util.inspect(SC.ProjectManager));
 
 // now we have everything running, take the config file
 
@@ -101,7 +111,9 @@ module.exports.startDevServer = function(projectpath){
     btContext.BT.curPath = projectpath;
     btContext.BT.curFile = p;
     vm.runInContext(c,btContext,p);
-    util.log('SC.projectManager: ' + util.inspect(btContext.BT.projectManager));
+    //util.log('SC.projectManager: ' + util.inspect(btContext.BT.projectManager));
+    //util.log('TestObject: ' + util.inspect(btContext.TestObject));
+    util.log("appOne: " + util.inspect(btContext.BT.projectManager.apps));
   }
   catch(e){
     if(e.code === 'ENOENT'){
