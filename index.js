@@ -31,6 +31,7 @@ var vm = require('vm');
 var SC = require('sc-runtime'); // for now
 var util = require('util');
 var path = require('path');
+var gulp = require('gulp');
 var fs = require('fs');
 var dirname = __dirname; // dirname of this file
 
@@ -38,6 +39,16 @@ var btContext = vm.createContext({
   SC: SC,
   BT: {
     projectDir: null,
+    Gulp: gulp.Gulp, // we want the class
+    plugins: { //default plugins
+      'gulp-uglify': require('gulp-uglify'),
+      //gulp-compass": "~1.0.9",
+      'gulp-replace': require('gulp-replace'),
+      'gulp-concat': require('gulp-concat'),
+      'gulp-rev': require('gulp-rev'),
+      'gulp-if': require('gulp-if')
+      //gulp-less: require('gulp-less')
+    },
     curFile: null,
     curPath: null,
     fs: fs,
