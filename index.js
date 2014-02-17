@@ -54,9 +54,9 @@ var btContext = vm.createContext({
 
         btContext.BT.curFile = p;
         btContext.BT.curPath = curDir;
-        util.log('reading file ' + p);
+        //util.log('reading file ' + p);
         var c = fs.readFileSync(p,{ encoding: 'utf8'});
-        util.log('code in file: ' + c);
+        //util.log('code in file: ' + c);
         vm.runInContext(c,btContext,p);
         btContext.BT.curFile = cFile; // restore
         btContext.BT.curPath = cPath;
