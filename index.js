@@ -33,6 +33,7 @@ var util = require('util');
 var path = require('path');
 var gulp = require('gulp');
 var fs = require('fs');
+var through = require('through2');
 var dirname = __dirname; // dirname of this file
 
 var btContext = vm.createContext({
@@ -49,6 +50,7 @@ var btContext = vm.createContext({
       'gulp-if': require('gulp-if')
       //gulp-less: require('gulp-less')
     },
+    through: through,
     curFile: null,
     curPath: null,
     fs: fs,
