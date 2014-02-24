@@ -74,9 +74,9 @@ var btContext = vm.createContext({
         btContext.BT.curFile = cFile; // restore
         btContext.BT.curPath = cPath;
       }
-      catch(e){
-        util.log('error when running config: ' + util.inspect(e));
-        throw e;
+      catch(er){
+        util.log('error when running config: ' + util.inspect(er));
+        throw er;
       }
     }
   },
@@ -102,7 +102,7 @@ var btContext = vm.createContext({
   }
 });
 
-// now, we include a few files from lib and run them through the env
+// now, we include the files from lib and run them through the env in the right order
 
 var files = ['lib/enhance_env.js','lib/project.js','lib/appbuilder.js','lib/api.js','lib/framework.js'];
 
@@ -126,15 +126,23 @@ module.exports.startDevServer = function(projectpath){
     vm.runInContext(c,btContext,p);
     //util.log('SC.projectManager: ' + util.inspect(btContext.BT.projectManager));
     //util.log('TestObject: ' + util.inspect(btContext.TestObject));
-    util.log("appOne: " + util.inspect(btContext.BT.projectManager.apps));
+    //util.log("appOne: " + util.inspect(btContext.BT.projectManager.apps));
   }
   catch(e){
+    util.log('error caught: ' + util.inspect(e,true,10));
     if(e.code === 'ENOENT'){
       util.log("You did not create a valid project config file");
       throw e;
     }
+    else if(e.message.indexOf("EMFILE") > -1 && e.message.indexOf("Too many opened files") > -1){
+      util.log("It seems your OS only allows a very limited number of open files. On OSX and Linux please run ulimit -n 4096");
+      process.exit(1);
+      //throw e;
+    }
     else {
       util.log('unknown error in %@: %@'.fmt(p,util.inspect(e)));
+      util.log('error.errorcode: ' + util.inspect(e.message));
+      throw e;
     }
   }
 };
