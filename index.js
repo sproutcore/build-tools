@@ -32,9 +32,11 @@ var SC = require('sc-runtime'); // for now
 var util = require('util');
 var path = require('path');
 var gulp = require('gulp');
+var minimatch = require('minimatch');
 var fs = require('fs');
 var through = require('through2');
 var dirname = __dirname; // dirname of this file
+var events = require('events');
 
 var btContext = vm.createContext({
   SC: SC,
@@ -56,6 +58,8 @@ var btContext = vm.createContext({
     fs: fs,
     path: path,
     util: util,
+    events: events,
+    minimatch: minimatch,
     runConfig: function(f){
       try {
         var hasSCConfig = f.indexOf("sc_config") > -1;

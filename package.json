@@ -25,7 +25,8 @@
     "gulp-less": "~1.1.10",
     "jsonschema": "~0.4.0",
     "gulp-if": "0.0.5",
-    "through2": "~0.4.1"
+    "through2": "~0.4.1",
+    "minimatch": "~0.2.14"
   },
   "version": "0.1.0",
   "engines": {
