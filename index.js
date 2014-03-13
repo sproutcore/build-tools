@@ -32,6 +32,9 @@ var SC = require('sc-runtime'); // for now
 var util = require('util');
 var path = require('path');
 var gulp = require('gulp');
+var http = require('http');
+var repl = require('repl');
+var url = require('url');
 var minimatch = require('minimatch');
 var fs = require('fs');
 var through = require('through2');
@@ -41,6 +44,7 @@ var events = require('events');
 var btContext = vm.createContext({
   SC: SC,
   BT: {
+    process: process,
     projectDir: null,
     Gulp: gulp.Gulp, // we want the class
     plugins: { //default plugins
@@ -56,8 +60,11 @@ var btContext = vm.createContext({
     curFile: null,
     curPath: null,
     fs: fs,
+    http: http,
     path: path,
     util: util,
+    url: url,
+    repl: repl,
     events: events,
     minimatch: minimatch,
     runConfig: function(f){
@@ -121,6 +128,7 @@ files.forEach(function(f){
 // now we have everything running, take the config file
 
 module.exports.startDevServer = function(projectpath){
+  btContext.BT.runMode = "debug";
   try {
     var p = path.join(projectpath,'sc_config');
     var c = fs.readFileSync(p,{ encoding: 'utf8'});
@@ -128,6 +136,7 @@ module.exports.startDevServer = function(projectpath){
     btContext.BT.curPath = projectpath;
     btContext.BT.curFile = p;
     vm.runInContext(c,btContext,p);
+    vm.runInContext("BT.projectManager.startServer();", btContext);
     //util.log('SC.projectManager: ' + util.inspect(btContext.BT.projectManager));
     //util.log('TestObject: ' + util.inspect(btContext.TestObject));
     //util.log("appOne: " + util.inspect(btContext.BT.projectManager.apps));
