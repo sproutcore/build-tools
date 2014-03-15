@@ -6,6 +6,7 @@ var util = require('util'),
     curPath = process.env.PWD,
     buildtools = require('../index'),
     command = args[2],
+    hasREPL = args.indexOf("--repl") > 1,
     runtype = (command === "build")? "save": "server",
     app = (command === "build")? args[3]: null;
 
@@ -13,7 +14,7 @@ util.puts("Sproutcore NodeJS BuildTools v0.0.1");
 util.puts("");
 
 if(runtype === "server"){
-  buildtools.startDevServer(curPath);
+  buildtools.startDevServer(curPath, { hasREPL: hasREPL });
 }
 
 //util.log("args: " + util.inspect(args));

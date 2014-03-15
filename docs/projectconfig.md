@@ -59,8 +59,8 @@ The BT application exposes a few extra properties and functions
 
 ### Project config
 
-In this file you need to either define your applications or use sc_require to load them from a different file. As written above,
-this file is the first file to be evaluated, so if you
+In this file you need to either define your applications or use sc_require to load them from a different file.
+As written above, this file is the first file to be evaluated, so if you
 
 
 ### Application config

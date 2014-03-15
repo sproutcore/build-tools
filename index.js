@@ -45,7 +45,7 @@ var btContext = vm.createContext({
   SC: SC,
   BT: {
     process: process,
-    projectDir: null,
+    projectPath: null,
     Gulp: gulp.Gulp, // we want the class
     plugins: { //default plugins
       'gulp-uglify': require('gulp-uglify'),
@@ -71,9 +71,9 @@ var btContext = vm.createContext({
       try {
         var hasSCConfig = f.indexOf("sc_config") > -1;
         var fp = hasSCConfig? f: path.join(f,"sc_config");
-        var p = path.join(btContext.BT.projectDir,fp);
+        var p = path.join(btContext.BT.projectPath,fp);
         var cFile = btContext.BT.curFile; //save
-        var cPath = btContext.BT.curPath || btContext.BT.projectDir;
+        var cPath = btContext.BT.curPath || btContext.BT.projectPath;
         var curDir = hasSCConfig? path.dirname(f): f;
 
         btContext.BT.curFile = p;
@@ -96,10 +96,9 @@ var btContext = vm.createContext({
     var fp = hasSCConfig? f: path.join(f,"sc_config");
 
     var cFile = btContext.BT.curFile; //save
-    var cPath = btContext.BT.curPath || btContext.BT.projectDir;
+    var cPath = btContext.BT.curPath || btContext.BT.projectPath;
     var curDir = hasSCConfig? path.dirname(f): f;
 
-    //var p = path.join(btContext.BT.projectDir,fp);
     var p = path.join(cPath,fp);
     var c = fs.readFileSync(p,{ encoding: 'utf8'});
 
@@ -127,16 +126,21 @@ files.forEach(function(f){
 
 // now we have everything running, take the config file
 
-module.exports.startDevServer = function(projectpath){
+module.exports.startDevServer = function(projectpath, opts){
   btContext.BT.runMode = "debug";
   try {
     var p = path.join(projectpath,'sc_config');
     var c = fs.readFileSync(p,{ encoding: 'utf8'});
-    btContext.BT.projectDir = projectpath;
+    btContext.BT.projectPath = projectpath;
     btContext.BT.curPath = projectpath;
     btContext.BT.curFile = p;
     vm.runInContext(c,btContext,p);
     vm.runInContext("BT.projectManager.startServer();", btContext);
+    if(opts.hasREPL){
+      repl.start({
+        prompt: "SCBT>> "
+      }).context = btContext;
+    }
     //util.log('SC.projectManager: ' + util.inspect(btContext.BT.projectManager));
     //util.log('TestObject: ' + util.inspect(btContext.TestObject));
     //util.log("appOne: " + util.inspect(btContext.BT.projectManager.apps));
