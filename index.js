@@ -109,18 +109,36 @@ var btContext = vm.createContext({
 
     btContext.BT.curFile = cFile; // restore
     btContext.BT.curPath = cPath;
-  }
+  },
+
+  require: require
 });
 
 // now, we include the files from lib and run them through the env in the right order
 
-var files = ['lib/enhance_env.js','lib/project.js','lib/appbuilder.js','lib/api.js','lib/framework.js'];
+var files = [
+  'lib/enhance_env.js',
+  'lib/node_wrap.js',
+  'lib/fs.js',
+  'lib/project.js',
+  'lib/file.js',
+  'lib/filetypes.js',
+  'lib/appbuilder.js',
+  'lib/api.js',
+  'lib/framework.js'];
 
 files.forEach(function(f){
   var p = path.join(dirname,f);
   var c = fs.readFileSync(p,{ encoding: 'utf8'}); // this is allowed to throw
   if(c){
+    if (/sc_super\(\s*[^\)\s]+\s*\)/.test(c)){
+      SC.Logger.log("ERROR in %@:  sc_super() should not be called with arguments. Modify the arguments array instead.".fmt(this.get('path')));
+    }
+    if(c && c.replace){
+      c = c.replace(/sc_super\(\)/g, 'arguments.callee.base.apply(this,arguments)');
+    }
     vm.runInContext(c, btContext, p);
+    SC.Logger.log("ran " + f);
   }
 });
 
