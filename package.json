@@ -1,9 +1,9 @@
 {
   "name": "sproutcore",
-  "description": "SproutCore buildtools: Node.js buildtools for sproutcore, based on sproutcore",
+  "description": "SproutCore buildtools: Node.js buildtools for SproutCore, written in SproutCore",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mauritslamers/scbt.git"
+    "url": "https://github.com/sproutcore/build-tools.git"
   },
   "keywords": [
     "node.js",
@@ -12,21 +12,12 @@
   "author": "Maurits Lamers <maurits@weidestraat.nl>",
   "main": "./index.js",
   "contributors": [
-    "Jeff Pittman"
+    "Jeff Pittman",
+    "Dave Porter"
   ],
   "dependencies": {
-    "sc-runtime": "git://github.com/mauritslamers/sc-runtime.git#statechart",
-    "gulp": "~3.4.0",
-    "gulp-uglify": "~0.1.0",
-    "gulp-compass": "~1.0.9",
-    "gulp-replace": "~0.2.0",
-    "gulp-concat": "~2.1.7",
-    "gulp-rev": "~0.2.1",
-    "gulp-less": "~1.1.10",
-    "jsonschema": "~0.4.0",
-    "gulp-if": "0.0.5",
-    "through2": "~0.4.1",
-    "minimatch": "~0.2.14"
+    "glob": "~3.2.9",
+    "sproutnode": "git://github.com/sproutcore/sproutcore#team/mauritslamers/sproutnode"
   },
   "version": "0.1.0",
   "engines": {

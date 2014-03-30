@@ -28,96 +28,19 @@
 
 // what this does is require SC and then require all the necessary files in lib.
 var vm = require('vm');
-var SC = require('sc-runtime'); // for now
+//var SC = require('sc-runtime'); // for now
+
 var util = require('util');
-var path = require('path');
-var gulp = require('gulp');
 var http = require('http');
 var repl = require('repl');
-var url = require('url');
-var minimatch = require('minimatch');
-var fs = require('fs');
-var through = require('through2');
 var dirname = __dirname; // dirname of this file
 var events = require('events');
+var pathlib = require('path');
 
-var btContext = vm.createContext({
-  SC: SC,
-  BT: {
-    process: process,
-    projectPath: null,
-    Gulp: gulp.Gulp, // we want the class
-    plugins: { //default plugins
-      'gulp-uglify': require('gulp-uglify'),
-      //gulp-compass": "~1.0.9",
-      'gulp-replace': require('gulp-replace'),
-      'gulp-concat': require('gulp-concat'),
-      'gulp-rev': require('gulp-rev'),
-      'gulp-if': require('gulp-if')
-      //gulp-less: require('gulp-less')
-    },
-    through: through,
-    curFile: null,
-    curPath: null,
-    fs: fs,
-    http: http,
-    path: path,
-    util: util,
-    url: url,
-    repl: repl,
-    events: events,
-    minimatch: minimatch,
-    runConfig: function(f){
-      try {
-        var hasSCConfig = f.indexOf("sc_config") > -1;
-        var fp = hasSCConfig? f: path.join(f,"sc_config");
-        var p = path.join(btContext.BT.projectPath,fp);
-        var cFile = btContext.BT.curFile; //save
-        var cPath = btContext.BT.curPath || btContext.BT.projectPath;
-        var curDir = hasSCConfig? path.dirname(f): f;
-
-        btContext.BT.curFile = p;
-        btContext.BT.curPath = curDir;
-        //util.log('reading file ' + p);
-        var c = fs.readFileSync(p,{ encoding: 'utf8'});
-        //util.log('code in file: ' + c);
-        vm.runInContext(c,btContext,p);
-        btContext.BT.curFile = cFile; // restore
-        btContext.BT.curPath = cPath;
-      }
-      catch(er){
-        util.log('error when running config: ' + util.inspect(er));
-        throw er;
-      }
-    }
-  },
-  sc_require: function(f){
-    var hasSCConfig = f.indexOf("sc_config") > -1;
-    var fp = hasSCConfig? f: path.join(f,"sc_config");
-
-    var cFile = btContext.BT.curFile; //save
-    var cPath = btContext.BT.curPath || btContext.BT.projectPath;
-    var curDir = hasSCConfig? path.dirname(f): f;
-
-    var p = path.join(cPath,fp);
-    var c = fs.readFileSync(p,{ encoding: 'utf8'});
-
-    btContext.BT.curFile = p;
-    btContext.BT.curPath = curDir;
-
-    vm.runInContext(c,btContext,p);
-
-    btContext.BT.curFile = cFile; // restore
-    btContext.BT.curPath = cPath;
-  },
-
-  require: require
-});
-
-// now, we include the files from lib and run them through the env in the right order
+var env = require('sproutnode');
 
 var files = [
-  'lib/enhance_env.js',
+  'lib/core.js',
   'lib/node_wrap.js',
   'lib/fs.js',
   'lib/project.js',
@@ -125,43 +48,116 @@ var files = [
   'lib/filetypes.js',
   'lib/appbuilder.js',
   'lib/api.js',
-  'lib/framework.js'];
+  'lib/framework.js'
+];
 
-files.forEach(function(f){
-  var p = path.join(dirname,f);
-  var c = fs.readFileSync(p,{ encoding: 'utf8'}); // this is allowed to throw
-  if(c){
-    if (/sc_super\(\s*[^\)\s]+\s*\)/.test(c)){
-      SC.Logger.log("ERROR in %@:  sc_super() should not be called with arguments. Modify the arguments array instead.".fmt(this.get('path')));
-    }
-    if(c && c.replace){
-      c = c.replace(/sc_super\(\)/g, 'arguments.callee.base.apply(this,arguments)');
-    }
-    vm.runInContext(c, btContext, p);
-    SC.Logger.log("ran " + f);
-  }
+// we need to install some new stuff in the running context
+
+
+files.forEach(function (f) {
+  env.loadFile(pathlib.join(dirname,f));
 });
+
+
+
+// var btContext = vm.createContext({
+//   SC: SC,
+//   BT: {
+//     process: process,
+//     projectPath: null,
+//     curFile: null,
+//     curPath: null,
+//     fs: fs,
+//     http: http,
+//     path: path,
+//     util: util,
+//     url: url,
+//     repl: repl,
+//     events: events,
+//     minimatch: minimatch,
+//     runConfig: function(f){
+//       try {
+//         var hasSCConfig = f.indexOf("sc_config") > -1;
+//         var fp = hasSCConfig? f: path.join(f,"sc_config");
+//         var p = path.join(btContext.BT.projectPath,fp);
+//         var cFile = btContext.BT.curFile; //save
+//         var cPath = btContext.BT.curPath || btContext.BT.projectPath;
+//         var curDir = hasSCConfig? path.dirname(f): f;
+
+//         btContext.BT.curFile = p;
+//         btContext.BT.curPath = curDir;
+//         //util.log('reading file ' + p);
+//         var c = fs.readFileSync(p,{ encoding: 'utf8'});
+//         //util.log('code in file: ' + c);
+//         vm.runInContext(c,btContext,p);
+//         btContext.BT.curFile = cFile; // restore
+//         btContext.BT.curPath = cPath;
+//       }
+//       catch(er){
+//         util.log('error when running config: ' + util.inspect(er));
+//         throw er;
+//       }
+//     }
+//   },
+//   sc_require: function(f){
+//     var hasSCConfig = f.indexOf("sc_config") > -1;
+//     var fp = hasSCConfig? f: path.join(f,"sc_config");
+
+//     var cFile = btContext.BT.curFile; //save
+//     var cPath = btContext.BT.curPath || btContext.BT.projectPath;
+//     var curDir = hasSCConfig? path.dirname(f): f;
+
+//     var p = path.join(cPath,fp);
+//     var c = fs.readFileSync(p,{ encoding: 'utf8'});
+
+//     btContext.BT.curFile = p;
+//     btContext.BT.curPath = curDir;
+
+//     vm.runInContext(c,btContext,p);
+
+//     btContext.BT.curFile = cFile; // restore
+//     btContext.BT.curPath = cPath;
+//   },
+
+//   require: require
+// });
+
+// now, we include the files from lib and run them through the env in the right order
+
+
+
+
+
+// files.forEach(function(f){
+//   var p = path.join(dirname,f);
+//   var c = fs.readFileSync(p,{ encoding: 'utf8'}); // this is allowed to throw
+//   if(c){
+//     if (/sc_super\(\s*[^\)\s]+\s*\)/.test(c)){
+//       SC.Logger.log("ERROR in %@:  sc_super() should not be called with arguments. Modify the arguments array instead.".fmt(this.get('path')));
+//     }
+//     if(c && c.replace){
+//       c = c.replace(/sc_super\(\)/g, 'arguments.callee.base.apply(this,arguments)');
+//     }
+//     vm.runInContext(c, btContext, p);
+//     SC.Logger.log("ran " + f);
+//   }
+// });
 
 // now we have everything running, take the config file
 
 module.exports.startDevServer = function(projectpath, opts){
-  btContext.BT.runMode = "debug";
+  env.setPath('BT.runMode',"debug");
   try {
-    var p = path.join(projectpath,'sc_config');
-    var c = fs.readFileSync(p,{ encoding: 'utf8'});
-    btContext.BT.projectPath = projectpath;
-    btContext.BT.curPath = projectpath;
-    btContext.BT.curFile = p;
-    vm.runInContext(c,btContext,p);
-    vm.runInContext("BT.projectManager.startServer();", btContext);
+    env.setPath('BT.projectPath',projectpath);
+    env.setPath('BT.curPath', projectpath);
+    var p = pathlib.join(projectpath,'sc_config');
+    env.loadFile(p); // this should actually load the config
+    env.runCode("BT.projectManager.startServer();");
     if(opts.hasREPL){
-      repl.start({
-        prompt: "SCBT>> "
-      }).context = btContext;
+      env.repl();
     }
-    //util.log('SC.projectManager: ' + util.inspect(btContext.BT.projectManager));
-    //util.log('TestObject: ' + util.inspect(btContext.TestObject));
-    //util.log("appOne: " + util.inspect(btContext.BT.projectManager.apps));
+
+    //env.runCode("console.log(__dirname);");
   }
   catch(e){
     util.log('error caught: ' + util.inspect(e,true,10));
@@ -175,11 +171,45 @@ module.exports.startDevServer = function(projectpath, opts){
       //throw e;
     }
     else {
-      util.log('unknown error in %@: %@'.fmt(p,util.inspect(e)));
-      util.log('error.errorcode: ' + util.inspect(e.message));
       throw e;
     }
   }
+
+  // btContext.BT.runMode = "debug";
+  // try {
+  //   var p = path.join(projectpath,'sc_config');
+  //   var c = fs.readFileSync(p,{ encoding: 'utf8'});
+  //   btContext.BT.projectPath = projectpath;
+  //   btContext.BT.curPath = projectpath;
+  //   btContext.BT.curFile = p;
+  //   vm.runInContext(c,btContext,p);
+  //   vm.runInContext("BT.projectManager.startServer();", btContext);
+  //   if(opts.hasREPL){
+  //     repl.start({
+  //       prompt: "SCBT>> "
+  //     }).context = btContext;
+  //   }
+  //   //util.log('SC.projectManager: ' + util.inspect(btContext.BT.projectManager));
+  //   //util.log('TestObject: ' + util.inspect(btContext.TestObject));
+  //   //util.log("appOne: " + util.inspect(btContext.BT.projectManager.apps));
+  // }
+  // catch(e){
+  //   util.log('error caught: ' + util.inspect(e,true,10));
+  //   if(e.code === 'ENOENT'){
+  //     util.log("You did not create a valid project config file");
+  //     throw e;
+  //   }
+  //   else if(e.message.indexOf("EMFILE") > -1 && e.message.indexOf("Too many opened files") > -1){
+  //     util.log("It seems your OS only allows a very limited number of open files. On OSX and Linux please run ulimit -n 4096");
+  //     process.exit(1);
+  //     //throw e;
+  //   }
+  //   else {
+  //     util.log('unknown error in %@: %@'.fmt(p,util.inspect(e)));
+  //     util.log('error.errorcode: ' + util.inspect(e.message));
+  //     throw e;
+  //   }
+  //}
 };
 
 //vm.runInContext(btContext,)
