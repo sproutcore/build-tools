@@ -150,6 +150,7 @@ module.exports.startDevServer = function(projectpath, opts){
   try {
     env.setPath('BT.projectPath',projectpath);
     env.setPath('BT.curPath', projectpath);
+    env.setPath('BT.btPath', dirname);
     var p = pathlib.join(projectpath,'sc_config');
     env.loadFile(p); // this should actually load the config
     env.runCode("BT.projectManager.startServer();");
