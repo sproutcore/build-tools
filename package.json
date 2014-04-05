@@ -16,7 +16,6 @@
     "Dave Porter"
   ],
   "dependencies": {
-    "glob": "~3.2.9",
     "sproutnode": "git://github.com/sproutcore/sproutcore#team/mauritslamers/sproutnode"
   },
   "version": "0.1.0",
