@@ -4,34 +4,6 @@ BT.CompassFile = BT.CSSFile.extend({
 
   content: null, // not a computed property as normal, because we need to go async...
 
-  // replaceAtTheme: function (source) {
-  //   // this replacement takes the value in the parentheses and adds it to
-  //   // the main theme. so in ace, @theme(sc-jumbo-size) becomes
-  //   // .ace.sc-jumbo-size
-  //   // var INCLUDE = /@include\s+slices?\([\s\S]+?\);/;
-  //   //
-  //   //var regex = /@theme\([\s\S]+?\)/;
-  //   var regex = new RegExp("\@theme\\((.*?)\\)", "g");
-  //   var result = [], match;
-  //   var themeName = this.getPath('framework.name');
-  //   var themetmp;
-
-  //   while (source.length > 0) {
-  //     match = regex.exec(source);
-  //     if (match) {
-  //       result.push(source.slice(0, match.index));
-  //       themetmp = [".", themeName, ".", match[1]].join("");
-  //       result.push("$theme: " + themetmp);
-  //       source = source.slice(match.index + match[0].length); // strip the match from source
-  //     }
-  //     else {
-  //       result.push(source);
-  //       source = "";
-  //     }
-  //   }
-  //   return result.join("");
-  // },
-  //
   handleTheme: function (css) {
     var atTheme = /@theme\([\s\S]+?\)/;
     var dollarTheme = /\$theme\./;
@@ -137,7 +109,7 @@ BT.CompassFile = BT.CSSFile.extend({
     } // if not found, take the current theme name from the fw and prepend it
     else {
       // only works for theme classes, but usually any other framework will have
-      // a _theme.css
+      // a _theme.css. Perhaps change for frameworks.theme...
       r = "$theme: " + fw.get('name') + ";\n" + r;
     }
 
@@ -151,10 +123,24 @@ BT.CompassFile = BT.CSSFile.extend({
     // we need to use the node wrap here to prevent an EMFILE error
     // require('child_process').exec("compass compile", { cwd: tmpPath }, function(err, stdout, stderr){
 
+    this.set('rawContentHasChanged', true);
+
     // });
     // BT.AsyncWrapper.from('child_process').perform('exec', "compass compile", { cwd: tmpPath })
     //   .notify(this, this.compassDidExecute).start();
   }.observes('rawContent'),
+
+  reloadParsedContent: function () {
+    // reload the file
+    var pathlib = require('path');
+    var tmpPath = pathlib.join(BT.projectPath, "tmpnode", "compass"); // make dynamic for windows cases
+    var cssFn = pathlib.join(tmpPath, 'stylesheets', this.get('path'));
+    var c = fslib.readFileSync(cssFn);
+    if (c) {
+      this.set('content', c.toString());
+    }
+    this.set('rawContentHasChanged', false);
+  },
 
   compassDidExecute: function (err, stdout, stderr) {
     var fslib = require('fs');
@@ -254,3 +240,5 @@ BT.CompassFile = BT.CSSFile.extend({
     return wdir;
   }
 });
+
+BT.projectManager.registerFileClass("css", BT.CompassFile);

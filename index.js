@@ -45,10 +45,20 @@ var files = [
   'lib/fs.js',
   'lib/project.js',
   'lib/file.js',
+  'lib/file_types/css.js',
+  'lib/file_types/image.js',
+  'lib/file_types/json.js',
+  'lib/file_types/script.js',
   'lib/filetypes.js',
   'lib/appbuilder.js',
   'lib/api.js',
-  'lib/framework.js'
+  'lib/controllers/stylesheets',
+  'lib/controllers/scripts',
+  'lib/controllers/files',
+  'lib/controllers/combined_files',
+  'lib/framework.js',
+  'extra/compass_ruby/compass.js',
+  'extra/compass_ruby/stylesheets.js',
 ];
 
 // we need to install some new stuff in the running context
