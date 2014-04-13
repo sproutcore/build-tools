@@ -122,7 +122,7 @@ BT.CompassFile = BT.CSSFile.extend({
     fslib.writeFileSync(sassFn, r);
     // we need to use the node wrap here to prevent an EMFILE error
     // require('child_process').exec("compass compile", { cwd: tmpPath }, function(err, stdout, stderr){
-
+    //SC.Logger.log("setting rawContentHasChanged for " + this.get('path'));
     this.set('rawContentHasChanged', true);
 
     // });
@@ -133,6 +133,7 @@ BT.CompassFile = BT.CSSFile.extend({
   reloadParsedContent: function () {
     // reload the file
     var pathlib = require('path');
+    var fslib = require('fs');
     var tmpPath = pathlib.join(BT.projectPath, "tmpnode", "compass"); // make dynamic for windows cases
     var cssFn = pathlib.join(tmpPath, 'stylesheets', this.get('path'));
     var c = fslib.readFileSync(cssFn);
@@ -242,3 +243,4 @@ BT.CompassFile = BT.CSSFile.extend({
 });
 
 BT.projectManager.registerFileClass("css", BT.CompassFile);
+

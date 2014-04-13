@@ -57,6 +57,7 @@ var files = [
   'lib/controllers/files',
   'lib/controllers/combined_files',
   'lib/framework.js',
+  'extra/compass_ruby/run_compass.js',
   'extra/compass_ruby/compass.js',
   'extra/compass_ruby/stylesheets.js',
 ];
