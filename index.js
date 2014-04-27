@@ -40,9 +40,12 @@ module.exports.startDevServer = function (projectpath, opts) {
     env.setPath('BT.btPath', dirname);
     var p = pathlib.join(projectpath, 'sc_config');
     env.loadFile(p); // this should actually load the config
-    env.runCode("SC.Benchmark.verbose = true;");
+    //env.runCode("SC.Benchmark.verbose = true;");
     if (opts.hasDebugServer) {
       env.setPath("BT.debugServer", true);
+    }
+    if (opts.runBenchmarks) {
+      env.setPath("BT.runBenchmarks", true);
     }
     env.runCode("BT.projectManager.startServer();");
     if (opts.hasREPL) {
