@@ -16,11 +16,11 @@ There are three ways to get started. You can,
 
         git clone git://github.com/mauritslamers/getting-started.git
         git checkout newbt
-        
+
 2. `cd` into an existing sproutcore project
 
         cd my_existing_sc_project
-        
+
 3. Or, you can also create a new project for testing if you have the existing Ruby build tools installed:
 
         sproutcore init MyProject
@@ -65,9 +65,7 @@ You should now be ready to run the server. From the top directory of your projec
 
     ./node_modules/sproutcore/bin/sproutcore
 
-_**Note:** On OS X, you will be prompted to install X11 because the new build tools uses the cairo library for slicing. You must install it to continue and then rerun this command. The prompt should provide a link to a page with more information, but you can currently get it from http://xquartz.macosforge.org/landing/_
-
-Once installed, visit [http://localhost:8080/](http://localhost:8080/) and click the link to load your app!
+Now visit [http://localhost:8080/](http://localhost:8080/) and click the link to load your app!
 
 The new build tools automatically watch for changes, so just start editing your files and refresh the page to see your changes!
 
