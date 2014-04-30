@@ -15,6 +15,7 @@ There are three ways to get started. You can,
 1. Clone the getting started project
 
         git clone git://github.com/mauritslamers/getting-started.git
+        git checkout newbt
         
 2. `cd` into an existing sproutcore project
 
