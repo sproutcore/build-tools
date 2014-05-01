@@ -70,3 +70,20 @@ Now visit [http://localhost:8080/](http://localhost:8080/) and click the link to
 The new build tools automatically watch for changes, so just start editing your files and refresh the page to see your changes!
 
 Please join us on [#sproutcore on IRC](http://sproutcore.com/community/#tab=irc) or post a message to the [mailing list](http://groups.google.com/group/sproutcore/topics?gvc=2) if you run into any issues!
+
+On Windows:
+
+Follow the same steps. You might run into a problem where running ```npm install``` in the getting-started folder
+immediately returns an error. This is caused by the way git has been installed on your system, where %PROGRAMFILES%\git\cmd is put into the path, but not %PROGRAMFILES%\git\bin. npm uses child processes which cannot execute .cmd files, so you will have to see whether it is indeed in your path by typing:
+
+    echo %PATH%
+
+If ```C:\Program Files\git\bin``` is not in your path, you can put it in by doing
+
+    set PATH=%PROGRAMFILES%\git\bin;%PATH%
+
+Also, the command to start the buildtools needs to be prepended with node:
+
+    node node_modules\sproutcore\bin\sproutcore
+
+
