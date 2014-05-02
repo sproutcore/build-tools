@@ -47,7 +47,7 @@ module.exports.startDevServer = function (projectpath, opts) {
     if (opts.runBenchmarks) {
       env.setPath("BT.runBenchmarks", true);
     }
-    env.runCode("BT.projectManager.startServer();");
+    env.runCode("SC.run(function() { BT.projectManager.startServer(); })");
     if (opts.hasREPL) {
       env.repl();
     }
