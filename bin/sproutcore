@@ -9,14 +9,24 @@ var util = require('util'),
     hasREPL = args.indexOf("--repl") > 1,
     hasDebugServer = args.indexOf("--debug-server") > 1,
     runBenchmarks = args.indexOf("--run-benchmarks") > 1,
-    runtype = (command === "build")? "save": "server",
+    runtype,
     app = (command === "build")? args[3]: null;
+
+
+
 
 util.puts("Sproutcore NodeJS BuildTools v0.0.1");
 util.puts("");
 
-if (runtype === "server") {
+function startDevServer () {
   buildtools.startDevServer(curPath, { hasREPL: hasREPL, hasDebugServer: hasDebugServer, runBenchmarks: runBenchmarks });
+};
+
+switch (command) {
+  case "save": buildtools.startSave(curPath); break;
+  case "install": buildtools.startInstall(curPath, args.slice(3)); break;
+  case "server": startDevServer(); break;
+  default: startDevServer();
 }
 
 //util.log("args: " + util.inspect(args));

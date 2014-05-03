@@ -1,4 +1,4 @@
-
+/*jshint node:true */
 
 // the basic setup of the build tools is to first parse the configuration
 // the configuration should contain specific settings for either dev or deploy / serve or build
@@ -23,7 +23,8 @@ var files = [
   'lib/filetypes.js',
   'lib/appbuilder.js',
   'lib/api.js',
-  'lib/framework.js'
+  'lib/framework.js',
+  'lib/installer.js'
 ];
 
 // we need to install some new stuff in the running context
@@ -67,5 +68,39 @@ module.exports.startDevServer = function (projectpath, opts) {
     else {
       throw e;
     }
+  }
+};
+
+module.exports.startInstall = function (projectpath, args) {
+  // sproutcore install giturl destination
+  env.setPath('BT.runMode', "install");
+  env.setPath('BT.projectPath', projectpath);
+  env.setPath('BT.curPath', projectpath);
+  env.setPath('BT.btPath', dirname);
+  var url, code;
+  var indexOfGlobal = args.indexOf("--global");
+  var indexOfG = args.indexOf("-g");
+  var isGlobal = (indexOfG > -1 || indexOfGlobal > -1);
+  if (indexOfGlobal === -1 && indexOfG === -1) { // no global opts, args[0] === url
+    url = args[0];
+  }
+  else {
+    if (indexOfGlobal === 0 || indexOfG === 0) { // -g or --global first
+      url = args[1];
+    }
+    else {
+      url = args[0];
+    }
+  }
+  if (!url) {
+    util.puts("No url found, please provide an url");
+    return;
+  }
+  code = "SC.run(function () { BT.startInstall('" + url + "', " + isGlobal + "); });";
+  try {
+    env.runCode(code);
+  }
+  catch (e) {
+    throw e;
   }
 };
