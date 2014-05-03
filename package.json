@@ -10,13 +10,14 @@
     "sproutcore"
   ],
   "scripts": {
-    "install": "node platform_dep_install.js"
+    "install": "node post_install.js"
   },
   "author": "Maurits Lamers <maurits@weidestraat.nl>",
   "main": "./index.js",
   "contributors": [
     "Jeff Pittman",
-    "Dave Porter"
+    "Dave Porter",
+    "Topher Fangio"
   ],
   "dependencies": {
     "sproutnode": "git://github.com/sproutcore/sproutcore#team/mauritslamers/sproutnode",
