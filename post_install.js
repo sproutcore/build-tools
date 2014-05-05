@@ -17,7 +17,7 @@ var code = "SC.run( function() { \n";
 code += "  BT.startInstall('git://github.com/sproutcore/sproutcore#team/mauritslamers/newbt', true, {\n";
 code += "    silent: true, frameworkName: 'sproutcore'}); \n";
 code += "  });";
-buildtools.env.runCode(code);
+buildtools.__env.runCode(code);
 
 util.log("SproutCore has been installed.");
 
