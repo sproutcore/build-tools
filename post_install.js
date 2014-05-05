@@ -1,13 +1,15 @@
 var os = require('os');
 var cp = require('child_process');
 var util = require('util');
+var pathlib = require('path');
 
 var doneInstalling = function () {
   util.log("SproutCore has been installed and is ready to use!");
 };
 
 // the first thing to do is to checkout sproutcore
-var buildtools = require('index.js');
+//
+var buildtools = require(pathlib.join(__dirname, 'index.js'));
 util.log('Installing sproutcore as global dependency...');
 buildtools.startInstall("git://github.com/sproutcore/sproutcore#team/mauritslamers/newbt", true, {
   silent: true,
