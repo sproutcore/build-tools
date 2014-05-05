@@ -21,7 +21,7 @@ buildtools.__env.setPath('BT.runMode', "install");
 buildtools.__env.setPath('BT.btPath', __dirname);
 buildtools.__env.runCode(code);
 
-util.log("SproutCore has been installed.");
+// util.log("SproutCore has been installed.");
 
 if (os.platform() === "darwin") {
   util.log("OSX detected, installing fsevents...");
