@@ -33,6 +33,8 @@ files.forEach(function (f) {
   env.loadFile(pathlib.join(dirname, f));
 });
 
+module.exports.__env = env;
+
 module.exports.startDevServer = function (projectpath, opts) {
   env.setPath('BT.runMode', "debug");
   try {

@@ -1,3 +1,5 @@
+/*jshint node:true*/
+
 var os = require('os');
 var cp = require('child_process');
 var util = require('util');
@@ -11,10 +13,12 @@ var doneInstalling = function () {
 //
 var buildtools = require(pathlib.join(__dirname, 'index.js'));
 util.log('Installing sproutcore as global dependency...');
-buildtools.startInstall("git://github.com/sproutcore/sproutcore#team/mauritslamers/newbt", true, {
-  silent: true,
-  frameworkName: 'sproutcore'
-});
+var code = "SC.run( function() { \n";
+code += "  BT.startInstall('git://github.com/sproutcore/sproutcore#team/mauritslamers/newbt', true, {\n";
+code += "    silent: true, frameworkName: 'sproutcore'}); \n";
+code += "  });";
+buildtools.env.runCode(code);
+
 util.log("SproutCore has been installed.");
 
 if (os.platform() === "darwin") {
