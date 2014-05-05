@@ -5,10 +5,6 @@ var cp = require('child_process');
 var util = require('util');
 var pathlib = require('path');
 
-var doneInstalling = function () {
-  util.log("SproutCore has been installed and is ready to use!");
-};
-
 // the first thing to do is to checkout sproutcore
 //
 var buildtools = require(pathlib.join(__dirname, 'index.js'));
@@ -20,10 +16,7 @@ code += "  });\n";
 
 buildtools.__env.setPath('BT.runMode', "install");
 buildtools.__env.setPath('BT.btPath', __dirname);
-buildtools.__env.setPath('BT._installDidFinish', doneInstalling);
 buildtools.__env.runCode(code);
-
-// util.log("SproutCore has been installed.");
 
 if (os.platform() === "darwin") {
   util.log("OSX detected, installing fsevents...");
@@ -34,8 +27,4 @@ if (os.platform() === "darwin") {
   proc.stderr.on('data', function (d) {
     util.log(d.toString());
   });
-  proc.on('exit', doneInstalling);
-}
-else {
-  doneInstalling();
 }
