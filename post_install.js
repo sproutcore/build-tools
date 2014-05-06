@@ -8,9 +8,8 @@ var pathlib = require('path');
 // the first thing to do is to checkout sproutcore
 //
 var buildtools = require(pathlib.join(__dirname, 'index.js'));
-util.log('Installing sproutcore as global dependency...');
-util.log("process.cwd(): " + process.cwd());
-buildtools.startInstall("", {
+util.log('Installing sproutcore as global dependency, this can take a while...');
+buildtools.startInstall(process.cwd(), {
   gitUrl: "git://github.com/sproutcore/sproutcore",
   isGlobal: true,
   isSilent: true,
@@ -21,9 +20,9 @@ if (os.platform() === "darwin") {
   util.log("OSX detected, installing fsevents...");
   var proc = cp.spawn("npm", ["install", "git://github.com/mauritslamers/fsevents-bin"]);
   proc.stdout.on('data', function (d) {
-    util.log(d.toString());
+    console.log(d.toString());
   });
   proc.stderr.on('data', function (d) {
-    util.log(d.toString());
+    console.log(d.toString());
   });
 }
