@@ -5,6 +5,9 @@
     "type": "git",
     "url": "https://github.com/sproutcore/build-tools.git"
   },
+  "bin": {
+    "sproutcore": "./bin/sproutcore"
+  },
   "keywords": [
     "node.js",
     "sproutcore"
@@ -23,7 +26,9 @@
     "sproutnode": "git://github.com/sproutcore/sproutcore#team/mauritslamers/sproutnode",
     "node-sass": "~0.8.4",
     "canvas": "git://github.com/mauritslamers/node-canvas-bin.git#node-v0.10",
-    "rimraf": "~2.2.6"
+    "rimraf": "~2.2.6",
+    "ejs": "~1.0.0",
+    "commander": "~2.2.0"
   },
   "version": "0.1.0",
   "engines": {

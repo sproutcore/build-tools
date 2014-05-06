@@ -73,32 +73,22 @@ module.exports.startDevServer = function (projectpath, opts) {
   }
 };
 
-module.exports.startInstall = function (projectpath, args) {
-  // sproutcore install giturl destination
+
+module.exports.startInstall = function (projectpath, opts) {
   env.setPath('BT.runMode', "install");
   env.setPath('BT.projectPath', projectpath);
   env.setPath('BT.curPath', projectpath);
   env.setPath('BT.btPath', dirname);
-  var url, code;
-  var indexOfGlobal = args.indexOf("--global");
-  var indexOfG = args.indexOf("-g");
-  var isGlobal = (indexOfG > -1 || indexOfGlobal > -1);
-  if (indexOfGlobal === -1 && indexOfG === -1) { // no global opts, args[0] === url
-    url = args[0];
+  var code = "SC.run(function () { BT.startInstall('";
+  code += opts.gitUrl + "', { ";
+  if (opts.isGlobal) code += "isGlobal: true, ";
+  if (opts.isSilent) {
+    code += "isSilent: true, ";
   }
-  else {
-    if (indexOfGlobal === 0 || indexOfG === 0) { // -g or --global first
-      url = args[1];
-    }
-    else {
-      url = args[0];
-    }
+  if (opts.branch) {
+    code += "branch: '" + opts.branch + "'";
   }
-  if (!url) {
-    util.puts("No url found, please provide an url");
-    return;
-  }
-  code = "SC.run(function () { BT.startInstall('" + url + "', " + isGlobal + "); });";
+  code += "}); });";
   try {
     env.runCode(code);
   }
@@ -106,3 +96,33 @@ module.exports.startInstall = function (projectpath, args) {
     throw e;
   }
 };
+
+// module.exports.startInstall = function (projectpath, args) {
+//   // sproutcore install giturl destination
+//   env.setPath('BT.runMode', "install");
+//   env.setPath('BT.projectPath', projectpath);
+//   env.setPath('BT.curPath', projectpath);
+//   env.setPath('BT.btPath', dirname);
+//   var url, code;
+//   var indexOfBranch = args.indexOf("--branch");
+//   var indexOfGlobal = args.indexOf("--global");
+//   var indexOfG = args.indexOf("-g");
+//   var isGlobal = (indexOfG > -1 || indexOfGlobal > -1);
+//   var isSilent = args.indexOf("--silent") > -1;
+//   if (indexOfGlobal === -1 && indexOfG === -1) { // no global opts, args[0] === url
+//     url = args[0];
+//   }
+//   else {
+//     if (indexOfGlobal === 0 || indexOfG === 0) { // -g or --global first
+//       url = args[1];
+//     }
+//     else {
+//       url = args[0];
+//     }
+//   }
+//   if (!url) {
+//     util.puts("No url found, please provide an url");
+//     return;
+//   }
+
+// };

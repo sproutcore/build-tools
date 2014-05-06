@@ -9,14 +9,13 @@ var pathlib = require('path');
 //
 var buildtools = require(pathlib.join(__dirname, 'index.js'));
 util.log('Installing sproutcore as global dependency...');
-var code = "SC.run( function() { \n";
-code += "  BT.startInstall('git://github.com/sproutcore/sproutcore', true, {\n";
-code += "    silent: true, frameworkName: 'sproutcore', branch: 'team/mauritslamers/newbt'}); \n";
-code += "  });\n";
-
-buildtools.__env.setPath('BT.runMode', "install");
-buildtools.__env.setPath('BT.btPath', __dirname);
-buildtools.__env.runCode(code);
+util.log("process.cwd(): " + process.cwd());
+buildtools.startInstall("", {
+  gitUrl: "git://github.com/sproutcore/sproutcore",
+  isGlobal: true,
+  isSilent: true,
+  branch: "team/mauritslamers/newbt"
+});
 
 if (os.platform() === "darwin") {
   util.log("OSX detected, installing fsevents...");
