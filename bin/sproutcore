@@ -41,7 +41,7 @@ commander.command("serve")
   .option("--repl", "open a repl to the buildtools")
   .option("--run-benchmarks", "run benchmarks on the buildtools")
   .action( function(opts) {
-    util.log("opts for serve:" + util.inspect(opts));
+    //util.log("opts for serve:" + util.inspect(opts));
     buildtools.startDevServer(curPath, {
       runBenchmarks: opts.runBenchmarks,
       hasREPL: opts.repl,
