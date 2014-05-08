@@ -98,32 +98,30 @@ module.exports.startInstall = function (projectpath, opts) {
   }
 };
 
-// module.exports.startInstall = function (projectpath, args) {
-//   // sproutcore install giturl destination
-//   env.setPath('BT.runMode', "install");
-//   env.setPath('BT.projectPath', projectpath);
-//   env.setPath('BT.curPath', projectpath);
-//   env.setPath('BT.btPath', dirname);
-//   var url, code;
-//   var indexOfBranch = args.indexOf("--branch");
-//   var indexOfGlobal = args.indexOf("--global");
-//   var indexOfG = args.indexOf("-g");
-//   var isGlobal = (indexOfG > -1 || indexOfGlobal > -1);
-//   var isSilent = args.indexOf("--silent") > -1;
-//   if (indexOfGlobal === -1 && indexOfG === -1) { // no global opts, args[0] === url
-//     url = args[0];
-//   }
-//   else {
-//     if (indexOfGlobal === 0 || indexOfG === 0) { // -g or --global first
-//       url = args[1];
-//     }
-//     else {
-//       url = args[0];
-//     }
-//   }
-//   if (!url) {
-//     util.puts("No url found, please provide an url");
-//     return;
-//   }
-
-// };
+module.exports.startBuild = function (projectpath, opts) {
+  env.setPath('BT.runMode', "install");
+  env.setPath('BT.projectPath', projectpath);
+  env.setPath('BT.curPath', projectpath);
+  env.setPath('BT.btPath', dirname);
+  try {
+    var p = pathlib.join(projectpath, 'sc_config');
+    env.loadFile(p); // this should actually load the config
+    var code = "SC.run(function() { BT.projectManager.startBuild(" + JSON.stringify(opts) + "); });";
+    env.runCode(code);
+  }
+  catch (err) {
+    util.log('error caught: ' + util.inspect(err, true, 10));
+    if (err.code === 'ENOENT') {
+      util.log("You did not create a valid project config file");
+      throw err;
+    }
+    else if (err.message.indexOf("EMFILE") > -1 && err.message.indexOf("Too many opened files") > -1) {
+      util.log("It seems your OS only allows a very limited number of open files. On OSX and Linux please run ulimit -n 4096");
+      process.exit(1);
+      //throw e;
+    }
+    else {
+      throw err;
+    }
+  }
+};

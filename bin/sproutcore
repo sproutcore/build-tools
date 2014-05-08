@@ -50,10 +50,19 @@ commander.command("serve")
   });
 
 
-commander.command("build [app]")
+commander.command("build [apps]")
   .description("run a build of all apps, or a specific app")
-  .action( function(cmd, opts) {
-    //buildtools.startSave(curPath, opts); break;
+  .action( function(appOne, opts) {
+    var o = {
+      apps: []
+    };
+    if (appOne) {
+      o.apps.push(appOne);
+    }
+    // util.log("app: " + appOne);
+    // util.log("opts: " + util.inspect(opts));
+    // //buildtools.startSave(curPath, opts);
+    buildtools.startBuild(curPath, o);
   });
 
 commander.parse(process.argv);
