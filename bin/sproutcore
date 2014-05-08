@@ -52,9 +52,11 @@ commander.command("serve")
 
 commander.command("build [apps]")
   .description("run a build of all apps, or a specific app")
+  .option("--run-benchmarks", "run benchmarks on the saving process")
   .action( function(appOne, opts) {
     var o = {
-      apps: []
+      apps: [],
+      runBenchmarks: opts.runBenchmarks
     };
     if (appOne) {
       o.apps.push(appOne);

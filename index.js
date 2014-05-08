@@ -99,15 +99,20 @@ module.exports.startInstall = function (projectpath, opts) {
 };
 
 module.exports.startBuild = function (projectpath, opts) {
-  env.setPath('BT.runMode', "install");
+  env.setPath('BT.runMode', "build");
   env.setPath('BT.projectPath', projectpath);
   env.setPath('BT.curPath', projectpath);
   env.setPath('BT.btPath', dirname);
   try {
+    if (opts.runBenchmarks) {
+      env.setPath("BT.runBenchmarks", true);
+    }
     var p = pathlib.join(projectpath, 'sc_config');
     env.loadFile(p); // this should actually load the config
     var code = "SC.run(function() { BT.projectManager.startBuild(" + JSON.stringify(opts) + "); });";
-    env.runCode(code);
+    var r = env.runCode(code);
+    //util.log('return value of r: ' + util.inspect(r));
+    if (r === "done") process.exit(0);
   }
   catch (err) {
     util.log('error caught: ' + util.inspect(err, true, 10));
