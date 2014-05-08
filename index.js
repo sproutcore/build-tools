@@ -89,7 +89,7 @@ module.exports.startInstall = function (projectpath, opts) {
     code += "branch: '" + opts.branch + "'";
   }
   code += "}); });";
-  util.log("about to run code: " + code);
+  //util.log("about to run code: " + code);
   try {
     env.runCode(code);
   }
