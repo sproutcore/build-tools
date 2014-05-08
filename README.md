@@ -36,14 +36,9 @@ You will want to change the name, description, and repository/bug URLs; and opti
 
 ### Installing the new build tools and Sproutcore
 
-Run the following commands to install the build tools using the node package manager as well as cloning the proper branch of the Sproutcore framework into your project:
+Run the following commands to install the build tools using the node package manager:
 
     npm install
-    mkdir frameworks
-    cd frameworks
-    git clone git://github.com/sproutcore/sproutcore.git
-    cd sproutcore
-    git checkout team/mauritslamers/newbt
 
 ### Create a build tools configuration file
 
