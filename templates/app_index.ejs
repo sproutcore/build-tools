@@ -191,11 +191,9 @@
 %>
 
 <% app.get('scripts').forEach(function (script) { %>
-  <script type="text/javascript" src="<%= script.get('url')  %>"> </script>
-<% }) %>
+  <script type="text/javascript" src="<%= script.get('url')  %>"> </script> <% }) %>
 <% if (app.get('contentForPageJavascript')) { %>
-<%- app.get('contentForPageJavascript') %>
-<% } %>
+<%- app.get('contentForPageJavascript') %> <% } %>
 <% // If config.html5_history is true, HTML5 history will be activated for
    // SC.routes and the SC.routes.baseURI setting will be automatically
    // set.
@@ -231,7 +229,7 @@
    // need to do before the page ends.  This is required for loading unit
    // tests among other things.
 %>
-<%= app.get('contentForFinal') %>
+<%- app.get('contentForFinal') %>
 <%
   //disable main if the application is loaded in design mode
 %>
