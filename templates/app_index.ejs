@@ -41,9 +41,9 @@
    //
 -%>
 <!DOCTYPE html>
-<html <% if (app.useHtml5Manifest) { %> manifest="manifest.appcache" <% } %> class="no-js" lang="<%= app.language %>">
+<html <% if (app.useHtml5Manifest) { %> manifest="manifest.appcache" <% } %> class="no-js" lang="<%= app.get('language') %>">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge<%=  app.useChromeFrame ? ',chrome=1' : ''   %>"  >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge<%=  app.get('useChromeFrame') ? ',chrome=1' : ''   %>"  >
 
     <script>
       var SC_benchmarkPreloadEvents = { headStart: new Date().getTime() };
@@ -57,25 +57,25 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"  >
     <meta http-equiv="Content-Script-Type" content="text/javascript"  >
     <meta name="apple-mobile-web-app-capable" content="yes"  >
-    <meta name="apple-mobile-web-app-status-bar-style" content="<%= app.statusBarStyle || 'default' %>"  >
+    <meta name="apple-mobile-web-app-status-bar-style" content="<%= app.get('statusBarStyle') || 'default' %>"  >
     <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"  >
 
     <% if (app.touchEnabled) { %>
       <% if (app.precomposedIcon) { %>
-    <link rel="apple-touch-icon-precomposed" href="<%- sc_static(app.precomposedIcon) %>"  >
+    <link rel="apple-touch-icon-precomposed" href="<%- sc_static(app.get('precomposedIcon')) %>"  >
       <% } else if (app.icon) { %>
-    <link rel="apple-touch-icon" href="<%-  sc_static(app.icon)  %>"  >
+    <link rel="apple-touch-icon" href="<%-  sc_static(app.get('icon'))  %>"  >
       <% } %>
       <% if (app.startupImagePortrait) { %>
-    <link rel="apple-touch-startup-image" media="screen and (orientation:portrait)" href="<%- sc_static(app.startup_image_portrait) %>" >
+    <link rel="apple-touch-startup-image" media="screen and (orientation:portrait)" href="<%- sc_static(app.get('startupImagePortrait')) %>" >
       <% } %>
       <% if (app.startupImageLandscape) { %>
-    <link rel="apple-touch-startup-image" media="screen and (orientation:landscape)" href="<%- sc_static(config.startup_image_landscape) %>" >
+    <link rel="apple-touch-startup-image" media="screen and (orientation:landscape)" href="<%- sc_static(app.get('startupImageLandscape')) %>" >
       <% } %>
     <% } %>
 
     <% if (app.favicon) { %>
-    <link rel="shortcut icon" href="<%- sc_static(config.favicon) %>" type="image/x-icon"  >
+    <link rel="shortcut icon" href="<%- sc_static(app.get('favicon')) %>" type="image/x-icon"  >
     <% } %>
 
 
