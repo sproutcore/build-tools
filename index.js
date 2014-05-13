@@ -18,6 +18,7 @@ var files = [
   'lib/core.js',
   'lib/node_wrap.js',
   'lib/fs.js',
+  'lib/proxy.js',
   'lib/project.js',
   'lib/file.js',
   'lib/filetypes.js',
