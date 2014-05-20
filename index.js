@@ -25,6 +25,7 @@ var files = [
   'lib/appbuilder.js',
   'lib/api.js',
   'lib/framework.js',
+  'lib/theme.js',
   'lib/installer.js'
 ];
 
