@@ -41,7 +41,7 @@
    //
 -%>
 <!DOCTYPE html>
-<html <% if (app.useHtml5Manifest) { %> manifest="manifest.appcache" <% } %> class="no-js" lang="<%= app.get('language') %>">
+<html <% if (app.get('addHtml5Manifest')) { %> manifest="<%= app.get('html5ManifestUrl') %>" <% } %> class="no-js" lang="<%= app.get('language') %>">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge<%=  app.get('useChromeFrame') ? ',chrome=1' : ''   %>"  >
 
