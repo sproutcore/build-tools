@@ -58,7 +58,7 @@ Create the following file named `sc_config` in the root level of your directory 
 
 You should now be ready to run the server. From the top directory of your project run:
 
-    ./node_modules/sproutcore/bin/sproutcore
+    ./node_modules/sproutcore/bin/sproutcore serve
 
 Now visit [http://localhost:8080/](http://localhost:8080/) and click the link to load your app!
 
@@ -68,18 +68,18 @@ Please join us on [#sproutcore on IRC](http://sproutcore.com/community/#tab=irc)
 
 On Windows:
 
-Use only a 32 bit NodeJS (for now). For the rest, the steps on Windows are essentially the same, 
+Use only a 32 bit NodeJS (for now). For the rest, the steps on Windows are essentially the same,
 except that the command to start the buildtools is:
 
     node node_modules\sproutcore\bin\sproutcore
 
-It is important that you use forward slashes as path separators in the config files! 
+It is important that you use forward slashes as path separators in the config files!
 The buildtools will convert them for you where necessary, but that doesn't work the other way around.
 
 You might run into a problem where running ```npm install``` in the getting-started folder
-immediately returns an error. This is caused by the way git has been installed on your system, 
-where %PROGRAMFILES%\git\cmd is put into the path, but not %PROGRAMFILES%\git\bin. 
-NPM uses child processes which cannot execute .cmd files, so you will have to see whether it 
+immediately returns an error. This is caused by the way git has been installed on your system,
+where %PROGRAMFILES%\git\cmd is put into the path, but not %PROGRAMFILES%\git\bin.
+NPM uses child processes which cannot execute .cmd files, so you will have to see whether it
 is indeed in your path by typing:
 
     echo %PATH%
