@@ -94,6 +94,8 @@
       SC.buildMode = '<%= BT.runMode %>';
       SC.buildNumber = '<%= app.get("buildNumber") %>';
       SC.buildLocale = '<%= app.get("language") %>';
+      
+      String.preferredLanguage='<%= app.get("language") %>';
     </script>
 
     <%- app.get('bootstrap') %>
