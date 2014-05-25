@@ -37,15 +37,18 @@ commander.command("install [git-repo]")
 
 commander.command("serve")
   .description("run the development server")
-  .option("--debug-server", "save the result of the dev-server build to tmpdebug folder")
-  .option("--repl", "open a repl to the buildtools")
+  .option("-d, --debug-server", "save the result of the dev-server build to tmpdebug folder")
+  .option("-r, --repl", "open a repl to the buildtools")
   .option("--run-benchmarks", "run benchmarks on the buildtools")
+  .option("--log-level [level]", "execution log level [debug, info, warn, error, none]", 'info')
+
   .action( function(opts) {
     //util.log("opts for serve:" + util.inspect(opts));
     buildtools.startDevServer(curPath, {
       runBenchmarks: opts.runBenchmarks,
       hasREPL: opts.repl,
-      hasDebugServer: opts.debugServer
+      hasDebugServer: opts.debugServer,
+      logLevel: opts.logLevel
     });
   });
 
@@ -53,10 +56,12 @@ commander.command("serve")
 commander.command("build [apps]")
   .description("run a build of all apps, or a specific app")
   .option("--run-benchmarks", "run benchmarks on the saving process")
+  .option("--log-level [level]", "execution log level [debug, info, warn, error, none]", 'info')
   .action( function(appOne, opts) {
     var o = {
       apps: [],
-      runBenchmarks: opts.runBenchmarks
+      runBenchmarks: opts.runBenchmarks,
+      logLevel: opts.logLevel
     };
     if (appOne) {
       o.apps.push(appOne);
