@@ -52,6 +52,9 @@ module.exports.startDevServer = function (projectpath, opts) {
     if (opts.runBenchmarks) {
       env.setPath("BT.runBenchmarks", true);
     }
+    if (opts.logLevel) {
+      env.runCode("SC.Logger.logOutputLevel = '"+opts.logLevel+"'");
+    }
     env.runCode("SC.run(function() { BT.projectManager.startServer(); })");
     if (opts.hasREPL) {
       env.repl();
@@ -105,9 +108,13 @@ module.exports.startBuild = function (projectpath, opts) {
   env.setPath('BT.projectPath', projectpath);
   env.setPath('BT.curPath', projectpath);
   env.setPath('BT.btPath', dirname);
+  env.setPath('BT.startTime', Date.now());
   try {
     if (opts.runBenchmarks) {
       env.setPath("BT.runBenchmarks", true);
+    }
+    if (opts.logLevel) {
+      env.runCode("SC.Logger.logOutputLevel = '"+opts.logLevel+"'");
     }
     var p = pathlib.join(projectpath, 'sc_config');
     env.loadFile(p); // this should actually load the config
