@@ -121,7 +121,8 @@ module.exports.startBuild = function (projectpath, opts) {
     var code = "SC.run(function() { BT.projectManager.startBuild(" + JSON.stringify(opts) + "); });";
     var r = env.runCode(code);
     //util.log('return value of r: ' + util.inspect(r));
-    if (r === "done") process.exit(0);
+    if (opts.REPL) env.repl();
+    if (r === "done" && !opts.REPL) process.exit(0);
   }
   catch (err) {
     util.log('error caught: ' + util.inspect(err, true, 10));
