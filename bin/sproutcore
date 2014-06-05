@@ -57,11 +57,13 @@ commander.command("build [apps]")
   .description("run a build of all apps, or a specific app")
   .option("--run-benchmarks", "run benchmarks on the saving process")
   .option("--log-level [level]", "execution log level [debug, info, warn, error, none]", 'info')
+  .option("--repl", "don't quit after build, but start a repl")
   .action( function(appOne, opts) {
     var o = {
       apps: [],
       runBenchmarks: opts.runBenchmarks,
-      logLevel: opts.logLevel
+      logLevel: opts.logLevel,
+      REPL: opts.repl
     };
     if (appOne) {
       o.apps.push(appOne);
