@@ -94,7 +94,7 @@
       SC.buildMode = '<%= BT.runMode %>';
       SC.buildNumber = '<%= app.get("buildNumber") %>';
       SC.buildLocale = '<%= app.get("language") %>';
-      
+
       String.preferredLanguage='<%= app.get("language") %>';
     </script>
 
@@ -161,7 +161,8 @@
 
 <%- app.get('contentForBody') || "" %>
 
-<% //
+<%
+   //
    // This is where your loading screen will appear.  To add a loading screen
    // just declare content_for('loading') in one of your partials. If you use
    // sc-gen to generate your app, it will create a file called loading.rhtml
@@ -193,7 +194,7 @@
 %>
 
 <% app.get('scripts').forEach(function (script) { %>
-  <script type="text/javascript" src="<%= script.get('url')  %>"> </script> <% }) %>
+  <script type="text/javascript" src="<%= (BT.runMode === BT.RM_BUILD && app.relativeBuild) ? script.get('relativeUrl') : script.get('url')  %>"> </script> <% }) %>
 <% if (app.get('contentForPageJavascript')) { %>
 <%- app.get('contentForPageJavascript') %> <% } %>
 <% // If config.html5_history is true, HTML5 history will be activated for
