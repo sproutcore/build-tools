@@ -37,14 +37,30 @@ files.forEach(function (f) {
 
 module.exports.__env = env;
 
+var loadScConfigs = function (projectpath) {
+  var appsPath = pathlib.join(projectpath, 'apps'),
+    fslib = require('fs'),
+    appList = fslib.readdirSync(appsPath);
+
+  appList.forEach(function (fn) {
+    var appConfig = pathlib.join(appsPath, fn, 'sc_config');
+    if (fslib.existsSync(appConfig)) env.loadFile(appConfig);
+  });
+  
+  var p = pathlib.join(projectpath, 'sc_config');
+  env.loadFile(p);
+};
+
 module.exports.startDevServer = function (projectpath, opts) {
   env.setPath('BT.runMode', "debug");
   try {
     env.setPath('BT.projectPath', projectpath);
     env.setPath('BT.curPath', projectpath);
     env.setPath('BT.btPath', dirname);
-    var p = pathlib.join(projectpath, 'sc_config');
-    env.loadFile(p); // this should actually load the config
+
+    loadScConfigs(projectpath);
+
+    // this should actually load the config
     //env.runCode("SC.Benchmark.verbose = true;");
     if (opts.hasDebugServer) {
       env.setPath("BT.debugServer", true);
@@ -116,8 +132,9 @@ module.exports.startBuild = function (projectpath, opts) {
     if (opts.logLevel) {
       env.runCode("SC.Logger.logOutputLevel = '"+opts.logLevel+"'");
     }
-    var p = pathlib.join(projectpath, 'sc_config');
-    env.loadFile(p); // this should actually load the config
+    console.log(projectpath);
+    loadScConfigs(projectpath);
+
     var code = "SC.run(function() { BT.projectManager.startBuild(" + JSON.stringify(opts) + "); });";
     var r = env.runCode(code);
     //util.log('return value of r: ' + util.inspect(r));
