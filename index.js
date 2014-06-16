@@ -132,7 +132,6 @@ module.exports.startBuild = function (projectpath, opts) {
     if (opts.logLevel) {
       env.runCode("SC.Logger.logOutputLevel = '"+opts.logLevel+"'");
     }
-    console.log(projectpath);
     loadScConfigs(projectpath);
 
     var code = "SC.run(function() { BT.projectManager.startBuild(" + JSON.stringify(opts) + "); });";
