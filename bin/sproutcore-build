@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+var commander = require('commander'),
+    curPath = process.cwd(),
+    util = require('util'),
+    buildtools = require('../index');
+
+commander
+  .description("run a build of all apps, or a specific app")
+  .option("--run-benchmarks", "run benchmarks on the saving process")
+  .option("--log-level [level]", "execution log level [debug, info, warn, error, none]", 'info')
+  .option("--repl", "don't quit after build, but start a repl")
+  .parse(process.argv);
+
+var opts = commander.args;
+
+buildtools.startBuild(curPath, {
+  apps: opts,
+  runBenchmarks: commander.runBenchmarks,
+  logLevel: commander.logLevel,
+  REPL: commander.repl
+};
+
+//util.log('opts: ' + util.inspect(opts));
+
+  // .action(function(appOne, opts) {
+  //   var o = {
+  //     apps: [],
+  //     runBenchmarks: opts.runBenchmarks,
+  //     logLevel: opts.logLevel,
+  //     REPL: opts.repl
+  //   };
+  //   if (appOne) {
+  //     o.apps.push(appOne);
+  //   }
+  //   // util.log("app: " + appOne);
+  //   // util.log("opts: " + util.inspect(opts));
+  //   // //buildtools.startSave(curPath, opts);
+  //   buildtools.startBuild(curPath, o);
+  // })

@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+var commander = require('commander'),
+    buildtools = require('../'),
+    curPath = process.cwd();
+
+commander
+  .description("run the development server")
+  .option("-d, --debug-server", "save the result of the dev-server build to tmpdebug folder")
+  .option("-r, --repl", "open a repl to the buildtools")
+  .option("--run-benchmarks", "run benchmarks on the buildtools")
+  .option("--log-level [level]", "execution log level [debug, info, warn, error, none]", 'info')
+  .parse(process.argv);
+
+//var opts = commander.args;
+
+buildtools.startDevServer(curPath, {
+  runBenchmarks: commander.runBenchmarks,
+  hasREPL: commander.repl,
+  hasDebugServer: commander.debugServer,
+  logLevel: commander.logLevel
+});
+
+// program
+//   .option('-f, --force', 'force installation')
+//   .parse(process.argv);
+
+// var pkgs = program.args;
+
+// if (!pkgs.length) {
+//   console.error('packages required');
+//   process.exit(1);
+// }
+
+// console.log();
+// if (program.force) console.log('  force: install');
+// pkgs.forEach(function(pkg){
+//   console.log('  install : %s', pkg);
+// });
+// console.log();
