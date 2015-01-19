@@ -54,7 +54,7 @@ commander.command("serve")
 
 
 commander.command("build [apps]")
-  .description("run a build of all apps, or a specific app")
+  .description("run a build. When apps is omitted, all apps will be built. Provide a comma separated list to build specific apps. (app1,app2)")
   .option("--run-benchmarks", "run benchmarks on the saving process")
   .option("--log-level [level]", "execution log level [debug, info, warn, error, none]", 'info')
   .option("--repl", "don't quit after build, but start a repl")
@@ -66,7 +66,8 @@ commander.command("build [apps]")
       REPL: opts.repl
     };
     if (appOne) {
-      o.apps.push(appOne);
+      if (appOne.indexOf(",")) o.apps = appOne.split(",");
+      else o.apps.push(appOne);
     }
     // util.log("app: " + appOne);
     // util.log("opts: " + util.inspect(opts));
