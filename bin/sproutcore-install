@@ -8,7 +8,8 @@ commander
   .description("Install a framework in the project or globally")
   .option("--global", "save the framework to the buildtools global frameworks folder")
   .option("--branch [branch]", "check out a specific branch of the repository")
-  .option("--silent", "suppress any messages during install")
+  .option("-l, --log-level [level]", "execution log level [trace, debug, info, warn, error, none]", "info")
+  .option("--silent", "set the execution log level to none")
   .parse(process.argv);
 
 var gitrepo = commander.args[0];
@@ -23,7 +24,7 @@ else {
     gitUrl: gitrepo,
     isGlobal: commander.global,
     branch: commander.branch,
-    isSilent: commander.silent
+    logLevel: commander.silent ? "none" : commander.logLevel,
   });
 }
 

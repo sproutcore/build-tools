@@ -16,6 +16,7 @@ var env = require('sproutnode');
 
 var files = [
   'lib/core.js',
+  'lib/logger.js',
   'lib/node_wrap.js',
   'lib/fs.js',
   'lib/proxy.js',
@@ -69,7 +70,7 @@ module.exports.startDevServer = function (projectpath, opts) {
       env.setPath("BT.runBenchmarks", true);
     }
     if (opts.logLevel) {
-      env.runCode("SC.Logger.logOutputLevel = '"+opts.logLevel+"'");
+      env.runCode("BT.Logger.logOutputLevel = '"+opts.logLevel+"'");
     }
     env.runCode("SC.run(function() { BT.projectManager.startServer(); })");
     if (opts.hasREPL) {
@@ -103,8 +104,8 @@ module.exports.startInstall = function (projectpath, opts) {
   var code = "SC.run(function () { BT.startInstall('";
   code += opts.gitUrl + "', { ";
   if (opts.isGlobal) code += "isGlobal: true, ";
-  if (opts.isSilent) {
-    code += "isSilent: true, ";
+  if (opts.logLevel) {
+    code += "logLevel: '" + opts.logLevel + "', ";
   }
   if (opts.branch) {
     code += "branch: '" + opts.branch + "'";
@@ -120,6 +121,7 @@ module.exports.startInstall = function (projectpath, opts) {
 };
 
 module.exports.startBuild = function (projectpath, opts) {
+  var util = require('util');
   env.setPath('BT.runMode', "build");
   env.setPath('BT.projectPath', projectpath);
   env.setPath('BT.curPath', projectpath);
@@ -130,7 +132,7 @@ module.exports.startBuild = function (projectpath, opts) {
       env.setPath("BT.runBenchmarks", true);
     }
     if (opts.logLevel) {
-      env.runCode("SC.Logger.logOutputLevel = '"+opts.logLevel+"'");
+      env.runCode("BT.Logger.logOutputLevel = '"+opts.logLevel+"'");
     }
     if (opts.apps.length > 0) {
       env.runCode("BT.BUILDTARGETS = " + JSON.stringify(opts.apps));
