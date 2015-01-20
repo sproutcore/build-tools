@@ -5,7 +5,7 @@ var commander = require('commander'),
     curPath = process.cwd();
 
 commander
-  .description("run the development server")
+  .description("Run the development server")
   .option("-d, --debug-server", "save the result of the dev-server build to tmpdebug folder")
   .option("-r, --repl", "open a repl to the buildtools")
   .option("--run-benchmarks", "run benchmarks on the buildtools")
@@ -20,21 +20,3 @@ buildtools.startDevServer(curPath, {
   hasDebugServer: commander.debugServer,
   logLevel: commander.logLevel
 });
-
-// program
-//   .option('-f, --force', 'force installation')
-//   .parse(process.argv);
-
-// var pkgs = program.args;
-
-// if (!pkgs.length) {
-//   console.error('packages required');
-//   process.exit(1);
-// }
-
-// console.log();
-// if (program.force) console.log('  force: install');
-// pkgs.forEach(function(pkg){
-//   console.log('  install : %s', pkg);
-// });
-// console.log();

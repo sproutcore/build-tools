@@ -20,68 +20,12 @@ var util = require('util'),
 
 commander
   .version("0.0.1")
-  .command("install [git-repo]", "install a repository, such as a framework")
-  .command("serve", "start the development server")
-  .command("build [apps]", "start the building process of one or more apps")
-  .command("gen app <name>", "generate project structure or parts of it")
+  .command("install [git-repo]", "Install a repository, such as a framework")
+  .command("serve", "Start the development server")
+  .command("build [app1]", "Start the building process of one or more apps")
+  .command("gen app <name>", "Generate project structure or parts of it")
   .parse(process.argv);
 
-  // .description("Install a framework in the project or globally")
-  // .option("--global", "save the framework to the buildtools global frameworks folder")
-  // .option("--branch [branch]", "check out a specific branch of the repository")
-  // .option("--silent", "suppress any messages during install")
-  // .action( function (gitrepo, opts){
-  //   if (!gitrepo) {
-  //     util.puts("You must provide a git url as first option");
-  //   }
-  //   else {
-  //     buildtools.startInstall(curPath, {
-  //       gitUrl: gitrepo,
-  //       isGlobal: opts.global,
-  //       branch: opts.branch,
-  //       isSilent: opts.silent
-  //     });
-  //   }
-  // });
-
-
-  // .description("run the development server")
-  // .option("-d, --debug-server", "save the result of the dev-server build to tmpdebug folder")
-  // .option("-r, --repl", "open a repl to the buildtools")
-  // .option("--run-benchmarks", "run benchmarks on the buildtools")
-  // .option("--log-level [level]", "execution log level [debug, info, warn, error, none]", 'info')
-
-  // .action( function(opts) {
-  //   //util.log("opts for serve:" + util.inspect(opts));
-  //   buildtools.startDevServer(curPath, {
-  //     runBenchmarks: opts.runBenchmarks,
-  //     hasREPL: opts.repl,
-  //     hasDebugServer: opts.debugServer,
-  //     logLevel: opts.logLevel
-  //   });
-  // });
-
-
-
-  // .description("run a build of all apps, or a specific app")
-  // .option("--run-benchmarks", "run benchmarks on the saving process")
-  // .option("--log-level [level]", "execution log level [debug, info, warn, error, none]", 'info')
-  // .option("--repl", "don't quit after build, but start a repl")
-  // .action( function(appOne, opts) {
-  //   var o = {
-  //     apps: [],
-  //     runBenchmarks: opts.runBenchmarks,
-  //     logLevel: opts.logLevel,
-  //     REPL: opts.repl
-  //   };
-  //   if (appOne) {
-  //     o.apps.push(appOne);
-  //   }
-  //   // util.log("app: " + appOne);
-  //   // util.log("opts: " + util.inspect(opts));
-  //   // //buildtools.startSave(curPath, opts);
-  //   buildtools.startBuild(curPath, o);
-  // });
 
 var genDesc = "Generate one of the following types of files: \n";
 genDesc += " - app [name] : Generate an app inside the current project\n";
