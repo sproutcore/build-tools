@@ -19,7 +19,7 @@ buildtools.startBuild(curPath, {
   runBenchmarks: commander.runBenchmarks,
   logLevel: commander.logLevel,
   REPL: commander.repl
-};
+});
 
 //util.log('opts: ' + util.inspect(opts));
 
