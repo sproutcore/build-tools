@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+var commander = require('commander'),
+    curPath = process.cwd(),
+    buildtools = require('../index');
+
+commander
+  .description("When apps is omitted, all apps will be built. Provide a comma separated list to build specific apps.")
+  .usage("\n     or: sproutcore build [app1, app2...]")
+  .option("--run-benchmarks", "run benchmarks on the saving process")
+  .option("-l, --log-level [level]", "execution log level [trace, debug, info, warn, error, none]", "info")
+  .option("--debug", "set the execution log level to debug")
+  .option("--repl", "don't quit after build, but start a repl")
+  .parse(process.argv);
+
+var opts = commander.args;
+
+buildtools.startBuild(curPath, {
+  apps: opts,
+  runBenchmarks: commander.runBenchmarks,
+  logLevel: commander.debug ? "debug" : commander.logLevel,
+  REPL: commander.repl
+});

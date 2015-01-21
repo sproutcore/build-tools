@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+
+var commander = require('commander'),
+    util = require('util'),
+    curPath = process.cwd();
+
+commander
+  .description("Install a framework in the project or globally")
+  .option("--global", "save the framework to the buildtools global frameworks folder")
+  .option("--branch [branch]", "check out a specific branch of the repository")
+  .option("-l, --log-level [level]", "execution log level [trace, debug, info, warn, error, none]", "info")
+  .option("--silent", "set the execution log level to none")
+  .parse(process.argv);
+
+var gitrepo = commander.args[0];
+// util.log("opts: " + util.inspect(opts));
+// util.log("commander: " + util.inspect(commander));
+
+if (!gitrepo) {
+  util.puts("You must provide a git url as first option");
+}
+else {
+  buildtools.startInstall(curPath, {
+    gitUrl: gitrepo,
+    isGlobal: commander.global,
+    branch: commander.branch,
+    logLevel: commander.silent ? "none" : commander.logLevel,
+  });
+}
+
+// program
+//   .option('-f, --force', 'force installation')
+//   .parse(process.argv);
+
+// var pkgs = program.args;
+
+// if (!pkgs.length) {
+//   console.error('packages required');
+//   process.exit(1);
+// }
+
+// console.log();
+// if (program.force) console.log('  force: install');
+// pkgs.forEach(function(pkg){
+//   console.log('  install : %s', pkg);
+// });
+// console.log();
+
+

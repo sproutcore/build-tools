@@ -12,7 +12,7 @@ util.log('Installing sproutcore as global dependency, this can take a while...')
 buildtools.startInstall(process.cwd(), {
   gitUrl: "git://github.com/sproutcore/sproutcore",
   isGlobal: true,
-  isSilent: true,
+  logLevel: "none",
   branch: "team/mauritslamers/newbt"
 });
 
