@@ -24,7 +24,6 @@ var files = [
   'lib/file.js',
   'lib/filetypes.js',
   'lib/appbuilder.js',
-  'lib/api.js',
   'lib/framework.js',
   'lib/theme.js',
   'lib/installer.js'
@@ -58,6 +57,7 @@ module.exports.startDevServer = function (projectpath, opts) {
     env.setPath('BT.projectPath', projectpath);
     env.setPath('BT.curPath', projectpath);
     env.setPath('BT.btPath', dirname);
+    env.setPath('BT.startTime', Date.now());
 
     loadScConfigs(projectpath);
 
@@ -68,6 +68,8 @@ module.exports.startDevServer = function (projectpath, opts) {
     }
     if (opts.runBenchmarks) {
       env.setPath("BT.runBenchmarks", true);
+      env.runCode("SC.Benchmark.start('BT_startup')");
+      env.runCode("SC.Benchmark.start('sc_config_load')");
     }
     if (opts.logLevel) {
       env.runCode("BT.Logger.logOutputLevel = '"+opts.logLevel+"'");
