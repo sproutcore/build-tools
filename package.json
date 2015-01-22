@@ -31,7 +31,8 @@
     "commander": "~2.6.0",
     "cssmin": "~0.4.1",
     "uglify-js": "~2.4.16",
-    "html-minifier": "~0.6.9"
+    "html-minifier": "~0.6.9",
+    "traceur": "0.0.81"
   },
   "version": "0.1.0",
   "engines": {
