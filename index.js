@@ -58,6 +58,7 @@ module.exports.startDevServer = function (projectpath, opts) {
     env.setPath('BT.projectPath', projectpath);
     env.setPath('BT.curPath', projectpath);
     env.setPath('BT.btPath', dirname);
+    env.setPath('BT.startTime', Date.now());
 
     loadScConfigs(projectpath);
 
