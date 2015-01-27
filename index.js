@@ -38,14 +38,15 @@ files.forEach(function (f) {
 module.exports.__env = env;
 
 var loadScConfigs = function (projectpath) {
-  var appsPath = pathlib.join(projectpath, 'apps'),
-    fslib = require('fs'),
-    appList = fslib.readdirSync(appsPath);
-
-  appList.forEach(function (fn) {
-    var appConfig = pathlib.join(appsPath, fn, 'sc_config');
-    if (fslib.existsSync(appConfig)) env.loadFile(appConfig);
-  });
+  // // Search for the sc_config files of the apps
+  // var appsPath = pathlib.join(projectpath, 'apps'),
+  //   fslib = require('fs'),
+  //   appList = fslib.readdirSync(appsPath);
+  // 
+  // appList.forEach(function (fn) {
+  //   var appConfig = pathlib.join(appsPath, fn, 'sc_config');
+  //   if (fslib.existsSync(appConfig)) env.loadFile(appConfig);
+  // });
   
   var p = pathlib.join(projectpath, 'sc_config');
   env.loadFile(p);
