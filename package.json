@@ -6,7 +6,10 @@
     "url": "https://github.com/sproutcore/build-tools.git"
   },
   "bin": {
-    "sproutcore": "./bin/sproutcore"
+    "sproutcore": "./bin/sproutcore",
+    "sproutcore-serve": "./bin/sproutcore-serve",
+    "sproutcore-build": "./bin/sproutcore-build",
+    "sproutcore-install": "./bin/sproutcore-install"
   },
   "keywords": [
     "node.js",
@@ -18,6 +21,7 @@
   "author": "Maurits Lamers <maurits@weidestraat.nl>",
   "main": "./index.js",
   "contributors": [
+    "Nicolas Badia",
     "Jeff Pittman",
     "Dave Porter",
     "Topher Fangio"
