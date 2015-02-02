@@ -29,7 +29,7 @@
   "dependencies": {
     "sproutnode": "git://github.com/sproutcore/sproutcore#team/mauritslamers/sproutnode",
     "node-sass": "~1.1.4",
-    "canvas": "git://github.com/mauritslamers/node-canvas-bin.git#node-v0.10",
+    "canvas-bin": "git://github.com/mauritslamers/node-canvas-bin.git",
     "compass-mixins": "git://github.com/sproutcore/compass-mixins",
     "rimraf": "~2.2.8",
     "ejs": "~1.0.0",
