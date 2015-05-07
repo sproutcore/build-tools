@@ -24,6 +24,7 @@ commander
   .command("serve", "Start the development server")
   .command("build [app1]", "Start the building process of one or more apps")
   .command("gen app <name>", "Generate project structure or parts of it")
+  .command("init <name>", "Generate new project structure and app with the same name")
   .parse(process.argv);
 
 

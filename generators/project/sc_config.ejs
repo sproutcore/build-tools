@@ -1,0 +1,19 @@
+
+BT.serverConfig = {
+// If you need one or more proxies, please remove the comments around the next block.
+// Any request which is not matched by anything from your app will automatically be forwarded to a proxy.
+// You can use the prefix to filter which requests will be forwarded to where.
+// The example shows how to set up a CouchDB proxy. You can set as many proxies as you want.
+/*  proxies: [
+    {
+      prefix: '/',   // set a prefix here for the development server
+      host: 'localhost', // to which host should the request be forwarded
+      port: 5984, // on which port is the host listening?
+      logRequests: false, // show the requests in the terminal?
+      proxyPrefix: '/' // replace the prefix set above with this
+    }
+  ],
+*/
+  port: 4200, // the port on which the development server should run
+  localOnly: true // allow access from the network if false
+}

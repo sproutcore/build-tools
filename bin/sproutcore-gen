@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+var util = require('util');
+
+//util.log('test gen');
+//generator
+
+var commander = require('commander'),
+
+
+/*
+Abbot does a detection of the project by taking the path and check whether it has a buildfile.
+if the buildfile defines a project (how?), it will take that path, otherwise it will repeat the same
+procedure with the dirname of the current path => one level up.
+It is completely unclear how abbot actually decides whether a project buildfile is a project buildfile.
+it seems to be searching for project setters (something like project!) but I cannot find any reference to
+this in a generated project buildfile.
+
+For the BT this is (sort of) a problem, as we also need to detect somehow when we are at the root of a specific project.
+Git does this by storing all stuff inside a .git directory, but I don't think that is necessarily a good idea for the BT.
+
+My approach suggestion:
+ - search for a folder which has sc_config in it
+ - that folder should also contain an apps folder at the minimum
+ */
+
+
+/*
+
+Generators are simple. The generators part should not use the SC runtime in any way, it can be plain nodejs, with the use of ejs for the templating.
+
+What this command does is check whether there is a folder of the command name given in the generators folder.
+If there is, it will call the generator.js command in that folder. This generator.js file should be independent, and
+like the other commands use commander preferrably.
+The generator.js command is called with the following options:
+
+
+The generator.js should export two functions:
+- create(name, projectPath, appName): a function which when given the project path and the name generates the requested files
+- help(): function to return a
+
+ */
+
+// program
+//   .option('-f, --force', 'force installation')
+//   .parse(process.argv);
+
+// var pkgs = program.args;
+
+// if (!pkgs.length) {
+//   console.error('packages required');
+//   process.exit(1);
+// }
+
+// console.log();
+// if (program.force) console.log('  force: install');
+// pkgs.forEach(function(pkg){
+//   console.log('  install : %s', pkg);
+// });
+// console.log();

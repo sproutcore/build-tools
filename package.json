@@ -27,17 +27,17 @@
     "Topher Fangio"
   ],
   "dependencies": {
-    "sproutnode": "git://github.com/sproutcore/sproutcore#team/mauritslamers/sproutnode",
-    "node-sass": "~1.1.4",
     "canvas-bin": "git://github.com/mauritslamers/node-canvas-bin.git",
+    "commander": "^2.8.1",
     "compass-mixins": "git://github.com/sproutcore/compass-mixins",
-    "rimraf": "~2.2.8",
-    "ejs": "~1.0.0",
-    "commander": "~2.6.0",
     "cssmin": "~0.4.1",
-    "uglify-js": "~2.4.16",
+    "ejs": "~1.0.0",
     "html-minifier": "~0.6.9",
-    "traceur": "0.0.81"
+    "node-sass": "~1.1.4",
+    "rimraf": "~2.2.8",
+    "sproutnode": "git://github.com/sproutcore/sproutcore#team/mauritslamers/sproutnode",
+    "traceur": "0.0.81",
+    "uglify-js": "~2.4.16"
   },
   "version": "0.1.0",
   "engines": {

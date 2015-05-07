@@ -1,0 +1,73 @@
+#!/usr/bin/env node
+var util = require('util'),
+    pathlib = require('path'),
+    curPath = process.cwd(),
+    btDir = pathlib.resolve(__dirname, ".."),
+    projectName,
+    projectFolder,
+    spawn = require('child_process').spawn,
+    commander = require('commander');
+
+//util.log('test gen');
+
+/*
+sproutcore init: project creator
+actions:
+ - create a basic sc_config file
+ - create an app with the name of the project
+ */
+
+function projectReady() {
+  console.log("Your project has been successfully created!");
+  process.exit(0);
+}
+
+function runAppGenerator() {
+  var scriptname = pathlib.join(btDir, 'generators', 'app', 'generator.js');
+  var proc = spawn('node', [scriptname, projectFolder, projectName], { stdio: 'inherit', customFds: [0, 1, 2] });
+
+  proc.on('close', projectReady);
+  proc.on('error', function (err) {
+    if (err.code == "ENOENT") {
+      console.error('\n  app generator does not exist, try --help\n');
+    }
+    process.exit(1);
+  });
+}
+
+function runProjectGenerator() {
+  var scriptname = pathlib.join(btDir, 'generators', 'project', 'generator.js');
+  var proc = spawn('node', [scriptname, curPath, projectName], { stdio: 'inherit', customFds: [0, 1, 2] });
+
+  proc.on('close', runAppGenerator);
+  proc.on('error', function (err) {
+    if (err.code == "ENOENT") {
+      console.error('\n  Project generator does not exist, try --help\n');
+    }
+    process.exit(1);
+  });
+}
+
+
+commander
+  .arguments('<name>')
+  .action(function (name) {
+    if (!name) {
+      console.log("You need to give a name!");
+      return;
+    }
+
+    projectName = name;
+    projectFolder = pathlib.join(curPath, projectName);
+    // we run two generators, one is the project itself, then the app
+
+
+  })
+  .parse(process.argv);
+
+//console.log(arguments);
+// generate the project in the current folder
+//var projPath = pathlib.join(curPath, name);
+//console.log('projectName: ' + projectName);
+runProjectGenerator();
+
