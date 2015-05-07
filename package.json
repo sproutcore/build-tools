@@ -9,7 +9,9 @@
     "sproutcore": "./bin/sproutcore",
     "sproutcore-serve": "./bin/sproutcore-serve",
     "sproutcore-build": "./bin/sproutcore-build",
-    "sproutcore-install": "./bin/sproutcore-install"
+    "sproutcore-install": "./bin/sproutcore-install",
+    "sproutcore-init": "./bin/sproutcore-init",
+    "sproutcore-gen": "./bin/sproutcore-gen"
   },
   "keywords": [
     "node.js",
