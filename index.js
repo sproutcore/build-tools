@@ -22,6 +22,7 @@ var files = [
   'lib/project.js',
   'lib/file.js',
   'lib/filetypes.js',
+  'lib/filemanager.js',
   'lib/appbuilder.js',
   'lib/framework.js',
   'lib/theme.js',
@@ -41,12 +42,12 @@ var loadScConfigs = function (projectpath) {
   // var appsPath = pathlib.join(projectpath, 'apps'),
   //   fslib = require('fs'),
   //   appList = fslib.readdirSync(appsPath);
-  // 
+  //
   // appList.forEach(function (fn) {
   //   var appConfig = pathlib.join(appsPath, fn, 'sc_config');
   //   if (fslib.existsSync(appConfig)) env.loadFile(appConfig);
   // });
-  
+
   var p = pathlib.join(projectpath, 'sc_config');
   env.loadFile(p);
 };
