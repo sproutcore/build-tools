@@ -55,6 +55,11 @@ var loadScConfigs = function (projectpath) {
 module.exports.startDevServer = function (projectpath, opts) {
   env.setPath('BT.runMode', "debug");
   try {
+    if (opts.runBenchmarks) {
+      env.setPath("BT.runBenchmarks", true);
+      env.runCode("SC.Benchmark.start('BT_startup')");
+      env.runCode("SC.Benchmark.start('sc_config_load')");
+    }
     env.setPath('BT.projectPath', projectpath);
     env.setPath('BT.curPath', projectpath);
     env.setPath('BT.btPath', dirname);
@@ -66,11 +71,6 @@ module.exports.startDevServer = function (projectpath, opts) {
     //env.runCode("SC.Benchmark.verbose = true;");
     if (opts.hasDebugServer) {
       env.setPath("BT.debugServer", true);
-    }
-    if (opts.runBenchmarks) {
-      env.setPath("BT.runBenchmarks", true);
-      env.runCode("SC.Benchmark.start('BT_startup')");
-      env.runCode("SC.Benchmark.start('sc_config_load')");
     }
     if (opts.logLevel) {
       env.runCode("BT.Logger.logOutputLevel = '"+opts.logLevel+"'");
