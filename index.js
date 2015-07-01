@@ -137,6 +137,9 @@ module.exports.startBuild = function (projectpath, opts) {
     if (opts.logLevel) {
       env.runCode("BT.Logger.logOutputLevel = '"+opts.logLevel+"'");
     }
+    if (opts.overwrite) {
+      env.runCode("BT.OVERWRITE_BUILD = true");
+    }
     if (opts.apps.length > 0) {
       env.runCode("BT.BUILDTARGETS = " + JSON.stringify(opts.apps));
     }
