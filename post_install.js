@@ -15,14 +15,3 @@ buildtools.startInstall(process.cwd(), {
   logLevel: "none",
   branch: "team/mauritslamers/newbt"
 });
-
-if (os.platform() === "darwin") {
-  util.log("OSX detected, installing fsevents...");
-  var proc = cp.spawn("npm", ["install", "git://github.com/mauritslamers/fsevents-bin"]);
-  proc.stdout.on('data', function (d) {
-    console.log(d.toString());
-  });
-  proc.stderr.on('data', function (d) {
-    console.log(d.toString());
-  });
-}
