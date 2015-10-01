@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 var util = require('util'),
     pathlib = require('path'),
+    fslib = require('fs'),
     curPath = process.cwd(),
     btDir = pathlib.resolve(__dirname, ".."),
-    projectName,
-    projectFolder,
+    projectName = "",
+    projectFolder = "",
     spawn = require('child_process').spawn,
     commander = require('commander');
 
@@ -48,20 +49,18 @@ function runProjectGenerator() {
   });
 }
 
-
 commander
+  .version("0.0.1")
   .arguments('<name>')
   .action(function (name) {
     if (!name) {
       console.log("You need to give a name!");
       return;
     }
-
+    // just set the variables, as they will be created by the generators
     projectName = name;
-    projectFolder = pathlib.join(curPath, projectName);
-    // we run two generators, one is the project itself, then the app
-
-
+    projectFolder = pathlib.join(curPath, name);
+    runProjectGenerator();
   })
   .parse(process.argv);
 
@@ -69,5 +68,5 @@ commander
 // generate the project in the current folder
 //var projPath = pathlib.join(curPath, name);
 //console.log('projectName: ' + projectName);
-runProjectGenerator();
+
 

@@ -1,5 +1,5 @@
 /*jshint node:true */
-// generator for a project. essentially creates the folder, and puts the sc_config in
+// generator for a project. essentially creates the folder, create an apps folder, and puts the sc_config in
 
 var util = require('util'),
    path = require('path'),
@@ -35,6 +35,7 @@ commander
     mkDir(projFolder);
     mkDir(path.join(projFolder, "apps"));
     try {
+      // we're not using the ejs options here (yet), so no ejs parsing required
       fs.writeFileSync(path.join(projFolder, "sc_config"), config);
     }
     catch (er) {
