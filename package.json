@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "canvas-bin": "git://github.com/mauritslamers/node-canvas-bin.git",
-    "commander": "~2.6.0",
+    "commander": "^2.8.1",
     "compass-mixins": "git://github.com/sproutcore/compass-mixins",
     "cssmin": "~0.4.1",
     "ejs": "~1.0.0",
