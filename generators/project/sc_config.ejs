@@ -1,9 +1,19 @@
+/*
+Please don't remove the following server configuration, as the build tools use it to
+determine the root of your project.
+ */
 
 BT.serverConfig = {
+  port: 4200, // the port on which the development server should run
+  localOnly: true, // allow access from the network if false
+
 // If you need one or more proxies, please remove the comments around the next block.
-// Any request which is not matched by anything from your app will automatically be forwarded to a proxy.
+// If you do a request from your app (file or XHR) which doesn't match anything the BT provide,
+// the request will be run past the proxies in the order you define them here.
 // You can use the prefix to filter which requests will be forwarded to where.
-// The example shows how to set up a CouchDB proxy. You can set as many proxies as you want.
+// In the proxied request the prefix you define will be replaced by the proxyPrefix.
+// The example shows how to set up a catch-all proxy, in this case to CouchDB.
+// You can set as many proxies as you want, as long as they don't share a prefix.
 /*  proxies: [
     {
       prefix: '/',   // set a prefix here for the development server
@@ -12,8 +22,6 @@ BT.serverConfig = {
       logRequests: false, // show the requests in the terminal?
       proxyPrefix: '/' // replace the prefix set above with this
     }
-  ],
+  ]
 */
-  port: 4200, // the port on which the development server should run
-  localOnly: true // allow access from the network if false
 }
