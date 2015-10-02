@@ -1,37 +1,51 @@
 #!/usr/bin/env node
-var util = require('util');
+var util = require('util'),
+    pathlib = require('path'),
+    fslib = require('fs'),
+    curDir = __dirname;
 
 //util.log('test gen');
 //generator
 
-var commander = require('commander'),
+var commander = require('commander');
 
+commander
+  .command("app [name]", "Create a new app with name in the current project")
+  .parse(process.argv);
 
 /*
-Abbot does a detection of the project by taking the path and check whether it has a buildfile.
-if the buildfile defines a project (how?), it will take that path, otherwise it will repeat the same
-procedure with the dirname of the current path => one level up.
-It is completely unclear how abbot actually decides whether a project buildfile is a project buildfile.
-it seems to be searching for project setters (something like project!) but I cannot find any reference to
-this in a generated project buildfile.
-
-For the BT this is (sort of) a problem, as we also need to detect somehow when we are at the root of a specific project.
-Git does this by storing all stuff inside a .git directory, but I don't think that is necessarily a good idea for the BT.
-
-My approach suggestion:
- - search for a folder which has sc_config in it
- - that folder should also contain an apps folder at the minimum
+The BT automatically detects the project folder using the following procedure
+- check the current folder for a sc_config. Quit if current folder is root, or matches /[C-Z]:\\/
+- if no, go one directory up, and repeat
+- if yes, check whether the sc_config has a BT.serverConfig definition.
+  - if yes, this is the project folder
+  - if no, go one directory up, and repeat (recursively)
  */
 
+function discoverProjectRoot(startdir) {
+  var flist = fslib.readDirSync(startdir);
+  if (flist.indexOf('sc_config')) {
+    var c = fslib.readFileSync(pathlib.join(startdir, 'sc_config')).toString();
+    if (c.indexOf("BT.serverConfig") > -1) {
+      return startdir;
+    }
+  }
+  if (pathlib.parse(startdir).root === startdir) { // root
+    return; // undefined
+  }
+  return discoverProjectRoot(pathlib.join(startdir, "..")); // default
+};
+
 
 /*
 
-Generators are simple. The generators part should not use the SC runtime in any way, it can be plain nodejs, with the use of ejs for the templating.
+Generators are plain nodejs, with the use of ejs for the templating.
 
 What this command does is check whether there is a folder of the command name given in the generators folder.
 If there is, it will call the generator.js command in that folder. This generator.js file should be independent, and
 like the other commands use commander preferrably.
 The generator.js command is called with the following options:
+
 
 
 The generator.js should export two functions:

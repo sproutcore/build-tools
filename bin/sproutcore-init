@@ -6,7 +6,8 @@ var util = require('util'),
     btDir = pathlib.resolve(__dirname, ".."),
     projectName = "",
     projectFolder = "",
-    spawn = require('child_process').spawn,
+    spawn = require('child_process').spawnSync,
+    basics = require('../generators/generator_basics'),
     commander = require('commander');
 
 //util.log('test gen');
@@ -18,36 +19,20 @@ actions:
  - create an app with the name of the project
  */
 
-function projectReady() {
-  console.log("Your project has been successfully created!");
-  process.exit(0);
-}
-
-function runAppGenerator() {
-  var scriptname = pathlib.join(btDir, 'generators', 'app', 'generator.js');
-  var proc = spawn('node', [scriptname, projectFolder, projectName], { stdio: 'inherit', customFds: [0, 1, 2] });
-
-  proc.on('close', projectReady);
-  proc.on('error', function (err) {
-    if (err.code == "ENOENT") {
-      console.error('\n  app generator does not exist, try --help\n');
-    }
-    process.exit(1);
-  });
-}
-
-function runProjectGenerator() {
+function runProjectGenerator(projectFolder, projectName) {
   var scriptname = pathlib.join(btDir, 'generators', 'project', 'generator.js');
   var proc = spawn('node', [scriptname, curPath, projectName], { stdio: 'inherit', customFds: [0, 1, 2] });
 
-  proc.on('close', runAppGenerator);
-  proc.on('error', function (err) {
+  if (proc.error) {
     if (err.code == "ENOENT") {
       console.error('\n  Project generator does not exist, try --help\n');
     }
     process.exit(1);
-  });
-}
+  }
+  basics.runAppGenerator(projectFolder, projectName);
+  console.log("Your project has been successfully created!");
+  process.exit(0);
+};
 
 commander
   .version("0.0.1")
@@ -58,9 +43,8 @@ commander
       return;
     }
     // just set the variables, as they will be created by the generators
-    projectName = name;
     projectFolder = pathlib.join(curPath, name);
-    runProjectGenerator();
+    runProjectGenerator(projectFolder, name);
   })
   .parse(process.argv);
 

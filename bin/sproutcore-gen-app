@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+
+var commander = require('commander'),
+    curPath = process.cwd(),
+    basics = require('../generators/generator_basics');
+    //buildtools = require('../index');
+
+commander
+  .version("0.0.1")
+  .arguments('<name>')
+  .action(function (name) {
+    if (!name) {
+      console.log("You forgot to tell me how the app should be called.");
+      process.exit(1);
+    }
+    var projectRoot = basics.discoverProjectRoot(curPath);
+    if (projectRoot === undefined) {
+      console.log("You need to be somewhere in a project to create a new app.");
+      process.exit(1);
+    }
+    basics.runAppGenerator(projectRoot, name);
+    console.log("App " + name + " generated");
+  })
+  .parse(process.argv);
