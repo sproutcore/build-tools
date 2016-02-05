@@ -1,6 +1,6 @@
 // use preinstall to install the right node-canvas-bin package
 
-var release = "v1.0rc2";
+var release = "v1.0rc3";
 var os = require('os');
 var node_version = process.version.split(".").filter(function (p, i) {
   if (i < 2) {
@@ -31,9 +31,9 @@ var url = base_url + release + "/" + filename;
 var spawn = require('child_process').spawn,
     npm   = spawn('npm', ['install', url]);
 
-npm.stdout.on('data', function (data) {
-  console.log('stdout: ' + data);
-});
+// npm.stdout.on('data', function (data) {
+//   console.log('stdout: ' + data);
+// });
 
 npm.stderr.on('data', function (data) {
   console.log('stderr: ' + data);
