@@ -2,7 +2,7 @@
 
 var release = "v1.0rc3";
 var os = require('os');
-var node_version = process.version.split(".").filter(function (p, i) {
+var node_version = process.versions.node.split(".").filter(function (p, i) {
   if (i < 2) {
     return p;
   }
