@@ -11,13 +11,15 @@
     "sproutcore-build": "./bin/sproutcore-build",
     "sproutcore-install": "./bin/sproutcore-install",
     "sproutcore-init": "./bin/sproutcore-init",
-    "sproutcore-gen": "./bin/sproutcore-gen"
+    "sproutcore-gen": "./bin/sproutcore-gen",
+    "sproutcore-gen-app": "./bin/sproutcore-gen-app"
   },
   "keywords": [
     "node.js",
     "sproutcore"
   ],
   "scripts": {
+    "preinstall": "node pre_install.js",
     "install": "node post_install.js"
   },
   "author": "Maurits Lamers <maurits@weidestraat.nl>",
@@ -29,7 +31,6 @@
     "Topher Fangio"
   ],
   "dependencies": {
-    "canvas-bin": "git://github.com/mauritslamers/node-canvas-bin.git",
     "commander": "^2.8.1",
     "compass-mixins": "git://github.com/sproutcore/compass-mixins",
     "cssmin": "~0.4.1",
@@ -43,6 +44,6 @@
   },
   "version": "0.1.0",
   "engines": {
-    "node": "0.10.x"
+    "node": ">=0.10.x"
   }
 }
