@@ -1,4 +1,6 @@
 // use preinstall to install the right node-canvas-bin package
+https://github.com/mauritslamers/node-canvas-builder/releases/download/v1.0r3/osx_0.12.tar.gz
+https://github.com/mauritslamers/node-canvas-builder/releases/download/v1.0rc3/osx_0.12.tar.gz
 
 var release = "v1.0rc3";
 var os = require('os');
@@ -28,6 +30,8 @@ filename += ".tar.gz";
 var base_url = "https://github.com/mauritslamers/node-canvas-builder/releases/download/";
 var url = base_url + release + "/" + filename;
 
+
+console.log("Installing canvas-bin for your platform (", platform, ",", arch, ") and node version: ", node_version);
 var spawn = require('child_process').spawn,
     npm   = spawn('npm', ['install', url]);
 
@@ -35,11 +39,16 @@ var spawn = require('child_process').spawn,
 //   console.log('stdout: ' + data);
 // });
 
-npm.stderr.on('data', function (data) {
-  console.log('stderr: ' + data);
-});
+// npm.stderr.on('data', function (data) {
+//   console.log(data);
+// });
 
 npm.on('close', function (code) {
-  console.log('child process exited with code ' + code);
+  if (code === 0) {
+    console.log('Successfully installed canvas-bin for your platform');
+  }
+  else {
+    console.log('Error installing canvas-bin for your platform. Please report this issue!');
+  }
 });
 
