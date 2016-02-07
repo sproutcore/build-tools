@@ -1,6 +1,7 @@
 {
   "name": "sproutcore",
   "description": "SproutCore buildtools: Node.js buildtools for SproutCore, written in SproutCore",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/sproutcore/build-tools.git"
@@ -42,7 +43,7 @@
     "traceur": "0.0.81",
     "uglify-js": "~2.4.16"
   },
-  "version": "0.1.0",
+  "version": "1.11.0",
   "engines": {
     "node": ">=0.10.x"
   }
