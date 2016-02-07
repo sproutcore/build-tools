@@ -43,7 +43,7 @@
     "traceur": "0.0.81",
     "uglify-js": "~2.4.16"
   },
-  "version": "1.11.0",
+  "version": "1.11.1",
   "engines": {
     "node": ">=0.10.x"
   }
