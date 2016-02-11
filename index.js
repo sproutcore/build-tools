@@ -41,12 +41,12 @@ var loadScConfigs = function (projectpath) {
   // var appsPath = pathlib.join(projectpath, 'apps'),
   //   fslib = require('fs'),
   //   appList = fslib.readdirSync(appsPath);
-  // 
+  //
   // appList.forEach(function (fn) {
   //   var appConfig = pathlib.join(appsPath, fn, 'sc_config');
   //   if (fslib.existsSync(appConfig)) env.loadFile(appConfig);
   // });
-  
+
   var p = pathlib.join(projectpath, 'sc_config');
   env.loadFile(p);
 };
@@ -73,6 +73,21 @@ module.exports.startDevServer = function (projectpath, opts) {
     }
     if (opts.logLevel) {
       env.runCode("BT.Logger.logOutputLevel = '"+opts.logLevel+"'");
+    }
+    if (opts.localOnly !== undefined) {
+      var lo;
+      // prevent injection of code from the command line
+      if (opts.localOnly === "true") {
+        lo = "true";
+      }
+      if (opts.localOnly === "false") {
+        lo = "false";
+      }
+      env.runCode("BT.serverConfig.localOnly = " + lo);
+    }
+    if (opts.port) {
+      var p = parseInt(opts.port, 10); // make sure this is a number
+      env.runCode("BT.serverConfig.port = " + p);
     }
     env.runCode("SC.run(function() { BT.projectManager.startServer(); })");
     if (opts.hasREPL) {

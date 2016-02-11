@@ -7,6 +7,8 @@ var commander = require('commander'),
 commander
   .description("Run the development server")
   .option("-d, --debug-server", "save the result of the dev-server build to tmpdebug folder")
+  .option("-a, --local-only [true/false]", "sets whether the server should run localOnly (overrides the project setting)")
+  .option("-p, --port [port]", "sets the port the server should listen on (overrides the project setting)")
   .option("-r, --repl", "open a repl to the buildtools")
   .option("--run-benchmarks", "run benchmarks on the buildtools")
   .option("-l, --log-level [level]", "execution log level [trace, debug, info, warn, error, none]", "info")
@@ -19,5 +21,7 @@ buildtools.startDevServer(curPath, {
   runBenchmarks: commander.runBenchmarks,
   hasREPL: commander.repl,
   hasDebugServer: commander.debugServer,
-  logLevel: commander.debug ? "debug" : commander.logLevel
+  logLevel: commander.debug ? "debug" : commander.logLevel,
+  localOnly: commander.localOnly,
+  port: commander.port
 });
