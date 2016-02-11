@@ -59,6 +59,11 @@ module.exports.startDevServer = function (projectpath, opts) {
     env.setPath('BT.btPath', dirname);
     env.setPath('BT.startTime', Date.now());
 
+    if (opts.includeTests) {
+      // tests are off by default, change the appbuilder prototype to add tests to all loaded apps
+      env.runCode("BT.AppBuilder.prototype.includeTests = true");
+    }
+
     loadScConfigs(projectpath);
 
     // this should actually load the config
