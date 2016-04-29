@@ -9,8 +9,8 @@ var node_version = process.versions.node.split(".").filter(function (p, i) {
     return p;
   }
 });
-if (node_version[0] !== 0) {
-  node_version[1] = 0;
+if (node_version[0] !== '0') {
+  node_version[1] = '0';
 }
 node_version = node_version.join(".");
 
