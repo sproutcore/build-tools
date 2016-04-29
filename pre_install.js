@@ -8,7 +8,12 @@ var node_version = process.versions.node.split(".").filter(function (p, i) {
   if (i < 2) {
     return p;
   }
-}).join(".");
+});
+if (node_version[0] !== 0) {
+  node_version[1] = 0;
+}
+node_version = node_version.join(".");
+
 var arch = os.arch();
 var platform = os.platform();
 var filename;
