@@ -63,7 +63,11 @@ module.exports.startDevServer = function (projectpath, opts) {
       // tests are off by default, change the appbuilder prototype to add tests to all loaded apps
       env.runCode("BT.AppBuilder.prototype.includeTests = true");
     }
-
+    // this needs to be done _before_ the configs are loaded, otherwise we never get the traces
+    // of the inits of the appBuilders or frameworks
+    if (opts.logLevel) {
+      env.runCode("BT.Logger.logOutputLevel = '"+opts.logLevel+"'");
+    }
     loadScConfigs(projectpath);
 
     // this should actually load the config
@@ -75,9 +79,6 @@ module.exports.startDevServer = function (projectpath, opts) {
       env.setPath("BT.runBenchmarks", true);
       env.runCode("SC.Benchmark.start('BT_startup')");
       env.runCode("SC.Benchmark.start('sc_config_load')");
-    }
-    if (opts.logLevel) {
-      env.runCode("BT.Logger.logOutputLevel = '"+opts.logLevel+"'");
     }
     if (opts.localOnly !== undefined) {
       var lo;
