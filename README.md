@@ -82,7 +82,13 @@ If ```C:\Program Files\git\bin``` is not in your path, you can put it in by doin
     set PATH=%PROGRAMFILES%\git\bin;%PATH%
 
 
+## Using generators 
 
+As is explained below, the BT expects a certain project layout. Because it can be tedious to create this by hand every time you start a project, the BT contain generators to generate the project layout or parts of it.
+
+`sproutcore init [project-name]` creates a new project for you, including configuration files, and a single app having the same name as the project.
+
+`sproutcore gen app [appname]` will create an app in the current project and will add a loading instruction to the project configuration.
 
 
 ## How BT server works

@@ -41,13 +41,16 @@ commander
       return;
     }
     var appPath = path.join(home, "apps", name);
-    var resourcesPath = path.join(appPath, "resources");
+    mkDir(appPath);
+    // generate the app folders
+    ['resources','controllers','states','views','fixtures'].forEach(function (d) {
+      mkDir(path.join(appPath, d));
+    });
+
     var namespace = camelize(name);
     namespace = namespace.charAt(0).toUpperCase() + namespace.slice(1);
     var cssname = name.replace(/_/g, "-");
     //console.log("appPath %s, resourcesPath %s, namespace: %s, cssname: %s", appPath, resourcesPath, namespace, cssname);
-    mkDir(appPath);
-    mkDir(resourcesPath);
 
     // now start writing files to the new app
     // first the root
@@ -71,7 +74,7 @@ commander
       basics.filename = filepath;
       var newc = ejs.render(c, basics);
       var fn = path.basename(f, path.extname(f));
-      fs.writeFileSync(path.join(resourcesPath, fn), newc);
+      fs.writeFileSync(path.join(appPath, 'resources', fn), newc);
     });
 
     // config file
