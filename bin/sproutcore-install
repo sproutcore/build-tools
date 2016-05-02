@@ -2,10 +2,37 @@
 
 var commander = require('commander'),
     util = require('util'),
+    buildtools = require('../index'),
+    basics = require('../generators/generator_basics'),
     curPath = process.cwd();
 
+var desc = "Install a framework in the project or globally by providing a git url to the repository.\n"
+desc += "  For a few frameworks (currently only sproutcore) you can provide a name instead."
+
+
 commander
-  .description("Install a framework in the project or globally")
+  .description(desc)
+  .arguments('<giturl>')
+  .action(function (giturl) {
+    if (!giturl) {
+      console.log("You must provide a git url as first option.");
+      process.exit(1);
+    }
+    var projectRoot = basics.discoverProjectRoot(curPath);
+    if (projectRoot === undefined) {
+      console.log("You need to be somewhere in a project to install a framework.");
+      process.exit(1);
+    }
+    if (giturl === "sproutcore") giturl = "git://github.com/sproutcore/sproutcore";
+    buildtools.startInstall(curPath, {
+      gitUrl: giturl,
+      isGlobal: commander.global,
+      branch: commander.branch,
+      logLevel: commander.silent ? "none" : commander.logLevel,
+    });
+    //basics.runAppGenerator(projectRoot, name);
+    //console.log("App " + name + " generated");
+  })
   .option("--global", "save the framework to the buildtools global frameworks folder")
   .option("--branch [branch]", "check out a specific branch of the repository")
   .option("-l, --log-level [level]", "execution log level [trace, debug, info, warn, error, none]", "info")
@@ -13,19 +40,16 @@ commander
   .parse(process.argv);
 
 var gitrepo = commander.args[0];
+
+
 // util.log("opts: " + util.inspect(opts));
 // util.log("commander: " + util.inspect(commander));
 
 if (!gitrepo) {
-  util.puts("You must provide a git url as first option");
+  util.puts("");
 }
 else {
-  buildtools.startInstall(curPath, {
-    gitUrl: gitrepo,
-    isGlobal: commander.global,
-    branch: commander.branch,
-    logLevel: commander.silent ? "none" : commander.logLevel,
-  });
+
 }
 
 // program
