@@ -3,26 +3,29 @@
 
 // This is the function that will start your app running.  The default
 // implementation will load any fixtures you have created then instantiate
-// your controllers and awake the elements on your page.
+// your controllers and fire up the state chart.
 //
 // As you develop your application you will probably want to override this.
 // See comments for some pointers on what to do next.
 //
 <%= namespace %>.main = function main() {
 
-  // Step 1: Instantiate Your Views
-  // The default code here will make the mainPane for your application visible
-  // on screen.  If you app gets any level of complexity, you will probably
-  // create multiple pages and panes.
-  <%= namespace %>.getPath('mainPage.mainPane').append() ;
+  // Step 1: Set the statechart to be the default responder
+  // The default code here will set the statechart as default responder for your application.
+  // It means that any action which is not given a specific target will be sent to the
+  // statechart. For most applications, this is the most convenient.
+  var statechart = <%= namespace %>.statechart;
+  SC.Rootresponder.responder.set('defaultResponder', statechart);
 
-  // Step 2. Set the content property on your primary controller.
-  // This will make your app come alive!
-  //
-  // ex.
+  // Step 2. If you are using controllers which need to be setup with data before
+  // your app comes alive (for example controllers holding menu options), do it here.
   // var content = <%= namespace %>.store.find(<%= namespace %>.Group);
   // <%= namespace %>.groupsController.set('content', content);
+  // or
+  // <%= namespace %>.menuListController.set('content', <%= namespace %>.menuOptions);
 
+  // Step 3. Initialize the statechart and make your app come alive.
+  statechart.initStatechart();
 };
 
 

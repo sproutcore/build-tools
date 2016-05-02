@@ -77,6 +77,23 @@ commander
       fs.writeFileSync(path.join(appPath, 'resources', fn), newc);
     });
 
+    // statechart
+    ['statechart.js.ejs', 'ready_state.js.ejs'].forEach(function (f) {
+      var filepath = path.join(__dirname, f);
+      var c = fs.readFileSync(filepath).toString();
+      basics.namespace = namespace;
+      basics.css_name = "";
+      basics.filename = filepath;
+      var newc = ejs.render(c, basics);
+      var fn = path.basename(f, path.extname(f));
+      if (f.indexOf("ready") > -1) {
+        fs.writeFileSync(path.join(appPath, 'states', fn), newc);
+      }
+      else {
+        fs.writeFileSync(path.join(appPath, fn), newc);
+      }
+    });
+
     // config file
     var filepath = path.join(__dirname, 'appconfig.ejs');
     var c = fs.readFileSync(filepath).toString();
