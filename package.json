@@ -39,6 +39,7 @@
     "html-minifier": "~0.6.9",
     "node-sass": "^3.2.0",
     "rimraf": "~2.2.8",
+    "socket.io": "^1.4.6",
     "sproutnode": "git://github.com/sproutcore/sproutcore#team/mauritslamers/sproutnode",
     "traceur": "0.0.108",
     "uglify-js": "~2.4.16"

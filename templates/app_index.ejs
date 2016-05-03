@@ -241,6 +241,20 @@
   <script>
     SC.benchmarkPreloadEvents['bodyEnd'] = new Date().getTime();
   </script>
+
+
+<% // this little bit of code creates a websocket connection between the SC app and the BuildTools.
+   // This is only used to transmit BT warnings or other messages to the app.
+  if (BT.runMode === BT.RM_DEBUG && !BT.noSocket) { %>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      SC.buildToolsLink = io.connect(location.origin, { reconnection: false });
+      SC.buildToolsLink.on('btmsg', function (msg) {
+        console.log("BuildTools: " + msg);
+      });
+    </script>
+<% } %>
+
   </body>
 </html>
 

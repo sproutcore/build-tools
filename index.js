@@ -19,6 +19,7 @@ var files = [
   'lib/logger.js',
   'lib/node_wrap.js',
   'lib/proxy.js',
+  'lib/bt_socketio.js',
   'lib/project.js',
   'lib/file.js',
   'lib/filetypes.js',
