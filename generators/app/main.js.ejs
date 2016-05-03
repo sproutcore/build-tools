@@ -15,7 +15,7 @@
   // It means that any action which is not given a specific target will be sent to the
   // statechart. For most applications, this is the most convenient.
   var statechart = <%= namespace %>.statechart;
-  SC.Rootresponder.responder.set('defaultResponder', statechart);
+  SC.RootResponder.responder.set('defaultResponder', statechart);
 
   // Step 2. If you are using controllers which need to be setup with data before
   // your app comes alive (for example controllers holding menu options), do it here.
