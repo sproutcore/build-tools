@@ -59,6 +59,9 @@ module.exports.startDevServer = function (projectpath, opts) {
     env.setPath('BT.curPath', projectpath);
     env.setPath('BT.btPath', dirname);
     env.setPath('BT.startTime', Date.now());
+    if (opts.disableSocket) {
+      env.setPath('BT.noSocket', true);
+    }
 
     if (opts.includeTests) {
       // tests are off by default, change the appbuilder prototype to add tests to all loaded apps

@@ -14,6 +14,7 @@ commander
   .option("-l, --log-level [level]", "execution log level [trace, debug, info, warn, error, none]", "info")
   .option("--debug", "set the execution log level to debug")
   .option("--include-tests", "force inclusion of the tests")
+  .option("--disable-bt-feedback", "Do not use the feedback system to the browser")
   .parse(process.argv);
 
 //var opts = commander.args;
@@ -25,5 +26,6 @@ buildtools.startDevServer(curPath, {
   logLevel: commander.debug ? "debug" : commander.logLevel,
   localOnly: commander.localOnly,
   port: commander.port,
-  includeTests: commander.includeTests
+  includeTests: commander.includeTests,
+  disableSocket: commander.disableBtFeedback
 });
