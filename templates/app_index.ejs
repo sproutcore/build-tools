@@ -219,14 +219,6 @@
 <%
   //render_page_views
 %>
-<% // Older SproutCore applications need SC.didLoad to be called after onload.
-   // This is no longer required by SproutCore so it is off by default.  To
-   // reenable set use_window_onload = true in yur config.
-%>
-<% if (app.get('useWindowOnLoad')) { %>
-<!-- Start SproutCore on Page Load -->
-    <script type="text/javascript">window.onload = SC.didLoad;</script>
-<% } %>
 <% //
    // The final content section can be used to add any last minute setup you
    // need to do before the page ends.  This is required for loading unit
