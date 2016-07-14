@@ -233,7 +233,18 @@
     <script>
       SC.buildToolsLink = io.connect(location.origin, { reconnection: false });
       SC.buildToolsLink.on('btmsg', function (msg) {
-        console.log("BuildTools: " + msg);
+        var data = JSON.parse(msg),
+          method = 'log';
+
+        switch(data.type) {
+          case 'warn': 
+            method = 'warn'; 
+          break;
+          case 'error': 
+            method = 'error'; 
+          break;
+        }
+        console[method](data.message);
       });
     </script>
 <% } %>
