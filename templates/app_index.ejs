@@ -194,7 +194,7 @@
 %>
 
 <% app.get('scripts').forEach(function (script) { %>
-  <script type="text/javascript" src="<%= (BT.runMode === BT.RM_BUILD && app.relativeBuild) ? script.get('relativeUrl') : script.get('url')  %>"> </script> <% }) %>
+  <script type="text/javascript" src="<%= app.get('doRelativeBuild') ? script.get('relativeUrl') : script.get('url')  %>"> </script> <% }) %>
 <% if (app.get('contentForPageJavascript')) { %>
 <%- app.get('contentForPageJavascript') %> <% } %>
 <% // If config.html5_history is true, HTML5 history will be activated for
