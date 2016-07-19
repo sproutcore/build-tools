@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Server index</title>
+  </head>
+
+  <body>
+    <p>The following apps are configured: </p>
+    <ul>
+      <% apps.forEach(function (app) { %>
+        <li>
+          <a href="/<%= app.get('url') %>"><%= app.get('title') %></a>
+        </li>
+      <% }) %>
+    </ul>
+  </body>
+</html>
