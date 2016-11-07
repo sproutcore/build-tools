@@ -6,6 +6,7 @@ var commander = require('commander'),
 
 commander
   .description("Run the development server")
+  .option("-d, --daemonize", "runs as a daemon")
   .option("-a, --local-only [true/false]", "sets whether the server should run localOnly (overrides the project setting)")
   .option("-p, --port [port]", "sets the port the server should listen on (overrides the project setting)")
   .option("-r, --repl", "open a repl to the buildtools")
@@ -27,6 +28,7 @@ commander
 //var opts = commander.args;
 
 buildtools.startDevServer(curPath, {
+  daemonize: commander.daemonize,
   runBenchmarks: commander.runBenchmarks,
   hasREPL: commander.repl,
   outputFiles: commander.outputFiles,

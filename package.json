@@ -42,7 +42,8 @@
     "socket.io": "^1.4.6",
     "sproutnode": "git://github.com/sproutcore/sproutcore#team/mauritslamers/sproutnode",
     "traceur": "0.0.108",
-    "uglify-js": "~2.4.16"
+    "uglify-js": "~2.4.16",
+    "daemon": "~1.1"
   },
   "version": "1.11.2-2",
   "engines": {
