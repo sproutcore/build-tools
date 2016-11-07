@@ -56,4 +56,3 @@ npm.on('close', function (code) {
     console.log('Error installing canvas-bin for your platform. Please report this issue!');
   }
 });
-

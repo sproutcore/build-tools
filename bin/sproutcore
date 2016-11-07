@@ -1,22 +1,10 @@
 #!/usr/bin/env node
 
-// we should take this apart, and have the sproutcore act like a proxy to other commands...
-// if possible with commander of course
-
 var util = require('util'),
     path = require('path'),
     args = process.argv,
     curPath = process.cwd(),
-    //buildtools = require('../index'), // no longer needed
     commander = require('commander');
-    //command = args[2],
-    // hasREPL = args.indexOf("--repl") > 1,
-    // hasDebugServer = args.indexOf("--debug-server") > 1,
-    // runBenchmarks = args.indexOf("--run-benchmarks") > 1,
-    // runtype,
-    // app = (command === "build")? args[3]: null;
-
-
 
 commander
   .version("0.0.1")
@@ -26,42 +14,3 @@ commander
   .command("gen app <name>", "Generate project structure or parts of it")
   .command("init <name>", "Generate new project structure and app with the same name")
   .parse(process.argv);
-
-
-var genDesc = "Generate one of the following types of files: \n";
-genDesc += " - app [name] : Generate an app inside the current project\n";
-genDesc += "(more to follow)";
-
-
-  //.description("creates an app by <name>")
-  //.usage("app <name>")
-  //.option("--verbose", "log everything")
-  // .action(function (first, opts) {
-  //   //util.log('gen opts ' + util.inspect(first) + " and " + util.inspect(opts));
-  // })
-
-// commander.command("gen controller <name>")
-//   .description("generate a controller by name. The name should contain the appname.")
-//   .usage("controller <name>")
-//   //.usage(genDesc)
-//   .option("--verbose", "log everything")
-//   // .action(function (first, opts) {
-//   //   //util.log('gen opts ' + util.inspect(first) + " and " + util.inspect(opts));
-//   // });
-
-
-// util.puts("Sproutcore NodeJS BuildTools v0.0.1");
-// util.puts("");
-
-// function startDevServer () {
-//   buildtools.startDevServer(curPath, { hasREPL: hasREPL, hasDebugServer: hasDebugServer, runBenchmarks: runBenchmarks });
-// };
-
-// switch (command) {
-//   case "save": buildtools.startSave(curPath); break;
-//   case "install":
-//   case "server": startDevServer(); break;
-//   default: startDevServer();
-// }
-
-//util.log("args: " + util.inspect(args));

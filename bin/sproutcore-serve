@@ -6,7 +6,6 @@ var commander = require('commander'),
 
 commander
   .description("Run the development server")
-  .option("-d, --debug-server", "save the result of the dev-server build to tmpdebug folder")
   .option("-a, --local-only [true/false]", "sets whether the server should run localOnly (overrides the project setting)")
   .option("-p, --port [port]", "sets the port the server should listen on (overrides the project setting)")
   .option("-r, --repl", "open a repl to the buildtools")
@@ -14,6 +13,7 @@ commander
   .option("-l, --log-level [level]", "execution log level [trace, debug, info, warn, error, none]", "info")
   .option("--debug", "set the execution log level to debug")
   .option("--include-tests", "force inclusion of the tests")
+  .option("-o, --output-files [path]", "save the built files in a directory [debug_output])")
   .option("--disable-bt-feedback", "Do not use the feedback system to the browser")
   .parse(process.argv);
 
@@ -22,8 +22,8 @@ commander
 buildtools.startDevServer(curPath, {
   runBenchmarks: commander.runBenchmarks,
   hasREPL: commander.repl,
-  hasDebugServer: commander.debugServer,
   logLevel: commander.debug ? "debug" : commander.logLevel,
+  outputFiles: commander.outputFiles,
   localOnly: commander.localOnly,
   port: commander.port,
   includeTests: commander.includeTests,

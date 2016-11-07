@@ -76,8 +76,8 @@ module.exports.startDevServer = function (projectpath, opts) {
 
     // this should actually load the config
     //env.runCode("SC.Benchmark.verbose = true;");
-    if (opts.hasDebugServer) {
-      env.setPath("BT.debugServer", true);
+    if (opts.outputFiles) {
+      env.setPath("BT.outputFiles", opts.outputFiles);
     }
     if (opts.runBenchmarks) {
       env.setPath("BT.runBenchmarks", true);
