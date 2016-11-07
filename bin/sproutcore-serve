@@ -17,6 +17,8 @@ commander
   .option("--error", "set the execution log level to error")
   .option("--silent", "set the execution log level to none")
 
+  .option("-l, --log-file [path]", "save the log to a file [serve.log]")
+
   .option("-t, --include-tests", "force inclusion of the tests")
   .option("-o, --output-files [path]", "save the built files in a directory [debug_output])")
   .option("--disable-bt-feedback", "Do not use the feedback system to the browser")
@@ -28,6 +30,7 @@ buildtools.startDevServer(curPath, {
   runBenchmarks: commander.runBenchmarks,
   hasREPL: commander.repl,
   outputFiles: commander.outputFiles,
+  logFile: commander.logFile,
   logLevel: commander.trace ? "trace" : commander.debug ? "debug" : commander.warn ? "warn" : commander.error ? "error" : commander.silent ? "none" : "info",
   localOnly: commander.localOnly,
   port: commander.port,

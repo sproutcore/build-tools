@@ -63,6 +63,11 @@ module.exports.startDevServer = function (projectpath, opts) {
       env.setPath('BT.noSocket', true);
     }
 
+    if (opts.logFile) {
+      if (typeof opts.logFile !== 'string') opts.logFile = 'serve.log';
+      env.runCode("BT.Logger.logFile = '"+opts.logFile+"'");
+    }
+
     if (opts.includeTests) {
       // tests are off by default, change the appbuilder prototype to add tests to all loaded apps
       env.runCode("BT.AppBuilder.prototype.includeTests = true");
