@@ -2,7 +2,7 @@
 //https://github.com/mauritslamers/node-canvas-builder/releases/download/v1.0r3/osx_0.12.tar.gz
 //https://github.com/mauritslamers/node-canvas-builder/releases/download/v1.0rc3/osx_0.12.tar.gz
 
-var release = "v1.0rc3";
+var release = "v1.0";
 var os = require('os');
 var node_version = process.versions.node.split(".").filter(function (p, i) {
   if (i < 2) {
