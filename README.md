@@ -27,10 +27,35 @@ Some of the benefits of using BT versus assembling your own content include:
   
 Although BT is intended primarily for building Web applications that use the SproutCore JavaScript framework, you can also use it to efficiently build any kind of static web content, even if SproutCore is not involved.
 
+## Install BT 
 
+### Normal installation
+The default way of installing the BT is through npm. If you are new to SproutCore, install it with
 
-## Install BT from the source
+```npm install -g sproutcore```
 
+If you are updating from the old build tools (Abbot), and you have those installed globally, you might run into a name collision on
+the sproutcore command if you install the new BT globally. If you want to remove Abbot, first remove it with 
+
+`gem uninstall sproutcore`
+
+and then install the new BT through
+
+`npm install -g sproutcore`
+
+If you don't want to uninstall Abbot, it is best to install the BT locally to the project. If it is a new project, create a 
+folder, then go inside it and run 
+
+`npm install sproutcore`.
+
+To generate the project, run 
+
+`node_modules/sproutcore/bin/sproutcore init [projectname] .`
+
+### Developing on BT
+If you want to be able to tinker with the BT itself, you can install the BT as a git repo.
+Create the project folder, then create a node_modules folder inside it.
+Go into this folder and 
 
 1. Clone BT repository
 
@@ -40,7 +65,7 @@ Although BT is intended primarily for building Web applications that use the Spr
 
         npm install
 
-
+You can then go back to the project folder and init a new project by the same command as given above.
 
 #####On Windows:
 

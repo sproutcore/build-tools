@@ -36,14 +36,14 @@ function runProjectGenerator(projectFolder, projectName) {
 
 commander
   .version("0.0.1")
-  .arguments('<name>')
+  .arguments('<name> [path]')
   .action(function (name) {
     if (!name) {
       console.log("You need to give a name!");
       return;
     }
     // just set the variables, as they will be created by the generators
-    projectFolder = pathlib.join(curPath, name);
+    projectFolder = pathlib.join( (path || curPath), name);
     runProjectGenerator(projectFolder, name);
   })
   .parse(process.argv);
