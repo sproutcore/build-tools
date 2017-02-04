@@ -18,7 +18,6 @@ commander
   .option("--warn", "set the execution log level to warn")
   .option("--error", "set the execution log level to error")
   .option("--silent", "set the execution log level to none")
-
   .option("-l, --log-file [path]", "save the log to a file [serve.log]")
 
   .option("-t, --include-tests", "force inclusion of the tests")
@@ -30,8 +29,8 @@ commander
 
 buildtools.startDevServer(curPath, {
   daemonize: commander.daemonize,
-  runBenchmarks: commander.runBenchmarks,
   hasREPL: commander.repl,
+  runBenchmarks: commander.runBenchmarks,
   outputFiles: commander.outputFiles,
   configFile: commander.configFile,
   logFile: commander.logFile,
