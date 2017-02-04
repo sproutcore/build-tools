@@ -43,7 +43,7 @@ commander
       return;
     }
     // just set the variables, as they will be created by the generators
-    projectFolder = pathlib.join( (path || curPath), name);
+    projectFolder = path? path : pathlib.join(curPath, name);
     runProjectGenerator(projectFolder, name);
   })
   .parse(process.argv);
