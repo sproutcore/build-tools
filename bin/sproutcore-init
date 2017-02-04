@@ -45,7 +45,6 @@ commander
       console.log("You need to give a name!");
       return;
     }
-    console.log('given path: ', path);
     // just set the variables, as they will be created by the generators
     projectFolder = path? path : pathlib.join(curPath, name);
     runProjectGenerator(projectFolder, name, !!path);

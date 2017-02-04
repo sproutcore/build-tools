@@ -31,7 +31,7 @@ commander
     var projFolder;
     if (!opts.skipCreateProjectfolder) {
       projFolder = path.join(folder, name);
-      mkDir(path.join(projFolder, "apps"));
+      mkDir(projFolder);
     }
     else projFolder = folder;
     
