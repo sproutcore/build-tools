@@ -37,7 +37,7 @@ function runProjectGenerator(projectFolder, projectName) {
 commander
   .version("0.0.1")
   .arguments('<name> [path]')
-  .action(function (name) {
+  .action(function (name, path) {
     if (!name) {
       console.log("You need to give a name!");
       return;
