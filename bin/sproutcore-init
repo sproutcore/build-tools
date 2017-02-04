@@ -19,9 +19,11 @@ actions:
  - create an app with the name of the project
  */
 
-function runProjectGenerator(projectFolder, projectName) {
+function runProjectGenerator(projectFolder, projectName, skipCreateProjectFolder) {
   var scriptname = pathlib.join(btDir, 'generators', 'project', 'generator.js');
-  var proc = spawn('node', [scriptname, curPath, projectName], { stdio: 'inherit', customFds: [0, 1, 2] });
+  var procArgs = [scriptname, curPath, projectName];
+  if (skipCreateProjectFolder) procArgs.push("--skip-create-projectfolder");
+  var proc = spawn('node', procArgs, { stdio: 'inherit', customFds: [0, 1, 2] });
 
   if (proc.error) {
     if (err.code == "ENOENT") {
@@ -29,6 +31,7 @@ function runProjectGenerator(projectFolder, projectName) {
     }
     process.exit(1);
   }
+  if (skipCreateProjectFolder) projectFolder = pathlib.resolve(projectFolder);
   basics.runAppGenerator(projectFolder, projectName);
   console.log("Your project has been successfully created!");
   process.exit(0);
@@ -42,9 +45,10 @@ commander
       console.log("You need to give a name!");
       return;
     }
+    console.log('given path: ', path);
     // just set the variables, as they will be created by the generators
     projectFolder = path? path : pathlib.join(curPath, name);
-    runProjectGenerator(projectFolder, name);
+    runProjectGenerator(projectFolder, name, !!path);
   })
   .parse(process.argv);
 
