@@ -6,24 +6,34 @@ var commander = require('commander'),
 
 commander
   .description("Run the development server")
-  .option("-d, --debug-server", "save the result of the dev-server build to tmpdebug folder")
+  .option("-d, --daemonize", "runs as a daemon")
   .option("-a, --local-only [true/false]", "sets whether the server should run localOnly (overrides the project setting)")
   .option("-p, --port [port]", "sets the port the server should listen on (overrides the project setting)")
   .option("-r, --repl", "open a repl to the buildtools")
-  .option("--run-benchmarks", "run benchmarks on the buildtools")
-  .option("-l, --log-level [level]", "execution log level [trace, debug, info, warn, error, none]", "info")
-  .option("--debug", "set the execution log level to debug")
-  .option("--include-tests", "force inclusion of the tests")
+  .option("-b, --run-benchmarks", "run benchmarks on the buildtools")
+
+  .option("--trace", "set the execution log level to trace")
+  .option("-v, --debug", "set the execution log level to debug")
+  .option("--warn", "set the execution log level to warn")
+  .option("--error", "set the execution log level to error")
+  .option("--silent", "set the execution log level to none")
+
+  .option("-l, --log-file [path]", "save the log to a file [serve.log]")
+
+  .option("-t, --include-tests", "force inclusion of the tests")
+  .option("-o, --output-files [path]", "save the built files in a directory [debug_output])")
   .option("--disable-bt-feedback", "Do not use the feedback system to the browser")
   .parse(process.argv);
 
 //var opts = commander.args;
 
 buildtools.startDevServer(curPath, {
+  daemonize: commander.daemonize,
   runBenchmarks: commander.runBenchmarks,
   hasREPL: commander.repl,
-  hasDebugServer: commander.debugServer,
-  logLevel: commander.debug ? "debug" : commander.logLevel,
+  outputFiles: commander.outputFiles,
+  logFile: commander.logFile,
+  logLevel: commander.trace ? "trace" : commander.debug ? "debug" : commander.warn ? "warn" : commander.error ? "error" : commander.silent ? "none" : "info",
   localOnly: commander.localOnly,
   port: commander.port,
   includeTests: commander.includeTests,

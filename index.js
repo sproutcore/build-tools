@@ -63,6 +63,11 @@ module.exports.startDevServer = function (projectpath, opts) {
       env.setPath('BT.noSocket', true);
     }
 
+    if (opts.logFile || opts.daemonize) {
+      if (typeof opts.logFile !== 'string') opts.logFile = 'serve.log';
+      env.runCode("BT.Logger.logFile = '"+opts.logFile+"'");
+    }
+
     if (opts.includeTests) {
       // tests are off by default, change the appbuilder prototype to add tests to all loaded apps
       env.runCode("BT.AppBuilder.prototype.includeTests = true");
@@ -76,8 +81,8 @@ module.exports.startDevServer = function (projectpath, opts) {
 
     // this should actually load the config
     //env.runCode("SC.Benchmark.verbose = true;");
-    if (opts.hasDebugServer) {
-      env.setPath("BT.debugServer", true);
+    if (opts.outputFiles) {
+      env.setPath("BT.outputFiles", opts.outputFiles);
     }
     if (opts.runBenchmarks) {
       env.setPath("BT.runBenchmarks", true);
@@ -99,8 +104,13 @@ module.exports.startDevServer = function (projectpath, opts) {
       var p = parseInt(opts.port, 10); // make sure this is a number
       env.runCode("BT.serverConfig.port = " + p);
     }
+
+    if (opts.daemonize) {
+      require('daemon')();
+    }
+
     env.runCode("SC.run(function() { BT.projectManager.startServer(); })");
-    if (opts.hasREPL) {
+    if (opts.hasREPL && !opts.daemonize) {
       env.repl();
     }
     //env.runCode("console.log(__dirname);");
