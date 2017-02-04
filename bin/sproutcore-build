@@ -11,6 +11,7 @@ commander
   .option("-l, --log-level [level]", "execution log level [trace, debug, info, warn, error, none]", "info")
   .option("--debug", "set the execution log level to debug")
   .option("--repl", "don't quit after build, but start a repl")
+  .option("-c, --config-file [path]", "the server configuration file to use [sc_config]")
   .parse(process.argv);
 
 var opts = commander.args;
@@ -20,4 +21,5 @@ buildtools.startBuild(curPath, {
   runBenchmarks: commander.runBenchmarks,
   logLevel: commander.debug ? "debug" : commander.logLevel,
   REPL: commander.repl
+  configFile: commander.configFile,
 });
