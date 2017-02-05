@@ -37,18 +37,9 @@ files.forEach(function (f) {
 
 module.exports.__env = env;
 
-var loadScConfigs = function (projectpath) {
-  // // Search for the sc_config files of the apps
-  // var appsPath = pathlib.join(projectpath, 'apps'),
-  //   fslib = require('fs'),
-  //   appList = fslib.readdirSync(appsPath);
-  //
-  // appList.forEach(function (fn) {
-  //   var appConfig = pathlib.join(appsPath, fn, 'sc_config');
-  //   if (fslib.existsSync(appConfig)) env.loadFile(appConfig);
-  // });
-
-  var p = pathlib.join(projectpath, 'sc_config');
+var loadScConfigs = function (projectpath, opts) {
+  var p = opts.configFile || 'sc_config';
+  if (p[0] !== '/') p = pathlib.join(projectpath, p);
   env.loadFile(p);
 };
 
@@ -77,7 +68,7 @@ module.exports.startDevServer = function (projectpath, opts) {
     if (opts.logLevel) {
       env.runCode("BT.Logger.logOutputLevel = '"+opts.logLevel+"'");
     }
-    loadScConfigs(projectpath);
+    loadScConfigs(projectpath, opts);
 
     // this should actually load the config
     //env.runCode("SC.Benchmark.verbose = true;");
@@ -174,12 +165,12 @@ module.exports.startBuild = function (projectpath, opts) {
     if (opts.apps.length > 0) {
       env.runCode("BT.BUILDTARGETS = " + JSON.stringify(opts.apps));
     }
-    loadScConfigs(projectpath);
+    loadScConfigs(projectpath, opts);
     var code = "SC.run(function() { BT.projectManager.startBuild(" + JSON.stringify(opts) + "); });";
     var r = env.runCode(code);
     //util.log('return value of r: ' + util.inspect(r));
-    if (opts.REPL) env.repl();
-    if (r === "done" && !opts.REPL) process.exit(0);
+    if (opts.hasREPL) env.repl();
+    if (r === "done" && !opts.hasREPL) process.exit(0);
   }
   catch (err) {
     util.log('error caught: ' + util.inspect(err, true, 10));
