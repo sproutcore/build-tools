@@ -2,8 +2,8 @@
 if (!SC.MODULE_INFO["<%= name %>"]) {
   SC.MODULE_INFO["<%= name %>"] = SC.Object.create({
     styles: <%- styles %>,
-    scriptURL: "<%= scriptURL %>",
-    stringURL: "<%= stringURL %>",
-    source: <%= scriptSource %>
+    scriptURL: "<%= scriptURL %>"<%if (locals.stringURL) { %>,
+    stringURL: "<%= stringURL %>"<% } %><%if (locals.scriptSource) { %>,
+    source: <%= scriptSource %><% } %>
   });
 }
