@@ -24,6 +24,7 @@ switch (platform) {
   case "linux":
     filename = "linux_" + arch + "_" + node_version; break;
   case "win32":
+    if (arch === "ia32") arch = "x86";
     filename = "win_" + arch + "_" + node_version; break;
     if (arch === "x64" && node_version === "0.10") {
       throw new Error("This version of the SproutCore buildtools cannot run on 64bit Windows and node 0.10 because of compilation errors.");
@@ -37,22 +38,17 @@ var url = base_url + release + "/" + filename;
 
 
 console.log("Installing canvas-bin for your platform (", platform, ",", arch, ") and node version: ", node_version);
-var spawn = require('child_process').spawn,
-    npm   = spawn('npm', ['install', url]);
+var execSync = require('child_process').execSync;
+var result;
 
-// npm.stdout.on('data', function (data) {
-//   console.log('stdout: ' + data);
-// });
+try {
+  result = execSync("npm install " + url);
+}
+catch (e) {
+  console.log("Error installing canvas-bin for your platform. Please report this issue!");
+  console.log(result);
+  console.log(e);
+  process.exit(1);
+}
 
-// npm.stderr.on('data', function (data) {
-//   console.log(data);
-// });
-
-npm.on('close', function (code) {
-  if (code === 0) {
-    console.log('Successfully installed canvas-bin for your platform');
-  }
-  else {
-    console.log('Error installing canvas-bin for your platform. Please report this issue!');
-  }
-});
+console.log("Successfully installed canvas-bin for your platform.");
