@@ -4,6 +4,7 @@
 
 var release = "v1.0";
 var os = require('os');
+var pathlib = require('path');
 var node_version = process.versions.node.split(".").filter(function (p, i) {
   if (i < 2) {
     return p;
@@ -42,7 +43,7 @@ var execSync = require('child_process').execSync;
 var result;
 
 try {
-  result = execSync("npm install " + url);
+  result = execSync("npm install " + url, { cwd: pathlib.join(__dirname, '..') }); // will cause the npm install to run in the npm_modules after install
 }
 catch (e) {
   console.log("Error installing canvas-bin for your platform. Please report this issue!");
@@ -50,5 +51,6 @@ catch (e) {
   console.log(e);
   process.exit(1);
 }
+
 
 console.log("Successfully installed canvas-bin for your platform.");
