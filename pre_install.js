@@ -48,7 +48,6 @@ try {
   // Doing it directly in the main node_modules folder interferes with the npm install process we are
   // running inside of.
   result = execSync("npm install " + url, { cwd: __dirname });
-  fslib.renameSync(pathlib.join(__dirname, 'node_modules', 'canvas-bin'), pathlib.join(__dirname, '..')); // move to main node_modules folder
 }
 catch (e) {
   console.log("Error installing canvas-bin for your platform. Please report this issue!");

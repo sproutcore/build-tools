@@ -4,6 +4,17 @@ var os = require('os');
 var cp = require('child_process');
 var util = require('util');
 var pathlib = require('path');
+var fslib = require('fs');
+
+// as moving the canvas-bin library in the pre_install doesn't work, we move it here.
+
+try {
+  fslib.renameSync(pathlib.join(__dirname, 'node_modules', 'canvas-bin'), pathlib.join(__dirname, '..')); // move to main node_modules folder
+}
+catch (e) {
+  console.log("Error when trying to move canvas-bin into place. Please report this issue");
+  process.exit(1);
+}
 
 // the first thing to do is to checkout sproutcore
 //
