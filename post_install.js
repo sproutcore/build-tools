@@ -6,9 +6,18 @@ var util = require('util');
 var pathlib = require('path');
 var fslib = require('fs');
 
+var node_version = process.versions.node.split(".").filter(function (p, i) {
+  if (i < 2) {
+    return p;
+  }
+});
+if (node_version[0] !== '0') {
+  node_version[1] = '0';
+}
+
 // as moving the canvas-bin library in the pre_install doesn't work, we move it here.
 
-if (!fslib.existsSync(pathlib.join(__dirname, '..', 'canvas-bin'))) {
+if (node_version[0] !== '0' && !fslib.existsSync(pathlib.join(__dirname, '..', 'canvas-bin'))) {
   try {
     fslib.renameSync(pathlib.join(__dirname, 'node_modules', 'canvas-bin'), pathlib.join(__dirname, '..', 'canvas-bin')); // move to main node_modules folder
   }
