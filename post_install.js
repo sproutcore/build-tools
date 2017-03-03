@@ -8,15 +8,17 @@ var fslib = require('fs');
 
 // as moving the canvas-bin library in the pre_install doesn't work, we move it here.
 
-try {
-  fslib.renameSync(pathlib.join(__dirname, 'node_modules', 'canvas-bin'), pathlib.join(__dirname, '..')); // move to main node_modules folder
-}
-catch (e) {
-  console.log("Error when trying to move canvas-bin into place. Please report this issue");
-  process.exit(1);
+if (!fslib.existSync(pathlib.join(__dirname, '..', 'canvas-bin'))) {
+  try {
+    fslib.renameSync(pathlib.join(__dirname, 'node_modules', 'canvas-bin'), pathlib.join(__dirname, '..')); // move to main node_modules folder
+  }
+  catch (e) {
+    console.log("Error when trying to move canvas-bin into place. Please report this issue");
+    process.exit(1);
+  }
 }
 
-// the first thing to do is to checkout sproutcore
+// checkout sproutcore
 //
 var buildtools = require(pathlib.join(__dirname, 'index.js'));
 util.log('Installing sproutcore as global dependency, this can take a while...');
