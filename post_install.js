@@ -8,7 +8,7 @@ var fslib = require('fs');
 
 // as moving the canvas-bin library in the pre_install doesn't work, we move it here.
 
-if (!fslib.existSync(pathlib.join(__dirname, '..', 'canvas-bin'))) {
+if (!fslib.existsSync(pathlib.join(__dirname, '..', 'canvas-bin'))) {
   try {
     fslib.renameSync(pathlib.join(__dirname, 'node_modules', 'canvas-bin'), pathlib.join(__dirname, '..')); // move to main node_modules folder
   }
