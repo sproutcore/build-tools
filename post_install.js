@@ -10,9 +10,10 @@ var fslib = require('fs');
 
 if (!fslib.existsSync(pathlib.join(__dirname, '..', 'canvas-bin'))) {
   try {
-    fslib.renameSync(pathlib.join(__dirname, 'node_modules', 'canvas-bin'), pathlib.join(__dirname, '..')); // move to main node_modules folder
+    fslib.renameSync(pathlib.join(__dirname, 'node_modules', 'canvas-bin'), pathlib.join(__dirname, '..', 'canvas-bin')); // move to main node_modules folder
   }
   catch (e) {
+    console.log(e);
     console.log("Error when trying to move canvas-bin into place. Please report this issue");
     process.exit(1);
   }
