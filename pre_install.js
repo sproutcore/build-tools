@@ -4,6 +4,7 @@
 
 var release = "v1.0";
 var os = require('os');
+var fslib = require('fs');
 var pathlib = require('path');
 var node_version = process.versions.node.split(".").filter(function (p, i) {
   if (i < 2) {
@@ -43,7 +44,11 @@ var execSync = require('child_process').execSync;
 var result;
 
 try {
-  result = execSync("npm install " + url, { cwd: pathlib.join(__dirname, '..') }); // will cause the npm install to run in the npm_modules after install
+  // we install first in the node_modules in the BT root, then move the folder
+  // Doing it directly in the main node_modules folder interferes with the npm install process we are
+  // running inside of.
+  result = execSync("npm install " + url, { cwd: __dirname });
+  fslib.renameSync(pathlib.join(__dirname, 'node_modules', 'canvas-bin'), pathlib.join(__dirname, '..')); // move to main node_modules folder
 }
 catch (e) {
   console.log("Error installing canvas-bin for your platform. Please report this issue!");
