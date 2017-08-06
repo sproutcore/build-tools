@@ -3,6 +3,7 @@
 //https://github.com/mauritslamers/node-canvas-builder/releases/download/v1.0rc3/osx_0.12.tar.gz
 
 var release = "v1.0";
+var last_supported_node_version = 7;
 var os = require('os');
 var fslib = require('fs');
 var pathlib = require('path');
@@ -13,6 +14,10 @@ var node_version = process.versions.node.split(".").filter(function (p, i) {
 });
 if (node_version[0] !== '0') {
   node_version[1] = '0';
+}
+// In case the installed version of node does not have a corresponding 'node-canvas-builder'.
+if (Number(node_version[0]) > last_supported_node_version) {
+  node_version[0] = last_supported_node_version;
 }
 node_version = node_version.join(".");
 
