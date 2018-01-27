@@ -1,6 +1,7 @@
 // use preinstall to install the right node-canvas-bin package
 //https://github.com/mauritslamers/node-canvas-builder/releases/download/v1.0r3/osx_0.12.tar.gz
 //https://github.com/mauritslamers/node-canvas-builder/releases/download/v1.0rc3/osx_0.12.tar.gz
+var http = require('https');
 
 function installCanvasBin (release) {
   // var release = "v1.0";
