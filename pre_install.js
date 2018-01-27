@@ -71,7 +71,7 @@ else {
   console.log('Trying to determine latest version from github.com');
   http.get({
     host: 'api.github.com',
-    path: 'repos/mauritslamers/node-canvas-builder/releases/latest',
+    path: '/repos/mauritslamers/node-canvas-builder/releases/latest',
     method: 'GET',
     headers: {'user-agent': 'node.js'}
   },
