@@ -69,7 +69,13 @@ if (process.argv[2]) {
 }
 else {
   console.log('Trying to determine latest version from github.com');
-  http.get('https://api.github.com/repos/mauritslamers/node-canvas-builder/releases/latest', (res) => {
+  http.get({
+    host: 'api.github.com',
+    path: 'repos/mauritslamers/node-canvas-builder/releases/latest',
+    method: 'GET',
+    headers: {'user-agent': 'node.js'}
+  },
+  (res) => {
     const statusCode = res.statusCode;
     const contentType = res.headers['content-type'];
 
