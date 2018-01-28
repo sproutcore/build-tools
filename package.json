@@ -35,15 +35,15 @@
     "commander": "^2.8.1",
     "compass-mixins": "git://github.com/sproutcore/compass-mixins",
     "cssmin": "~0.4.1",
+    "daemon": "~1.1",
     "ejs": "~>2.5.5",
     "html-minifier": "~0.6.9",
     "node-sass": "^3.2.0",
     "rimraf": "~2.2.8",
     "socket.io": "^1.4.6",
-    "sproutnode": "git://github.com/sproutcore/sproutcore#team/mauritslamers/sproutnode",
+    "sproutnode": "https://github.com/sproutcore/sproutcore#team/mauritslamers/sproutnode",
     "traceur": "0.0.108",
-    "uglify-js": "~>2.6.0",
-    "daemon": "~1.1"
+    "uglify-js": "~>2.6.0"
   },
   "version": "1.11.2-22",
   "engines": {
