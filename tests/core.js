@@ -14,10 +14,13 @@ http.get('http://localhost:4020/sproutcore/tests', (res) => {
     console.log(error.message);
     // consume response data to free up memory
     res.resume();
+    process.exit(1);
     // return;
   }
 
   assert.equal(statusCode, 200, "Request failed for test runner");
+  // process.exit(0);
 }).on('error', (e) => {
   console.log(`Got error: ${e.message}`);
+  process.exit(1);
 });
