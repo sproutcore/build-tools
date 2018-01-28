@@ -7,6 +7,7 @@ sudo: false
 
 before_install:
   - npm install
+  - bin/sproutcore-serve --include-tests
+  - sleep 15
 
-script: bin/sproutcore-serve --include-tests
-
+script: node tests/core.js
