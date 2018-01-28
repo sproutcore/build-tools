@@ -45,7 +45,7 @@
     "uglify-js": "~>2.6.0",
     "daemon": "~1.1"
   },
-  "version": "1.11.2-21",
+  "version": "1.11.2-22",
   "engines": {
     "node": ">=0.10.x"
   }
