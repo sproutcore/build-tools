@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 var commander = require('commander'),
+    fslib = require('fs'),
+    pathlib = require('path'),
     buildtools = require('../'),
     curPath = process.cwd();
 
@@ -26,6 +28,17 @@ commander
   .parse(process.argv);
 
 //var opts = commander.args;
+
+if (!fslib.existsSync(pathlib.join(__dirname, '..', 'frameworks', 'sproutcore'))) {
+  // var buildtools = require(pathlib.join(__dirname, '..', 'index.js'));
+  util.log('Global SproutCore missing, installing sproutcore as global dependency, a moment please...');
+  buildtools.startInstall(process.cwd(), {
+    gitUrl: "git://github.com/sproutcore/sproutcore",
+    isGlobal: true,
+    logLevel: "none",
+    branch: "team/mauritslamers/newbt"
+  });
+}
 
 buildtools.startDevServer(curPath, {
   daemonize: commander.daemonize,
