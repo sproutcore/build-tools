@@ -1,7 +1,7 @@
 var assert = require('assert');
 var http = require('http');
 
-http.get('http://localhost:4020/sproutcore/tests', (res) => {
+http.get('http://localhost:4020/sc/targets.json', (res) => {
   const statusCode = res.statusCode;
   const contentType = res.headers['content-type'];
 
