@@ -40,21 +40,23 @@ function installCanvasBin (release) {
 
   console.log("Installing canvas-bin for your platform (", platform, ",", arch, ") and node version: ", node_version);
   var spawn = require('child_process').spawn,
+      errors = [],
       npm   = spawn('npm', ['install', url]);
 
   // npm.stdout.on('data', function (data) {
   //   console.log('stdout: ' + data);
   // });
 
-  // npm.stderr.on('data', function (data) {
-  //   console.log(data);
-  // });
+  npm.stderr.on('data', function (data) {
+    errors.push(data);
+  });
 
   npm.on('close', function (code) {
     if (code === 0) {
       console.log('Successfully installed canvas-bin for your platform');
     }
     else {
+      console.log(errors.join("\n"));
       console.log('Error installing canvas-bin for your platform. If you are on an older version of Node,');
       console.log('you can try to fix this by manually installing an older version by providing the pre_install.js')
       console.log('script with a version: node pre_install.js v1.0. If this doesn\'t help you, please report the issue!');
