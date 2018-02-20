@@ -7,7 +7,7 @@ sudo: false
 
 before_install:
   - npm install
-  - ( bin/sproutcore serve --local-only=true --port=4020 --include-tests --disable-bt-feedback & ) || /bin/true
+  - ( bin/sproutcore serve --port=4020 --include-tests --disable-bt-feedback & ) || /bin/true
   - sleep 15
 
 script: node tests/core.js
