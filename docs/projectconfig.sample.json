@@ -42,7 +42,7 @@
     "myapp": {
       "description": "this hash is optional, as many things can be autodetected. this config file can overrule files deeper in the tree",
       "name":"myapp",
-      "theme": "ace",
+      "theme": "aki",
       "title": "MyApp",
       "path": "apps/name",
       "htmlHead": [],
