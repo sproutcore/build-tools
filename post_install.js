@@ -15,18 +15,6 @@ if (node_version[0] !== '0') {
   node_version[1] = '0';
 }
 
-// as moving the canvas-bin library in the pre_install doesn't work, we move it here.
-if (node_version[0] !== '0' && (parseInt(node_version[0],10) < 6) && !fslib.existsSync(pathlib.join(__dirname, '..', 'canvas-bin'))) {
-  try {
-    fslib.renameSync(pathlib.join(__dirname, 'node_modules', 'canvas-bin'), pathlib.join(__dirname, '..', 'canvas-bin')); // move to main node_modules folder
-  }
-  catch (e) {
-    console.log(e);
-    console.log("Error when trying to move canvas-bin into place. Please report this issue");
-    process.exit(1);
-  }
-}
-
 // checkout sproutcore
 //
 var buildtools = require(pathlib.join(__dirname, 'index.js'));
