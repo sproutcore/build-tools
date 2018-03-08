@@ -4,10 +4,11 @@ var util = require('util'),
     path = require('path'),
     args = process.argv,
     curPath = process.cwd(),
+    scVersion = require('../package.json').version,
     commander = require('commander');
 
 commander
-  .version("0.0.1")
+  .version(scVersion)
   .command("install [git-repo]", "Install a repository, such as a framework")
   .command("serve", "Start the development server")
   .command("build [app1]", "Start the building process of one or more apps")
