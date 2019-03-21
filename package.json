@@ -43,7 +43,7 @@
     "socket.io": "^2.2.0",
     "sproutnode": "git+https://github.com/sproutcore/sproutcore.git#team/mauritslamers/sproutnode",
     "traceur": "0.0.111",
-    "uglify-js": "~3.4.10"
+    "terser": "~3.17.0"
   },
   "version": "1.11.2-26",
   "engines": {
