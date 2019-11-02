@@ -38,7 +38,7 @@ files.forEach(function (f) {
 module.exports.__env = env;
 
 var loadScConfigs = function (projectpath, opts) {
-  var p = opts.configFile || 'sc_config';
+  var p = opts.configFile || 'sc_config';
   if (p[0] !== '/') p = pathlib.join(projectpath, p);
   env.loadFile(p);
 };
