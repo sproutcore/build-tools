@@ -13,7 +13,6 @@
    // what follows here is a specification of that hash
    // {
      // config: {
-     //   contentForHtml5Manifest: "",
      //   useChromeFrame: false,
      //   statusBarStyle: "default",
      //   touchEnabled: true,
@@ -41,7 +40,7 @@
    //
 -%>
 <!DOCTYPE html>
-<html <% if (app.get('addHtml5Manifest')) { %> manifest="<%= app.get('html5ManifestUrl') %>" <% } %> class="no-js" lang="<%= app.get('language') %>">
+<html class="no-js" lang="<%= app.get('language') %>">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge<%=  app.get('useChromeFrame') ? ',chrome=1' : ''   %>"  >
 
@@ -235,6 +234,9 @@
           method = 'log';
 
         switch(data.type) {
+          case 'debug':
+            method = 'debug';
+          break;
           case 'warn':
             method = 'warn';
           break;
