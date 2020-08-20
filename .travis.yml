@@ -1,13 +1,12 @@
+os: linux
+dist: xenial
 language: node_js
 node_js:
-  - "6"
-  - "8"
-
-sudo: false
-
+  - "10"
+  - "12"
+  - "14"
 before_install:
   - npm install
   - bin/sproutcore-serve --include-tests --disable-bt-feedback &
   - sleep 15
-
 script: node tests/core.js
