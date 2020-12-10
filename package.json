@@ -42,7 +42,8 @@
     "rimraf": "~2.6.3",
     "socket.io": "^2.3.0",
     "sproutnode": "git+https://github.com/sproutcore/sproutcore.git#team/mauritslamers/sproutnode",
-    "terser": "~4.8.0",
+    "sync-rpc": "~1.3.6",
+    "terser": "~5.5.1",
     "traceur": "0.0.111"
   },
   "version": "1.11.2-26",
