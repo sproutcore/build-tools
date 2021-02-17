@@ -11,7 +11,8 @@ commander
   .option("-p, --port [port]", "sets the port the server should listen on (overrides the project setting)")
   .option("-r, --repl", "open a repl to the buildtools")
   .option("-b, --run-benchmarks", "run benchmarks on the buildtools")
-  .option("-c, --config-file [path]", "the server configuration file to use [sc_config]")
+  .option("-c, --config-file <path>", "the server configuration file to use", "sc_config")
+  .option("-e, --env <env>", "the environment name", "dev")
 
   .option("--trace", "set the execution log level to trace")
   .option("-v, --debug", "set the execution log level to debug")
@@ -33,6 +34,7 @@ buildtools.startDevServer(curPath, {
   runBenchmarks: commander.runBenchmarks,
   outputFiles: commander.outputFiles,
   configFile: commander.configFile,
+  envName: commander.env,
   logFile: commander.logFile,
   logLevel: commander.trace ? "trace" : commander.debug ? "debug" : commander.warn ? "warn" : commander.error ? "error" : commander.silent ? "none" : "info",
   localOnly: commander.localOnly,

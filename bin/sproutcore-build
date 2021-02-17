@@ -9,7 +9,8 @@ commander
   .usage("\n     or: sproutcore build [app1, app2...]")
   .option("--repl", "don't quit after build, but start a repl")
   .option("--run-benchmarks", "run benchmarks on the saving process")
-  .option("-c, --config-file [path]", "the server configuration file to use [sc_config]")
+  .option("-c, --config-file <path>", "the server configuration file to use", "sc_config")
+  .option("-e, --env <env>", "the environment name", "prod")
 
   .option("--trace", "set the execution log level to trace")
   .option("-v, --debug", "set the execution log level to debug")
@@ -26,6 +27,7 @@ buildtools.startBuild(curPath, {
   hasREPL: commander.repl,
   runBenchmarks: commander.runBenchmarks,
   configFile: commander.configFile,
+  envName: commander.env,
   logFile: commander.logFile,
   logLevel: commander.trace ? "trace" : commander.debug ? "debug" : commander.warn ? "warn" : commander.error ? "error" : commander.silent ? "none" : "info",
 });
