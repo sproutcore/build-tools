@@ -45,6 +45,7 @@ var loadScConfigs = function (projectpath, opts) {
 
 module.exports.startDevServer = function (projectpath, opts) {
   env.setPath('BT.runMode', "debug");
+  env.setPath("BT.envName", opts.envName);
   try {
     env.setPath('BT.projectPath', projectpath);
     env.setPath('BT.curPath', projectpath);
@@ -151,6 +152,7 @@ module.exports.startInstall = function (projectpath, opts) {
 module.exports.startBuild = function (projectpath, opts) {
   var util = require('util');
   env.setPath('BT.runMode', "build");
+  env.setPath("BT.envName", opts.envName);
   env.setPath('BT.projectPath', projectpath);
   env.setPath('BT.curPath', projectpath);
   env.setPath('BT.btPath', dirname);
