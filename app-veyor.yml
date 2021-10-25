@@ -1,5 +1,6 @@
 image:
   - Ubuntu
+build: off 
 platform:
   - x64
 environment:
