@@ -11,8 +11,7 @@ environment:
 init:
   - git config --global core.autocrlf true
 install:
-  - ps: Install-Product node $env:nodejs_version
-  - npm install -g npm@latest
+  - nvm use $env:nodejs_version
   - pwd
   - ls -al
   - mkdir /home/appveyor/projects/build-tools/node_modules
