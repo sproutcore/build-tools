@@ -18,7 +18,7 @@ install:
   - mkdir /home/appveyor/projects/build-tools/node_modules
   - mkdir node-sass
   - mkdir vendor
-  - npm --verbose install
+  - npm install
   - bin/sproutcore serve --include-tests --disable-bt-feedback &
   - sleep 15
 test_script:
