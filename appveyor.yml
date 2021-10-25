@@ -12,8 +12,11 @@ init:
   - git config --global core.autocrlf true
 install:
   - npm install -g npm@latest
+  - pwd
   - ls -al
-  - mkdir /home/appveyor/projects/build-tools/node_modules/node-sass/vendor
+  - mkdir /home/appveyor/projects/build-tools/node_modules
+  - mkdir node-sass
+  - mkdir vendor
   - npm --verbose install
   - bin/sproutcore serve --include-tests --disable-bt-feedback &
   - sleep 15
