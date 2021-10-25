@@ -14,5 +14,5 @@ install:
   - npm install
   - bin/sproutcore serve --include-tests --disable-bt-feedback &
   - sleep 15
-test:
+test_script:
   - node tests/core.js
