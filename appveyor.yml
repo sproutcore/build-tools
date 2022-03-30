@@ -1,0 +1,9 @@
+image: Ubuntu2004
+
+install: 
+  - npm install
+  - bin/sproutcore init test
+
+test_script:
+  - cd test
+  - ../bin/sproutcore build
