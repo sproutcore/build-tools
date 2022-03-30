@@ -1,6 +1,7 @@
 image: Ubuntu2004
 
 install: 
+  - nvm use 14
   - npm install
   - bin/sproutcore init test
 
