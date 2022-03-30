@@ -32,15 +32,15 @@
   ],
   "dependencies": {
     "commander": "^2.8.1",
-    "compass-mixins": "git://github.com/sproutcore/compass-mixins",
+    "compass-mixins": "git+https://github.com/sproutcore/compass-mixins",
     "cssmin": "^0.4.1",
     "daemon": "~1.1",
     "ejs": "~>2.5.5",
     "html-minifier": "^3.5.9",
     "image-size": "^0.6.2",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.1",
     "rimraf": "~2.2.8",
-    "socket.io": "^2.2.0",
+    "socket.io": "^4.4.1",
     "sproutnode": "git+https://github.com/sproutcore/sproutcore.git#team/mauritslamers/sproutnode",
     "traceur": "0.0.111",
     "uglify-js": "~3.1.3"
