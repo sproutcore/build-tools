@@ -108,13 +108,13 @@ module.exports.startDevServer = function (projectpath, opts) {
     //env.runCode("console.log(__dirname);");
   }
   catch (e) {
-    util.log('error caught: ' + util.inspect(e, true, 10));
+    console.log('error caught: ' + util.inspect(e, true, 10));
     if (e.code === 'ENOENT') {
-      util.log("You did not create a valid project config file");
+      console.log("You did not create a valid project config file");
       throw e;
     }
     else if (e.message.indexOf("EMFILE") > -1 && e.message.indexOf("Too many opened files") > -1) {
-      util.log("It seems your OS only allows a very limited number of open files. On OSX and Linux please run ulimit -n 4096");
+      console.log("It seems your OS only allows a very limited number of open files. On OSX and Linux please run ulimit -n 4096");
       process.exit(1);
       //throw e;
     }
@@ -140,7 +140,7 @@ module.exports.startInstall = function (projectpath, opts) {
     code += "branch: '" + opts.branch + "'";
   }
   code += "}); });";
-  //util.log("about to run code: " + code);
+  //console.log("about to run code: " + code);
   try {
     env.runCode(code);
   }
@@ -170,18 +170,18 @@ module.exports.startBuild = function (projectpath, opts) {
     loadScConfigs(projectpath, opts);
     var code = "SC.run(function() { BT.projectManager.startBuild(" + JSON.stringify(opts) + "); });";
     var r = env.runCode(code);
-    //util.log('return value of r: ' + util.inspect(r));
+    //console.log('return value of r: ' + util.inspect(r));
     if (opts.hasREPL) env.repl();
     if (r === "done" && !opts.hasREPL) process.exit(0);
   }
   catch (err) {
-    util.log('error caught: ' + util.inspect(err, true, 10));
+    console.log('error caught: ' + util.inspect(err, true, 10));
     if (err.code === 'ENOENT') {
-      util.log("You did not create a valid project config file");
+      console.log("You did not create a valid project config file");
       throw err;
     }
     else if (err.message.indexOf("EMFILE") > -1 && err.message.indexOf("Too many opened files") > -1) {
-      util.log("It seems your OS only allows a very limited number of open files. On OSX and Linux please run ulimit -n 4096");
+      console.log("It seems your OS only allows a very limited number of open files. On OSX and Linux please run ulimit -n 4096");
       process.exit(1);
       //throw e;
     }

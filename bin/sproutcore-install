@@ -42,8 +42,8 @@ commander
 var gitrepo = commander.args[0];
 
 
-// util.log("opts: " + util.inspect(opts));
-// util.log("commander: " + util.inspect(commander));
+// console.log("opts: " + util.inspect(opts));
+// console.log("commander: " + util.inspect(commander));
 
 if (!gitrepo) {
   util.puts("");

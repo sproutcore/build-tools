@@ -10,7 +10,7 @@ var util = require('util'),
     basics = require('../generators/generator_basics'),
     commander = require('commander');
 
-//util.log('test gen');
+//console.log('test gen');
 
 /*
 sproutcore init: project creator

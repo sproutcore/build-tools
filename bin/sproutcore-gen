@@ -4,7 +4,7 @@ var util = require('util'),
     fslib = require('fs'),
     curDir = __dirname;
 
-//util.log('test gen');
+//console.log('test gen');
 //generator
 
 var commander = require('commander');

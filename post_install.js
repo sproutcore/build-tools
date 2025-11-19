@@ -18,7 +18,7 @@ if (node_version[0] !== '0') {
 // checkout sproutcore
 //
 var buildtools = require(pathlib.join(__dirname, 'index.js'));
-util.log('Installing sproutcore as global dependency, this can take a while...');
+console.log('Installing sproutcore as global dependency, this can take a while...');
 buildtools.startInstall(process.cwd(), {
   gitUrl: "git://github.com/sproutcore/sproutcore",
   isGlobal: true,
