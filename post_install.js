@@ -23,5 +23,5 @@ buildtools.startInstall(process.cwd(), {
   gitUrl: "git://github.com/sproutcore/sproutcore",
   isGlobal: true,
   logLevel: "none",
-  branch: "team/mauritslamers/newbt"
+  branch: "team/gestixi/trunk"
 });
