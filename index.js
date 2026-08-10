@@ -45,7 +45,7 @@ var loadScConfigs = function (projectpath, opts) {
 
 module.exports.startDevServer = function (projectpath, opts) {
   env.setPath('BT.runMode', "debug");
-  env.setPath("BT.envName", opts.envName);
+  env.setPath("BT.envName", opts.envName || "dev");
   try {
     env.setPath('BT.projectPath', projectpath);
     env.setPath('BT.curPath', projectpath);
